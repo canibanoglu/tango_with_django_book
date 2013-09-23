@@ -1,2 +1,1 @@
-tango_with_django_book
-======================
+The Tango with Django Book Repository

@@ -184,6 +184,10 @@ You can see that we are now introducing ``body_block`` to the template - which o
 
 After the block ends, remove the remaining HTML content. All that exists within the ``category.html`` template should be the ``extends`` command, and ``body_block`` block. You don't need a well-formatted HTML document, because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to that base to create the complete HTML document which is sent to the client's browser.
 
+.. note::  To learn more about the extensive functionality offered by Django's template language, check out the official `Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/>`_. 
+
+
+
 Exercises
 ---------
 Update all the other existing templates within Rango's repertoire to extends from our new ``base.html`` template. Follow the exact same process as demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`.

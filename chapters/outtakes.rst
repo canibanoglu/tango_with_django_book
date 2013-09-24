@@ -37,3 +37,11 @@ In an attempt to make this concept easier to understand, Figure :num:`fig-relati
 	
 	
 	Getting to grips with Django's Model-View-Template pattern is an important part of using the framework - and is often a stumbling block for many students. It can also be difficult to conform to the pattern if you have been developing in other frameworks or other tools, where you have had to do all the SQL grunt work yourself. However
+
+
+	 These are stored within a Python list, demonstrated with the example taken from the Django shell below.
+
+	.. code-block:: python
+
+		>>> Category.objects.all()
+		[<Category: home>, <Category: sport>, <Category: fun>]

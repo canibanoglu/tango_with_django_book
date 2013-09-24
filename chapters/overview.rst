@@ -72,7 +72,7 @@ Your client would like you to create a website, called **Rango** that lets users
 
 	* For the **main page** of the site, they would like visitors to be able to see:
 
-	 	* the 5 most recently added pages
+	 	* the 5 most viewed pages
 		* the five most rango'ed categories, and
 		* some way for visitors to browse or search through categories.
 

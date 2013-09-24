@@ -113,7 +113,7 @@ Let's start by considering the URL problem. One way we could handle this problem
 
 Instead, we could just use the category name as part of the URL. ``/rango/category/sport/`` should give us a list of pages related to the sport category. An even simpler approach would be to remove ``category`` altogether, leaving URLs such as ``/rango/fun/`` or ``/rango/sport/``. URLs like this are much nicer from a usability point of view because they are readable, meaningful and predictable. Of course, if we go this approach, we will have to handle categories which have multiple words, like 'Other Frameworks', etc.
 
-.. note:: Designing clean URLs is an important aspect of web design. See `Wikipedia's article on Clean URLS<http://en.wikipedia.org/wiki/Clean_URL>`_ for more details.  
+.. note:: Designing clean URLs is an important aspect of web design. See `Wikipedia's article on Clean URLs <http://en.wikipedia.org/wiki/Clean_URL>`_ for more details.  
 
 
 Category Page Workflow

@@ -116,8 +116,8 @@ With your files cloned, you must then prepare your database. We'll be using the 
 
 As discussed earlier in the book, the first command synchronises your database with your project's installed models.
 
-Setup your Web Application
---------------------------
+Setting up your Web Application
+-------------------------------
 Now that your application's files and database are all present and correct, we can set it up to work with PythonAnywhere. Within PythonAnywhere's web interface, navigate to your *dashboard* and click on the *Web* tab. On the left of the page that appears, click *Add a new web app.*
 
 A popup box will then appear. Follow the instructions on-screen, and when the time comes, select the *manual configuration* option. **Don't** select *Django*! You should then complete the wizard.

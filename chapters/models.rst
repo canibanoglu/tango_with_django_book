@@ -2,50 +2,63 @@
 
 Models and Databases
 ====================
-Django provides you with a really simple way to access data for your applications. According to the `Django documentation <https://docs.djangoproject.com/en/1.5/topics/db/models/>`_, *models* are the *definitive source of data about your data*. If you don't like SQL that much, you're going to love this. Read on to learn how to create your own models, save them to a database of your choice, and use them in your project.
+Working with databases often requires you to get your hands dirty messing about with SQL. In Django, a lot of this hassle is taken care of by Django's Object Relational Mapping functions and how Django encapsulates databases tables through models. Essentially, a model is a Python object that describes your data model/table. Instead of directly working on the table via SQL, all you have to do is manipulate the Python object. In this chapter, we shall walk through how to setup a database and the models required for Rango.
 
 Rango's Requirements
 --------------------
-As part of this chapter, we'll be focusing on setting everything up for our sample Django application, Rango. So that you know exactly what we are developing, let's assume that we have the following requirements for our new application.
+First, let's go over the data requirements for Rango:
 
-* Rango is a *web page directory* - a site containing links to other websites. A simplified version of what we wish to achieve can be seen at `this <http://www.w3.org/History/19921103-hypertext/hypertext/DataSources/WWW/Servers.html>`_ archived webpage - created by `Sir Tim Berners-Lee <http://www.w3.org/People/Berners-Lee/>`_ - from 1992.
-* Rango splits the links it stores up into different *webpage categories*. For example, we might have a section on sport, and a section on politics.
-* Therefore, each category houses a list of links to webpages (e.g. a one-to-many relationship).
-* The index page of Rango (or homepage) will display a list of categories to the user.
-* A user of the application will be able to select a category, and Rango will then display the list of links/pages to webpages for that particular category.
-* Each category has its own name.
-* Each page refers to a category and has a title, URL and an integer to record the number of times the page has been viewed.
+* Rango is a essentially a *web page directory* - a site containing links to other websites. 
+* There is a number of different *webpage categories* and each category houses a number of links. We assumed that this is a one-to-many relationship (see the Entity Relationship Diagram below).
+* A category has a name, number of visits, and number of likes.
+* A page refers to a category, has a title, URL and a number of views.
 
-These points should make the requirements of what we wish to build much clearer.
+.. image:: ../images/rango-erd.png
+
+With these points in mind, we can now start to construct these models in Django.
+
 
 Telling Django About Your Database
 ----------------------------------
-Now that we know roughly what we want to create, we can get started. Before we can create any models, we must first setup our database for use by Django. This again involves modifying our project's ``settings.py``, located within the project configuration directory (e.g. ``<workspace>/tango_with_django_project/tango_with_django_project/``). Within the file, locate the ``DATABASES`` dictionary. Modify the ``default`` key/value pair so it looks something like the following example.
+Before we can create any models, we must first setup our database configuration. 
+
+To do this, open the ``settings.py`` and locate the dictionary called ``DATABASES``. Now, modify the ``default`` key/value pair so it looks something like the following example.
 
 .. code-block:: python
 	
 	DATABASES = {
 	    'default': {
 	        'ENGINE': 'django.db.backends.sqlite3',
-	        'NAME': PROJECT_PATH + '/tango_with_django_project/rango.db',
+	        'NAME': DATABASE_PATH,
 	    }
 	}
+	
+Also create a new variable called ``DATABASE_PATH`` and add that to the top of your ``settings.py`` along with the other paths:
 
-With the example above, we define the *default* database to use the *SQLite* Django backend. This provides us with access to the lightweight database framework, `SQLite <http://www.sqlite.org/>`_. When using SQLite as the database engine, the ``NAME`` key/value pair specifies the path to the database file. In the example above, we make use of our ``PROJECT_PATH`` variable defined in the previous chapter to produce an absolute path to where we wish to store our database. In the example, the value for ``NAME`` would be ``<workspace>/tango_with_django_project/tango_with_django_project/rango.db``. For SQLite databases, the remaining keys of ``USER``, ``PASSWORD``, ``HOST`` and ``PORT`` are not required - you can remove them if you wish.
+.. code-block:: python
+	
+	DATABASE_PATH = os.path.join(PROJECT_PATH, 'rango.db')
+	
 
-.. note:: With Django, you aren't restricted to using only SQLite as your database engine. Django itself comes with out of the box support for several other popular database engines - all of which are listed as part of `Django's official documentation <https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-DATABASE-ENGINE>`_. Database engines such as `PostgreSQL <http://www.postgresql.org/>`_ and `MySQL <http://www.mysql.com/>`_ are much more robust and capable of servicing large volumes of requests, so you can consider them if you are developing a project that will be visited frequently. For a simple introductory project however, SQLite should more more than sufficient for your needs. You can also use multiple databases if you need to. Check out `Django's official documentation <https://docs.djangoproject.com/en/1.5/topics/db/multi-db/>`_ for more information in this area.
+Here, we have defined the *default* database to use the *SQLite* Django backend. This provides us with access to the lightweight python database, `SQLite <http://www.sqlite.org/>`_, which is great for development purposes. 
+The only other value we need to set is the ``NAME`` key/value pair, which we have set to ``DATABASE_PATH``.
+For SQLite databases, the remaining keys of ``USER``, ``PASSWORD``, ``HOST`` and ``PORT`` are not required. 
+
+.. note::  While we have used an SQLite engine here and it is fine for getting started it is not the best option when you go to deploy your application. Instead, it is better to use a more robust and scalable database engine. 
+Django comes with out of the box support for several other popular database engines, such as  `PostgreSQL <http://www.postgresql.org/>`_ and `MySQL <http://www.mysql.com/>`_. See  `Django's official documentation
+ on Database Engines <https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-DATABASE-ENGINE>`_ for more details. 
 
 Creating Models
 ---------------
-With your database configured in ``settings.py``, let's now create two initial data models for the Rango application. To start, navigate to the ``rango`` directory, contained within your Django project's root directory. Within ``rango``, open the file ``models.py``. This file provides a location for you to define all of Rango's database models.
+With your database configured in ``settings.py``, let's now create the two initial data models for the Rango application.
 
-Within ``models.py``, we then need to create two Python classes, both of which inherit from ``django.db.models.Model``. The two Python classes will be the definitions for models representing categories and pages, each of which are explained in the requirements section above. The code for the two models should look like the following example. Note that you should keep the ``import`` statement provided at the top of the file for you - if you delete it, your models won't work!
+In``rango/models.py`` we will define two classes, both of which inherit from ``django.db.models.Model``. The two Python classes will be the definitions for models representing *categories* and *pages*. Define the ``Category`` and ``Page`` models as follows:
 
 .. code-block:: python
 	
 	class Category(models.Model):
 	    name = models.CharField(max_length=128, unique=True)
-	    
+
 	    def __unicode__(self):
 	        return self.name
 	
@@ -58,21 +71,13 @@ Within ``models.py``, we then need to create two Python classes, both of which i
 	    def __unicode__(self):
 	        return self.title
 
-From the code example above, defining a model is essentially a process of creating a class and defining a series of attributes for each field of your database model. In an attempt to make this concept easier to understand, Figure :num:`fig-relational-schema-basic-models` shows a relational schema representing the two models defined above.
+When you define a model, you need to specify the list of attributes and their associated types along with any optional parameters. Django provides a number of built-in fields, some of the most common are:
+	* ``CharField``, a field for storing character data (e.g. strings). Speciy ``max_length`` to provide a maximum number of characters the field can store.
+	* ``URLField``, much like a ``CharField``, but designed for storing resource URLs. You may also specify a ``max_length`` parameter.
+	* ``IntegerField``, which stores integers.
+	* ``DateField``, which stores a Python ``datetime.date``.
 
-.. _fig-relational-schema-basic-models:
-
-.. figure:: ../images/relational-schema-basic-models.pdf
-	:figclass: align-center
-
-	A relational schema diagram which shows the two database tables created as a result of the Django models defined previously.
-
-You can imagine that each attribute you create in a Django model corresponds to a column in a database table. The column type depends on the kind of field you specify. Django provides many kinds of built-in fields that you can use in your databases - some with optional parameters, others without. Check out the `Django documentation <https://docs.djangoproject.com/en/1.5/ref/models/fields/>`_ for a full list of built-in field types. Some of the most common types you will use are listed below.
-
-* ``CharField``, a field for storing character data (e.g. strings). Speciy ``max_length`` to provide a maximum number of characters the field can store.
-* ``URLField``, much like a ``CharField``, but designed for storing resource URLs. You may also specify a ``max_length`` parameter.
-* ``IntegerField``, which stores integers.
-* ``DateField``, which stores a Python ``datetime.date``.
+Check out the `Django documentation on model fields <https://docs.djangoproject.com/en/1.5/ref/models/fields/>`_ for a full listing.
 
 For each field, you can specify the ``unique`` attribute. If set to ``True``, only one instance of a particular value in that field may exist throughout the entire database model. For example, take a look at our ``Category`` model defined above. The field ``name`` has been set to unique - thus every category name must be unique.
 
@@ -90,11 +95,11 @@ From our model examples above, the field ``category`` in model ``Page`` is of ty
 
 Creating and Synchronising the Database
 ---------------------------------------
-With our models defined, we can now let Django work its magic and create the table representations in our database. With a terminal or Command Prompt instance looking at your Django project's root, synchronise the database with the ``manage.py`` script.
+With our models defined, we can now let Django work its magic and create the table representations in our database. To do this we need to synchronise the database using the ``manage.py`` script:
 
 ``$ python manage.py syncdb``
 
-Follow the on-screen instructions. You'll notice that Django creates a number of tables within your specified database. Of particular interest to you are the two tables ``rango_category`` and ``rango_page``. These correspond to your two Rango models, ``Category`` and ``Page``. Check out the example output the script produces below.
+Then follow the on-screen instructions. You'll notice that Django creates a number of tables within your specified database. Of particular interest to you are the two tables ``rango_category`` and ``rango_page``. These correspond to your two Rango models, ``Category`` and ``Page``. Check out the example output the script produces below.
 
 ::
 	
@@ -126,9 +131,15 @@ Follow the on-screen instructions. You'll notice that Django creates a number of
 
 You may be asked if you wish to create a superuser account, like in the example above. The superuser account will be used to access the Django admin interface later on in this tutorial, so we recommend that you bite the bullet and set up an account now. Enter ``yes``, then enter a username for the account, your e-mail address and provide a password when prompted. Once completed, the script should finish successfully. Make sure you take a note of the username and password for your superuser account.
 
-Have a look at your project configuration directory (e.g. the nested ``tango_with_django_project`` directory). You should now have a new file present called ``rango.db`` if you are using SQLite and followed our instructions. This file is your database, and if you wish to delete it, you'll have to go through the ``syncdb`` process once more.
+After this process has been completed you will be able to see a new file called ``rango.db`` in your project directory. 
 
-Although we know that the ``manage.py`` script created a load of tables in our database for us, what you don't see is the interactions going on between Django and the database backend. If you're interested, run the command ``python manage.py sql rango``. This will output the SQL code that was issued to the database backend on your behalf. The code that was executed for us is shown below. Pay particular attention to the foreign key reference that is created in table ``rango_page``, and the ``id`` fields created in both tables.
+
+.. note:: Whenever you change your database models, you will have to delete this file, and then re-sync the database by running ``python manage.py syncdb`` again. However if you add a new model, you can call re-sync the database without deleting the database file. You may have noticed that we forgot to include a couple of fields in our Category model - later we will add these in to remind you of this process.
+
+
+Generated SQL 
+-------------
+The database synchronisation process essentially converts the Django models into SQL tables. To see the SQL that is produced run the command ``python manage.py sql rango``. This will output the SQL code that was issued to the database backend on your behalf. Notice that while we did not specify an ``id'' attribute in our model, Django automatically assigns an ``id`` to every model. Also, note that in the ``rango_page`` the reference to Category as a foreign key.
 
 .. code-block:: sql
 	
@@ -149,9 +160,10 @@ Although we know that the ``manage.py`` script created a load of tables in our d
 
 	COMMIT;
 
-Thank you, Django! Hopefully now you can see that much of the donkeywork regarding databases is nicely abstracted away from us. With the Django models framework, we simply don't have to worry about what SQL commands to issue, although we `can run custom SQL <https://docs.djangoproject.com/en/1.5/topics/db/sql/#executing-custom-sql-directly>`_ if the need arises.
+Since Django provides a wrapper over the database engines all we need to worry about is interfacing with the models (and the Object Relation Mapping). However, you still have the ability to issue SQL commands directly to the database if you wish. This is detailed in the `Official Django Documentation on running custom SQL <https://docs.djangoproject.com/en/1.5/topics/db/sql/#executing-custom-sql-directly>`_. 
 
-.. warning:: The process of synchronising your database is what you should do when you create new models for your Django applications. For example, we could create a new model for Rango and then run the ``manage.py syncdb`` command again to update our database. Problems arise however if you wish to *update* a previously synchronised model. If you were to add an additional field, you would have to recreate your database - **syncdb doesn't pick up on these changes.** It's disappointing that no built-in functionality presently exists within Django to handle this scenario. However, there are external libraries which can add such functionality. Check out `this <http://stackoverflow.com/questions/830130/adding-a-field-to-an-existing-django-model>`_ Stack Overflow question and answer page for more details. One of the answers recommends using `South <http://south.aeracode.org/>`_, which works really well. However, we don't discuss South in this tutorial. Have a look at the `official South tutorial <http://south.readthedocs.org/en/latest/tutorial/index.html>`_ if you'd like to learn more.
+.. warning:: The process of synchronising your database is what you should do when you create new models for your Django applications. For example, we could create a new model for Rango and then run the ``manage.py syncdb`` command again to update our database. Problems arise however if you wish to *update* a previously synchronised model. If you were to add an additional field, you would have to delete the database then recreate it - ** as syncdb doesn't pick up on these changes.**
+
 
 Django Models and the Django Shell
 ----------------------------------
@@ -161,7 +173,7 @@ To access the shell, we need to call ``manage.py`` from within your Django proje
 
 ``$ python manage.py shell``
 
-which will start an instance of the Python interpreter. In this case, Django sets up your path and imports your project's settings for you. Doing so will ensure that everything will work correctly. When the interpreter is started, enter the following code. At the end of each line, hit return or enter on your keyboard to execute the line. Read the comments added inline with the code for an explanation of what is going on.
+which will start an instance of the Python interpreter and load in the projects settings. You can then interact with the models in the following manner:
 
 .. code-block:: python
 	
@@ -183,9 +195,10 @@ which will start an instance of the Python interpreter. In this case, Django set
 	# Quit the Django shell.
 	>>> quit()
 
-With only a few lines of Python, we can create a model instance (or database table row) and save it to the database. All without a single line of SQL.
 
-.. note:: The example we provide above is only a very basic taster on database-related activities you can perform in the Django shell. Check out the `online documentation <https://docs.djangoproject.com/en/1.5/ref/django-admin/#available-commands>`_ for a comprehensive list of commands you can issue to modify your database - and perform other Django-related tasks.
+Here, we first import the model that we want to manipulate, then print out all the existing categories (of which there are none, because our table is empty). Then we create and save a Category, before printing out all the categories again.
+
+.. note:: The example we provide above is only a very basic taster on database-related activities you can perform in the Django shell. If you have not done so already, it is good time to complete part one of the `Official Django Tutorial to learn more about interacting with the models <https://docs.djangoproject.com/en/1.5/intro/tutorial01/>'_. Also check out the `Official Django documentation on the list of available commands <https://docs.djangoproject.com/en/1.5/ref/django-admin/#available-commands>`_ for working with models.
 
 Configuring the Admin Interface
 -------------------------------
@@ -209,11 +222,11 @@ First, we must open our Django project's ``settings.py`` file. This is located w
 		'rango',
 	)
 
-When this has been done, save the file and synchronise the database. We need to do this as the ``django.contrib.admin`` application needs to add some database tables in order to function correctly. Run the command
+When this has been done, save the file and synchronise the database. We need to do this as the ``django.contrib.admin`` application needs to add some additional database tables in order to function correctly: 
 
 ``$ python manage.py syncdb``
 
-from within your Django project's root. You should see that the table ``django_admin_log`` is created for you. Once done, you must open your project's root ``urls.py`` file. This was created in the project configuration directory. Within the file, we first need to uncomment the two lines after the import statements. We also need to ensure that the URL pattern for ``/admin/`` is present, and points to the ``admin.site.urls`` module. Have a look at the code sample below to see our modified file.
+You should see that the table ``django_admin_log`` is created for you. Once done, open your project's ``urls.py`` file. This was created in the project configuration directory. Within the file, first uncomment the two lines after the import statements. We also need to ensure that the URL pattern for ``/admin/`` is present, and points to the ``admin.site.urls`` module, as shown below:
 
 .. code-block:: python
 	
@@ -236,7 +249,9 @@ from within your Django project's root. You should see that the table ``django_a
 			'serve',
 			{'document_root': settings.MEDIA_ROOT}), )
 
-Save the ``urls.py`` file. We're almost there! We need to now tell the Django admin application what models we wish to make available to the admin interface. To do this, start by navigating to the ``rango`` application directory. Within the directory, create a new file called ``admin.py``. Add the following code to the file:
+
+
+We're almost there! Next, we need to now tell the Django admin application what models we wish to make available to the admin interface. To do this, you will need to create a new python file in ``rango`` application directory called ``admin.py``. Add the following code to the file:
 
 .. code-block:: python
 	
@@ -246,9 +261,9 @@ Save the ``urls.py`` file. We're almost there! We need to now tell the Django ad
 	admin.site.register(Category)
 	admin.site.register(Page)
 	
-Save the file. Essentially, we need to *regsiter* each of the two models we created earlier with the admin interface. Doing so makes the admin application aware of them. If we were to have another model, it would be a trivial case of calling the ``admin.site.register()`` function, passing the model in as a parameter.
+This will *regsiter* the models with the admin interface. If we were to have another model, it would be a trivial case of calling the ``admin.site.register()`` function, passing the model in as a parameter.
 
-With all of these changes made, start or restart the Django development server as you normally do. Navigate to the URL ``http://127.0.0.1:8000/admin/``, substituting the port and address to those of your particular setup. You should then see a login box, prompting you for a username and password. Enter the username and password you created when setting up your database, and you should then see a webpage similar to that shown in Figure :num:`fig-rango-admin`. If you do, you've successfully set up the Django admin interface!
+With all of these changes made, start or restart the Django development server and visit: ``http://127.0.0.1:8000/admin/``. You should then see a login box, prompting you for a username and password. Enter the username and password you created when setting up your database, and you should then see a webpage similar to that shown in Figure :num:`fig-rango-admin`. 
 
 .. _fig-rango-admin:
 
@@ -275,43 +290,43 @@ To create a population script for Rango's database, we start by creating a new P
 	import sys
 	
 	def populate():
-	    home_cat = add_cat('Python')
+	    python_cat = add_cat('Python')
 	
-	    add_page(cat=home_cat,
+	    add_page(cat=python_cat,
 	        title="Official Python Tutorial",
 	        url="http://docs.python.org/2/tutorial/")
 	
-	    add_page(cat=home_cat,
+	    add_page(cat=python_cat,
 	        title="How to Think like a Computer Scientist",
 	        url="http://www.greenteapress.com/thinkpython/")
 	
-	    add_page(cat=home_cat,
+	    add_page(cat=python_cat,
 	        title="Learn Python in 10 Minutes",
 	        url="http://www.korokithakis.net/tutorials/python/")
 	
-	    sport_cat = add_cat("Django")
+	    django_cat = add_cat("Django")
 	
-	    add_page(cat=sport_cat,
+	    add_page(cat=django_cat,
 	        title="Official Django Tutorial",
 	        url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
 	
-	    add_page(cat=sport_cat,
+	    add_page(cat=django_cat,
 	        title="Django Rocks",
 	        url="http://www.djangorocks.com/")
 	    
-	    add_page(cat=sport_cat,
+	    add_page(cat=django_cat,
 	        title="How to Tango with Django",
 	        url="http://www.tangowithdjango.com/")
 	
-	    fun_cat = add_cat("Other Frameworks")
+	    frame_cat = add_cat("Other Frameworks")
 	
-	    add_page(cat=fun_cat,
-	        title="Ruby on Rails",
-	        url="http://rubyonrails.org/")
+	    add_page(cat=frame_cat,
+	        title="Bottle",
+	        url="http://bottlepy.org/docs/dev/")
 	
-	    add_page(cat=fun_cat,
-	        title=".NET MVC",
-	        url="http://www.asp.net/mvc")
+	    add_page(cat=frame_cat,
+	        title="Flask",
+	        url="http://flask.pocoo.org")
 	
 	    # Print out what we have added to the user.
 	    for c in Category.objects.all():
@@ -353,8 +368,8 @@ When saved, we can run the script by changing the current working directory in a
 	- Django - Official Django Tutorial
 	- Django - Django Rocks
 	- Django - How to Tango with Django
-	- Other Frameworks - Ruby on Rails
-	- Other Frameworks - .NET MVC
+	- Other Frameworks - Bottle
+	- Other Frameworks - Flask
 
 Now let's verify that the population script populated the database. Restart the Django development server, navigate to the admin interface, and check that you have some new categories and pages. Do you see all the pages if you click ``Pages``, like in Figure :num:`fig-admin-populated`?
 
@@ -365,25 +380,32 @@ Now let's verify that the population script populated the database. Restart the 
 
 	The Django admin interface, showing the Page table populated with sample data from our population script.
 
-A population script is a really simple way to regenerate test data for your database. Get yourself into a habit of calling your population script every time you need to recreate your database - and don't forget to update the script if your database models change!
+A population script takes a bit of time  write but if you every change your models you will be glad you have it. Remember to update your population script when you update your models as well.
 
 Basic Workflow
 --------------
-Getting to grips with Django's model-view-controller architecture can be a bit of a head-scratcher. This can be especially true for those of you who have previously undertaken web development tasks, where you might be well-versed with using SQL to query your databases. However, time and practice will turn you into a pro.
 
-Let's now summarise the basic workflow of adding a new model. Remember that with a new Django project, you should first tell Django about the database you intend to use. Without doing so, Django won't have anywhere to store your data. You can also enable the admin interface to make your life a little bit easier - and remember, you can always disable it later if you want to.
+Setting up your Database
+........................
 
-Once these steps are completed, the workflow for adding models can be broken down into five steps.
+Remember that with a new Django project, you should first tell Django about the database you intend to use (i.e. configure ``DATATBASES`` in settings.py). Without doing so, Django won't have anywhere to store your data. You can also enable the admin interface to make your life a little bit easier - and remember, you can always disable it later if you want to.
+
+
+Adding a Model
+..............
+
+The workflow for adding models can be broken down into five steps.
 
 #. First, create your new model(s) in your Django application's ``models.py`` file.
 #. With the model created, reconfigure the admin interface to include your new model(s), if you are using it.
 #. You should then synchronise or resynchronise your database with the ``$ python manage.py syncdb`` command. This will create the necessary infrastructure within the database for your new model(s).
-#. Create and run a population script for your new model(s) for an easy way to add test data.
-#. Verify that test data has been correctly added to the model(s) by exploring the admin interface.
+#. Create/Edit and then run your population script for your new model(s).
 
-You should also remember about the nuances of the ``syncdb`` command. Note that the command can be used only for adding new models to your database - if you wish to amend an existing model, you must recreate the database. This is unfortunately a very frustrating thing to have to do. However, there is a `Python package called South <http://south.readthedocs.org/en/latest/about.html>`_ which handles this case for you - although we do not discuss South in this book.
+You should also remember about the nuances of the ``syncdb`` command. Note that the command can be used only for adding new models to your database - if you wish to amend an existing model, you must recreate the database. 
 
 Exercises (LEIF TODO?)
 ---------------------
-
+* Update the Category model to include the additional attributes, ``views`` and ``likes``.
+* Re-sync your database, and update your population script so that the Python category has 128 views and 64 likes, the Django category has 64 views and 32 likes, and the Other Frameworks category has 32 views and 16 likes.
+* Undertake the `Part Two of Offical Django Tutorial < https://docs.djangoproject.com/en/1.5/intro/tutorial02/> if you have not done so already to reinforce what you have learnt here and to learn more about customizing the Admin Interface.
 * Customize the Admin Interface - so that for the Pages table the list view also displays the category name and the category url name (i.e. the encoded category name).

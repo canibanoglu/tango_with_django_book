@@ -18,3 +18,22 @@ It's easy to navigate through documentation. The most straightforward way to do 
 
 
 you will be essentially creating a number of URL to view mappings. Views don't just have to return web pages. As you will see later on, they can return `JSON <http://en.wikipedia.org/wiki/JSON>`_/`XML <http://en.wikipedia.org/wiki/XML>`_ objects (useful for `AJAX requests <http://en.wikipedia.org/wiki/Ajax_(programming)>`_), or any other type of file you like (through the use of static files). More complex URL mappings that include forms of parameterisation can also be handled by Django - see `here <https://docs.djangoproject.com/en/1.5/topics/http/urls/>`_ for more information. *Creating clear, logical URL mappings is a hugely important aspect of developing a web application.*
+
+
+
+In an attempt to make this concept easier to understand, Figure :num:`fig-relational-schema-basic-models` shows a relational schema representing the two models defined above.
+
+.. _fig-relational-schema-basic-models:
+
+.. figure:: ../images/relational-schema-basic-models.pdf
+	:figclass: align-center
+
+	A relational schema diagram which shows the two database tables created as a result of the Django models defined previously.
+	
+	
+	However, there are external libraries which can perform such checks and sort out such changes, for example,
+
+	`South <http://south.aeracode.org/>`_,. However, we don't discuss South in this tutorial. Have a look at the `official South tutorial <http://south.readthedocs.org/en/latest/tutorial/index.html>`_ if you'd like to learn more.
+	
+	
+	Getting to grips with Django's Model-View-Template pattern is an important part of using the framework - and is often a stumbling block for many students. It can also be difficult to conform to the pattern if you have been developing in other frameworks or other tools, where you have had to do all the SQL grunt work yourself. However

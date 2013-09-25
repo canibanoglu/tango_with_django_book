@@ -1,6 +1,6 @@
 User Authentication
 ===================
-The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll by using the ``auth`` application provided as part of a standard Django installation in package ``django.contrib.auth``. According to `Django's official documentation <https://docs.djangoproject.com/en/1.5/topics/auth/>`_, the application consists of the following aspects.
+The aim of this next part of the tutorial is to get you familiar with the user authentication mechanisms provided by Django. We'll by using the ``auth`` application provided as part of a standard Django installation in package ``django.contrib.auth``. According to `Django's official documentation on Authentication <https://docs.djangoproject.com/en/1.5/topics/auth/>`_, the application consists of the following aspects.
 
 - Users.
 - Permissions: a series of binary flags (e.g. yes/no) determining what a user may or may not do.
@@ -9,13 +9,13 @@ The aim of this next part of the tutorial is to get you familiar with the user a
 - Forms and view tools for logging in users, or restricting content.
 - A pluggable backend system.
 
-There's lots that Django can do for you in the area of user authentication. We'll be covering the basics, but you can of course check out the `Django website <https://docs.djangoproject.com/en/1.5/topics/auth/>`_ for more advanced examples - and elsewhere online. Remember, your search engine is your friend!
+There's lots that Django can do for you in the area of user authentication. We'll be covering the basics to get your started.
 
 Setting up Authentication
 -------------------------
-Before we can begin to play around with Django's authentication offering, we'll need to make sure that the relevant settings are present in your Rango project's ``settings.py`` file. Open the file - remember, this is located in your Django project's configuration directory (e.g. ``<workspace>/tango_with_django_project/tango_with_django_project``).
+Before you can begin to play around with Django's authentication offering, you'll need to make sure that the relevant settings are present in your Rango project's ``settings.py`` file.
 
-Within the ``settings.py`` file, you must first find the ``INSTALLED_APPS`` tuple and check that ``django.contrib.auth`` and ``django.contrib.contenttypes`` are listed within the tuple. As an example, ``INSTALLED_APPS`` should look something like the following example.
+Within the ``settings.py`` file find the ``INSTALLED_APPS`` tuple and check that ``django.contrib.auth`` and ``django.contrib.contenttypes`` are listed, so that it looks like the code below:
 
 .. code-block:: python
 	
@@ -33,17 +33,16 @@ Within the ``settings.py`` file, you must first find the ``INSTALLED_APPS`` tupl
 	    'rango',
 	)
 
-While ``django.contrib.auth`` provides Django with access to the authentication system, ``django.contrib.contenttypes`` is used by the authentication application to track models installed in your database. You can read more about the application on `Django's official documentation <https://docs.djangoproject.com/en/1.5/ref/contrib/contenttypes/>`_ if you're interested.
+While ``django.contrib.auth`` provides Django with access to the authentication system, ``django.contrib.contenttypes`` is used by the authentication application to track models installed in your database. 
 
-.. warning:: Remember, if you had to add either one of the ``auth`` or ``contenttypes`` applications to your ``INSTALLED_APPS`` tuple, you'll need to resynchronise your database with the ``$ python manage.py syncdb`` command.
+.. note:: Remember, if you had to add either one of the ``auth`` or ``contenttypes`` applications to your ``INSTALLED_APPS`` tuple, you will need to resynchronise your database with the ``$ python manage.py syncdb`` command.
 
-Passwords are stored by default in Django using the `PBKDF2 algorithm <http://en.wikipedia.org/wiki/PBKDF2>`_, providing a good level of security for your user's data. You can read more about this as part of the `official Django documentation <https://docs.djangoproject.com/en/1.5/topics/auth/passwords/#how-django-stores-passwords>`_. The documentation also provides an explanation of how to use different password hashers if you require a greater level of security. With these new settings saved, you should now be ready to move on and begin experimenting with Django's authentication system.
+Passwords are stored by default in Django using the `PBKDF2 algorithm <http://en.wikipedia.org/wiki/PBKDF2>`_, providing a good level of security for your user's data. You can read more about this as part of the `official Django documentation on how django stores passwords  <https://docs.djangoproject.com/en/1.5/topics/auth/passwords/#how-django-stores-passwords>`_. The documentation also provides an explanation of how to use different password hashers if you require a greater level of security. 
 
-.. note:: If you're interested in further detail about how Django's password hashing system works, check out `this awesome explanation <http://www.levigross.com/post/18880148948/a-review-of-djangos-new-password-authentication>`_.
+The User Model
+--------------
 
-The User Model: Understanding and Expanding
--------------------------------------------
-The core of Django's authentication system is the ``User`` object, located at ``django.contrib.auth.models.User``. A ``User`` object represents each of the people interacting with a Django application. The `Django documentation <https://docs.djangoproject.com/en/1.5/topics/auth/default/#user-objects>`_ states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles and the association of creators with site content.
+The core of Django's authentication system is the ``User`` object, located at ``django.contrib.auth.models.User``. A ``User`` object represents each of the people interacting with a Django application. The `Django documentation on user objects <https://docs.djangoproject.com/en/1.5/topics/auth/default/#user-objects>`_ states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles and the association of creators with site content.
 
 The ``User`` model comes complete with five primary attributes. They are:
 
@@ -53,8 +52,11 @@ The ``User`` model comes complete with five primary attributes. They are:
 - the user's first name; and
 - the user's surname.
 
-The model also comes with other attributes such as ``is_active`` (which determines whether a particular account is active or not). Check the `official Django documentation <https://docs.djangoproject.com/en/1.5/ref/contrib/auth/#django.contrib.auth.models.User>`_ for a full list of attributes provided by the base ``User`` model.
+The model also comes with other attributes such as ``is_active`` (which determines whether a particular account is active or not). Check the `official Django documentation on the user model <https://docs.djangoproject.com/en/1.5/ref/contrib/auth/#django.contrib.auth.models.User>`_ for a full list of attributes provided by the base ``User`` model.
 
+
+Addition User Attributes
+------------------------
 However, what if all the provided attributes that the ``User`` model provides isn't enough? For our Rango application, we want to include two more additional attributes for each user account. Specifically, we wish to include:
 
 - a ``URLField``, allowing a user of Rango to specify their own website; and
@@ -76,15 +78,19 @@ Fortunately, this is a relatively easy task to accomplish. This is achieved thro
 	    def __unicode__(self):
 	        return self.user.username
 
-As we also reference the ``User`` model, we'll need to include the model into the ``models.py`` namespace. Add it with the following import statement at the top of the Python file.
+As we also reference the ``User`` model, we'll need to include the model into the ``models.py`` namespace. Add it with the following import statement at the top of the file:
 
 .. code-block:: python
 	
 	from django.contrib.auth.models import User
 
-So, how do we accomplish our goal of adding additional user profile attributes? This isn't actually achieved with class inheritance as some may think. Our ``UserProfile`` actually inherits from Django's bog-standard ``Model`` class. Instead, we `link to the base <http://stackoverflow.com/a/3221933>`_ ``User`` class through a one-to-one relationship via attribute ``user``. We also add our two additional attributes to complete our user profile, and provide a ``__unicode__()`` method to return a meaningful value when a unicode representation of a ``UserProfile`` model instance is requested.
+So, how do we accomplish our goal of adding additional user profile fields? This isn't achieved through inheritance, instead the ``UserProfile`` model inherits from Django's ``Model`` class and is linked to the base ``User`` class through a one-to-one relationship via attribute ``user``. This is because various applications may all want to use the User model and extend upon it in different ways.
 
-For our two additional attributes, note how we set ``blank=True`` for both. This allows each of the fields to be blank if necessary, meaning that users need not supply values for the attributes if they do not wish to. The ``ImageField`` field also has a ``upload_to`` attribute. The value of this attribute is conjoined with the project's ``MEDIA_ROOT`` setting to provide a path with which uploaded profile images will be stored. For example, a ``MEDIA_ROOT`` of ``<workspace>/tango_with_django_project/media/`` and ``upload_to`` attribute of ``profile_images`` will result in all profile images being stored in ``<workspace>/tango_with_django_project/media/profile_images/``.
+For Rango, we've added two fields to complete our user profile, and provided a ``__unicode__()`` method to return a meaningful value when a unicode representation of a ``UserProfile`` model instance is requested.
+
+For the two fields we have set ``blank=True`` for both. This allows each of the fields to be blank if necessary, meaning that users need not supply values for the attributes if they do not wish to.
+
+Note that the ``ImageField`` field has a ``upload_to`` attribute. The value of this attribute is conjoined with the project's ``MEDIA_ROOT`` setting to provide a path with which uploaded profile images will be stored. For example, a ``MEDIA_ROOT`` of ``<workspace>/tango_with_django_project/media/`` and ``upload_to`` attribute of ``profile_images`` will result in all profile images being stored in ``<workspace>/tango_with_django_project/media/profile_images/``.
 
 With our ``UserProfile`` model defined, we now edit Rango's ``admin.py`` file to include the new ``UserProfile`` model in the Django administration web interface. In the ``admin.py`` file, add the following line.
 
@@ -102,7 +108,7 @@ You also need to import the ``UserProfile`` model by adding one of the following
 	# Import the UserProfile model with Category and Page
 	from rango.models import Category, Page, UserProfile
 
-.. warning:: Remember that with the creation of a new model, you much synchronise your database. Run the ``$ python manage.py syncb`` command to synchronise the new ``UserProfile`` model. Not doing so will result in errors explaining that the required database tables cannot be found.
+.. note:: Remember that with the creation of a new model, you much synchronise your database. Run the ``$ python manage.py syncb`` command to synchronise the new ``UserProfile`` model. Not doing so will result in errors explaining that the required database tables cannot be found.
 
 Creating a User Registration View and Template
 ----------------------------------------------

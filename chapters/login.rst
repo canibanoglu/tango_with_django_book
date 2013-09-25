@@ -114,19 +114,26 @@ Creating a User Registration View and Template
 ----------------------------------------------
 With our authentication infrastructure laid out, we can now begin to build onto it by providing users of our application with the opportunity to create new user accounts. We will achieve this via the creation of a new view and template combination.
 
-.. note:: We feel it's important to note that there are several off-the-shelf user registration packages available for you to download and use in your Django projects. Examples include the `Django Registration application <https://bitbucket.org/ubernostrum/django-registration/>`_, and you can also check out the table on `this webpage <https://www.djangopackages.com/grids/g/registration/>`_ which lists other registration packages. While these exist, we'll be showing you how to set up everything from scratch. This is at odds from the DRY principle, but we feel this is important as doing everything from scratch will allow you to familiarise yourself with the handling of user registrations.
+.. note:: We feel it's important to note that there are several off-the-shelf user registration packages available for you to download and use in your Django projects. Examples include the `Django Registration application <https://bitbucket.org/ubernostrum/django-registration/>`_, and you can also check out the table on `this webpage <https://www.djangopackages.com/grids/g/registration/>`_ which lists other registration packages. While these exist, we'll be showing you how to set up everything from scratch. While this is at odds with the DRY principle, it is also important to get a feeling for the user authentication package and feature. It will also re-enforce your understanding of working with forms, how to extend upon the user model, and how to upload media.
 
-To set everything up, we'll be making use of Django's form functionality once more. Specifically, we'll be looking at how to go about the following five steps.
 
-#. The first step is to create a ``UserForm`` and ``UserProfileForm``.
-#. We'll then add a view to handle the creation of a new user.
-#. A template will then be created that displays the ``UserForm`` and ``UserProfileForm``.
-#. A URL mapping will be added to Rango's ``urls.py`` file.
-#. Finally, we'll pop a link into our ``index.html`` template to allow users to register.
+To set everything the user registration functionality will we go through the following steps:
 
-Now we're all set to get started! Let's create our ``ModelForms`` first. In Rango's ``models.py`` file, add the following classes.
+#. Create a ``UserForm`` and ``UserProfileForm``.
+#. Add a view to handle the creation of a new user.
+#. Create a  template that displays the ``UserForm`` and ``UserProfileForm``.
+#. Map a URL to the view created.
+#. Link the index page to the register page
+
+
+Create UserForm and UserProfileForm
+....................................
+
+In ``rango/forms.py``, add the following classes:
 
 .. code-block:: python
+	
+	from models.rango import UserProfile
 	
 	class UserForm(forms.ModelForm):
 	    password = forms.CharField(widget=forms.PasswordInput())
@@ -140,13 +147,21 @@ Now we're all set to get started! Let's create our ``ModelForms`` first. In Rang
 	        model = UserProfile
 	        fields = ['website', 'picture']
 
-We add **two** classes: one representing an input form for a ``User`` model instance, the other for a ``UserProfile`` model instance. Recall how additional fields were combined with the base ``User`` model - not with inheritance, but by linking the two models together with a one-to-one relationship, hence the need for two form representations.
+Here, we added **two** classes: one representing an input form for a ``User`` model, the other for the ``UserProfile`` model. Recall how additional fields were combined with the base ``User`` model - not with inheritance, but by linking the two models together with a one-to-one relationship, hence the need for two forms.
 
-You should be able to recall from the previous chapter what each class does that inherits from ``ModelForm`` - including the nested ``Meta`` class. ``Meta`` attribute ``model`` associated the ``ModelForm`` to a Django model, and ``fields`` dictates what fields users should be able to provide values for in the rendered form. Within ``UserForm``, we also adjust the widget that is provided as the means for input of the ``password`` attribute. This is changed to a ``PasswordInput`` widget, which hides a user's input when he or she types into the field.
+Recall that the attribute ``model`` in the ``Meta`` class within the inherited ``ModelForm`` associates the model to the form, and ``fields`` dictates what fields will be displayed on the form. 
 
-With our ``ModelView`` representations adds, we can then move on to creating the view handling registration of a new user. Like our ``add_category()`` view defined in the previous chapter, our new view - ``register()`` - will handle both the rendering of the form, and the processing of form input data. Within Rango's ``views.py`` file, add the following function. Check out the inline commentary for an explanation of what each line does.
+Within ``UserForm``, we have set the form field of ``password`` to be a ``forms.PasswordInput()`` widget, which will hide the user's input when they type into the field.
+
+
+Create a Register View
+.......................
+
+Next we need to handle both the rendering of the form, and the processing of form input data. Within Rango's ``views.py`` file, add the following view function:
 
 .. code-block:: python
+	
+	from rango.models import UserForm, UserProfileForm
 	
 	def register(request):
 	    # Like before, get the request's context.
@@ -208,15 +223,14 @@ With our ``ModelView`` representations adds, we can then move on to creating the
 	            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
 	            context)
 
-As we reference our new ``ModelForm`` classes, we'll also need to import them at the top of ``views.py``. Add the following at the top of the file:
-
-.. code-block:: python
-	
-	from rango.models import UserForm, UserProfileForm
 
 Is the view a lot more complex? Not really. The only added complexity from our previous ``add_category()`` view is the need to handle two distinct ``ModelForm`` instances - one for the ``User`` model, and one for the ``UserProfile`` model. We also need to handle a user's profile image, if he or she chooses to upload one. We must also establish a link between the two model instances that we create. After creating a new ``User`` model instance, we reference it in the ``UserProfile`` instance with the line ``profile.user = user``.
 
-Now create a new template file. You can work out its name from the ``register()`` view code sample provided above. In your new template, add the following markup.
+
+Create Registration Template
+............................
+
+Now create a new template file, ``rango/register.html`` and add the following code:
 
 .. code-block:: html
 	
@@ -253,11 +267,16 @@ Now create a new template file. You can work out its name from the ``register()`
 	    </body>
 	</html>
 
-Our HTML template makes use of the ``register`` variable we used in our view indicating whether registration was successful or not. Note that ``registered`` must be ``False`` in order for the template to display the registration form - otherwise, apart from the title, only a success message is displayed.
+This HTML template makes use of the ``register`` variable we used in our view indicating whether registration was successful or not. Note that ``registered`` must be ``False`` in order for the template to display the registration form - otherwise, apart from the title, only a success message is displayed.
 
-.. warning:: When using forms, don't forget to include your ``{% csrf_token %}``. You'll save yourself a world of issues if you remember to include it. You should also be aware of the ``enctype`` attribute for the ``<form>`` element. When you wish to provide functionality for users to upload files, you **need** to set ``enctype`` to ``multipart/form-data``. This is due to the need for your browser needing to encode data in a particular way. A more detailed explanation can be seen `here <http://stackoverflow.com/a/4526286>`_.
+.. warning::  
+	You should be aware of the ``enctype`` attribute for the ``<form>`` element. When you want users to upload files, you **need** to set ``enctype`` to ``multipart/form-data``. This is because the browser needs to encode the data in a number of chunks in order to send the file.
 
-Now we can add a URL mapping to our new view. In Rango's ``urls.py`` file, modify the ``urlpatterns`` tuple to look like the sample below. Pay attention to the ordering in which the patterns appear.
+	Also, remember to make sure you include the CSRF token too ``{% csrf_token %}``.
+
+Mapping the View to a URL
+.........................
+Now we can add a URL mapping to our new view. In ``rango/urls.py`` modify the ``urlpatterns`` tuple as shown below:
 
 .. code-block:: python
 	
@@ -267,13 +286,21 @@ Now we can add a URL mapping to our new view. In Rango's ``urls.py`` file, modif
 	    url(r'^register/$', views.register, name='register'), # NEW PATTERN HERE
 	    url(r'^(?P<category_name_url>\w+)', views.category, name='category'),)
 
-Our new pattern now points the URL ``/rango/register/`` to our new ``register()`` view. Now that we know this, we can add a link pointing to that URL in our homepage ``index.html`` template. Underneath the link to the category addition page, add the following hyperlink.
+The newly added pattern points the URL ``/rango/register/`` to the ``register()`` view. 
+
+Linking the Register to Index
+.............................
+Finally, we can add a link pointing to that URL in our homepage ``index.html`` template. Underneath the link to the category addition page, add the following hyperlink.
 
 .. code-block:: html
 	
 	<a href="/rango/register/">Register Here</a>
 
-Easy! Now you'll have a new hyperlink with the text ``Register Here`` that'll take you to the registration page. Try it out now - you're ready to go! Just start your Django development server, go to the Rango homepage, and try and register a new user account. Upload a profile image if you wish. Your registration form should look like the one illustrated in Figure :num:`fig-rango-register-form`.
+
+Demo
+....
+
+Easy! Now you'll have a new hyperlink with the text ``Register Here`` that'll take you to the registration page. Try it out now! Start your Django development server and try to register a new user account. Upload a profile image if you wish. Your registration form should look like the one illustrated in Figure :num:`fig-rango-register-form`.
 
 .. _fig-rango-register-form:
 
@@ -282,7 +309,8 @@ Easy! Now you'll have a new hyperlink with the text ``Register Here`` that'll ta
 
 	A screenshot illustrating the basic registration form you create as part of this tutorial.
 
-Upon seeing the message indicating your details were successfully registered, the database should have two new entries in its tables corresponding to the ``User`` and ``UserProfile`` models. Your question now may be how to use that data. Read on to see!
+Upon seeing the message indicating your details were successfully registered, the database should have two new entries in its tables corresponding to the ``User`` and ``UserProfile`` models. 
+
 
 Adding Login Functionality
 --------------------------

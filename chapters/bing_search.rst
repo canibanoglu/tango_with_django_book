@@ -1,7 +1,31 @@
-Adding External Services: Search Functionality
-==============================================
+.. _bing-label:
 
-Instead of just browsing the directory of web pages in Rango - lets add in some web search functionality as well. To do this you will require the services of the Bing Search API. To gain access to this search you will need to register with Windows Azure Marketplace. Currently, the Bing Search API provides 5000 transactions for free per month.
+Adding External Search Functionality
+====================================
+At this stage, our Rango application is looking pretty good - a majority of our required functionality is implemented. However, instead of simply using Rango as a webpage directory, why not add some search functionality too? By doing so, Rango can then mimic first-generation web search engines, where pages were also provided in a categorised format.
+
+To provide this functionality, we'll need to call upon the services of an external search engine to help us provide search results. Creating a web search engine of our own is well outside the scope of this book - so why not figure out how to call upon someone else's? In this chapter, we'll be making use of the *Bing Search Application Programming Interface* - or *Bing Search API* for short.
+
+.. note:: According to the `relevant article on Wikipedia <http://en.wikipedia.org/wiki/Application_programming_interface>`_, an *Application Programming Interface (API)* specifies how software components should interact with one another. In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, `Luis Rei provides an excellent tutorial on APIs <http://blog.luisrei.com/articles/rest.html>`_.
+
+The Bing Search API
+-------------------
+The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application. Easy!
+
+.. note:: Many different web APIs provide the ability to specify in what format results are returned to the requesting computer. For an example, `check out the documentation for the Echo Nest's API <http://developer.echonest.com/raw_tutorials/responses.html>`_. Note that the same data is returned in the two examples - the format in which the data is presented is the only difference. In many cases, using JSON is the preferred approach as it is more compact and thus requires less bandwidth.
+
+Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the API, we need to sign up for an API key which gives us the access to 5000 free queries per month.
+
+Registering for a Bing API Key
+..............................
+To register for a Bing API key, you must first register for a free Microsoft account, which gives you access to a range of Microsoft services. If you have a Hotmail account, you already probably have one! You can create an account and login at `https://account.windowsazure.com/` - or if you 
+
+
+
+By signing up for a free account, you gain the ability to perform up to 5000 queries per month. The API allows you to query for webpages, images and news articles. 
+
+
+Instead of just browsing the directory of web pages in Rango - lets add in some web search functionality as well. To do this you will require the services of the Bing Search API. To gain access to this search you will need to register with Windows Azure Marketplace. Currently, the *Bing Search Application Programming Interface*, or *Bing API* provides 5000 transactions for free per month.
 
 The Bing Search API
 -------------------

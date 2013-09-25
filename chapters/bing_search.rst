@@ -10,32 +10,40 @@ To provide this functionality, we'll need to call upon the services of an extern
 
 The Bing Search API
 -------------------
-The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application. Easy!
+The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can then be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application. Easy!
 
 .. note:: Many different web APIs provide the ability to specify in what format results are returned to the requesting computer. For an example, `check out the documentation for the Echo Nest's API <http://developer.echonest.com/raw_tutorials/responses.html>`_. Note that the same data is returned in the two examples - the format in which the data is presented is the only difference. In many cases, using JSON is the preferred approach as it is more compact and thus requires less bandwidth.
 
-Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the API, we need to sign up for an API key which gives us the access to 5000 free queries per month.
+Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, we need to sign up for an *API key*. The key provides us with access to a total of 5000 free queries per month, which should be more than enough for our web application.
 
 Registering for a Bing API Key
 ..............................
-To register for a Bing API key, you must first register for a free Microsoft account, which gives you access to a range of Microsoft services. If you have a Hotmail account, you already probably have one! You can create an account and login at `https://account.windowsazure.com/` - or if you 
+To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already probably have one! You can create your free account and login at https://account.windowsazure.com.
 
+When you account has been created, jump to the `Windows Azure Marketplace Bing Search API page <https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44>`_. At the top of the screen, you may first need to click the *Sign On* button - if you have already signed into your Microsoft account, you won't need to provide your account details again. If the text says *Sign Out*, you're already logged in.
 
+Down the right of the page is a list of transactions per month. At the bottom of the list is *5,000 Transactions/month*. Click the sign up button to the right - you should be subscribing for a free service. You should then read the *Publisher Offer Terms*, agree with them and click *Sign Up* to continue. You should then be presented with a page confirming that you have successfully signed up.
 
-By signing up for a free account, you gain the ability to perform up to 5000 queries per month. The API allows you to query for webpages, images and news articles. 
+Once you've signed up, click the *Data* link at the top of the page. From there, you should be presented with a list of data sources available through the Windows Azure Marketplace. At the top of the list should be *Bing Search API* - it should also say that you are *subscribed* to the data source. Click the *use* link to the right of the page, and you will then be presented with a screen similar to that shown in Figure :num:`fig-bing-explore`.
 
+.. _fig-bing-explore:
 
-Instead of just browsing the directory of web pages in Rango - lets add in some web search functionality as well. To do this you will require the services of the Bing Search API. To gain access to this search you will need to register with Windows Azure Marketplace. Currently, the *Bing Search Application Programming Interface*, or *Bing API* provides 5000 transactions for free per month.
+.. figure:: ../images/bing-explore.png
+	:figclass: align-center
 
-The Bing Search API
--------------------
-The Bing Search API enables you to embed and customize search results in your application. The results returned by the API are either in XML or JSON. For the purposes of this tutorial, you will be working with the JSON results, the format of the results is detailed in the FAQ available at: https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44
+	The Bing Search API service explorer page. The *Primary Account Key* is deliberately obscured.
 
-The Bing Search API is pretty straightforward. Essentially, it lets you send a query to Bing and returns a list of results. Results can be Web, Image, News, etc, but in this tutorial you will be using the Web results.
+This page allows you to try out the Bing Search API by filling out the boxes to the left. For example, the *Query* box allows you to specify a query to send to the API. Ensure that at the bottom of the screen you select *Web* for web search results only. Note the URL provided in the blue box at the top of the page changes as you alter the settings within the webpage. Take a note of the Web search URL. We'll be using part of this URL within our code later on. The following example is a URL to perform a web search using the query *rango*.
 
-Register for a Bing API Key
-...........................
-Visit https://accountservices.passport.net and sign up for an Windows Azure Marketplace account and then register to use the Bing Search API at: https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44
+::
+	
+	https://api.datamarket.azure.com/Bing/Search/v1/Web?Query=%27rango%27
+
+We must also retrieve our API key so we can authenticate with the Bing servers when posing requests. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be exposed. We'll be using it later, so take a note of it - and keep it safe! If someone obtains your key, they'll be able to use your free query quota.
+
+Adding Search Functionality
+---------------------------
+Blah
 
 Add in search functionality
 ...........................

@@ -45,3 +45,21 @@ In an attempt to make this concept easier to understand, Figure :num:`fig-relati
 
 		>>> Category.objects.all()
 		[<Category: home>, <Category: sport>, <Category: fun>]
+		
+		
+		
+LOGIN
+-----
+
+ Using Django's form functionality, user registration can be provided in the following steps.
+
+#. First, a form should be created which maps to our ``User`` model - and if we create a secondary ``User`` model with additional fields, a form should be created to correspond to that, too.
+#. We then create a view which corresponds to our one or two ``User`` form classes.
+#. A template can be provided which helps describe how the forms should be displayed to the user.
+#. A URL is then mapped to the view.
+
+User logins also make use of forms - though the number details required is usually very small (only username and password). As such, we can create a simple HTML form within a login page template, without the need to use Django's form functionality.
+
+#. Create a login view, ensuring that the view can process both HTTP ``GET`` and ``POST`` requests. For ``GET`` requests, the login form should be displayed to the user. For ``POST`` requests, the view should attempt to process login information provided by the user via the form.
+#. Produce a template which displays a login form, containing a username and password input box. The form should also contain a login button to submit the form to the *same URL*, but using a HTTP ``POST`` request.
+#. Map the login view to a URL.

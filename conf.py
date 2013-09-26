@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import sys, os
+
 sys.path.append(os.path.abspath('sphinx-extensions')) # Added the sphinx-extensions directory so we can include custom extensions (e.g. numfig)
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -42,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'How_To_Tango_With_Django'
-copyright = u'2012, Leifos'
+copyright = u'2013, Leifos'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -92,7 +93,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'nature'
+html_theme = 'sphinxdoc'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

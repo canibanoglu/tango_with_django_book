@@ -18,6 +18,7 @@ Why work with this book
 
 **This book is not designed to be read**. Whatever you do, do not read this book! It is a hands-on guide to building web applications in Django, reading is not doing. To increase the value you gain from this experience, go through and develop the application. When you code up the application, do not just cut and paste the code. Type it in, think about what it does, then read the explanations we have provided to describe what is going on. If you still do not understand, then check out the Django documentation, go to stack overflow, etc and fill in this gap in your knowledge. If you think it is worth mentioning, please get in touch with us so that we can improve the book - we already have a number of contributors and we will happily acknowledge your contribution!
 
+
 What you will learn
 ...................
 In this book, we will be taking an exampled based approach (or inquiry based learning). The book will show you how to design a web application called **Rango** (see design brief below), and along the way show you how to:
@@ -37,9 +38,12 @@ In this book, we will be taking an exampled based approach (or inquiry based lea
 
 At the end of each chapter, we have included a number of exercises designed to push you harder and to see if you can apply what you have learnt. The later chapters of the book provide a number of open development exercises along with coded solutions and explanations. Finally, all the code is available from GitHub:
 
-and to see a working version of the application you can visit the How to Tango with Django website:
+https://github.com/leifos/tango_with_django
 
-http://www.tangowithdjango.com
+and to see a working version of the application you can visit the *How to Tango with Django* website:
+
+http://www.tangowithdjango.com/rango/
+
 
 Technologies and Services
 .........................
@@ -60,6 +64,7 @@ Through the course of this book, we will used various technologies and external 
 	* PythonAnywhere, https://www.pythonanywhere.com
 
 We've selected these technologies and services as they are either fundamental to web development and/or enable us to provide examples on how to integrate your web application with CSS toolkits (like Bootstrap), external services like (those provided by Azure) and deploy your application quickly and easily (with PythonAnywhere).
+
 
 Rango: Initial Design and Specification
 .......................................

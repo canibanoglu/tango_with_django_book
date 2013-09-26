@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import sys, os
+
 sys.path.append(os.path.abspath('sphinx-extensions')) # Added the sphinx-extensions directory so we can include custom extensions (e.g. numfig)
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -41,8 +42,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'How_To_Tango_With_Django'
-copyright = u'2012, Leifos'
+project = u'How To Tango With Django'
+copyright = u'2013, Leif Azzopardi and David Maxwell'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -92,7 +93,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'nature'
+html_theme = 'sphinxdoc'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -104,7 +105,7 @@ html_theme = 'nature'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-#html_title = None
+html_title = 'How to Tango with Django'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -154,7 +155,7 @@ html_static_path = ['_static']
 #html_show_sphinx = True
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-#html_show_copyright = True
+html_show_copyright = True
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
@@ -185,7 +186,7 @@ latex_elements = {
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'How_To_Tango_With_Django.tex', u'How to Tango with Django',
-   u'Leifos', 'manual'),
+   u'Leif Azzopardi and David Maxwell', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -214,8 +215,8 @@ latex_logo = 'images/cover_image.pdf'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'how_to_tango_with_django', u'How_To_Tango_With_Django Documentation',
-     [u'Leifos'], 1)
+    ('index', 'how to tango with django', u'How To Tango With Django',
+     [u'Leif Azzopardi and David Maxwell'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -228,8 +229,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'How_To_Tango_With_Django', u'How_To_Tango_With_Django Documentation',
-   u'Leifos', 'How_To_Tango_With_Django', 'One line description of project.',
+  ('index', 'How To Tango With Django', u'How To Tango With Django',
+   u'Leif Azzopardi and David Maxwell', 'How To Tango With Django', 'A starters Guide to Web Development in Django 1.5',
    'Miscellaneous'),
 ]
 
@@ -246,10 +247,10 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'How_To_Tango_With_Django'
-epub_author = u'Leifos'
-epub_publisher = u'Leifos'
-epub_copyright = u'2012, Leifos'
+epub_title = u'How To Tango With Django'
+epub_author = u'Leif Azzopardi and David Maxwell'
+epub_publisher = u'Leif Azzopardi and David Maxwell'
+epub_copyright = u'2013, Leif Azzopardi and David Maxwell'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

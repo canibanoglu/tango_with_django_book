@@ -85,3 +85,9 @@ In essence, the identified HTML is the barebones for creating a blank HTML5 page
 	- Using cookies will only work with the cookie persists in the user's browser. A more permanent solution is to record the number of times the user visits and to store that in their UserPro
 
 	The ``User`` object which corresponds to the currently logged in user can be accessed at ``request.user``, where ``request`` is a reference to the single required parameter for a view. Modify the existing ``UserProfile`` model you created so that it now includes an additional field to store the number of times a user has visited the website. The end result should mean the number of times each user has visited the site should now also be stored server-side. *Remember, you will need to recreate and synchronise your database!*
+	
+	
+	
+	
+	
+	.. note:: Most web APIs provide the ability to specify in what format results are returned to the requesting computer. For an example, `check out the documentation for the Echo Nest's API <http://developer.echonest.com/raw_tutorials/responses.html>`_. Note that the same data is returned in the two examples - the format in which the data is presented is the only difference.

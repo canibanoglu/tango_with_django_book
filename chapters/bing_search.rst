@@ -2,27 +2,21 @@
 
 Adding External Search Functionality
 ====================================
-At this stage, our Rango application is looking pretty good - a majority of our required functionality is implemented. However, instead of simply using Rango as a webpage directory, why not add some search functionality too? By doing so, Rango can then mimic first-generation web search engines, where pages were also provided in a categorised format.
-
-To provide this functionality, we'll need to call upon the services of an external search engine to help us provide search results. Creating a web search engine of our own is well outside the scope of this book - so why not figure out how to call upon someone else's? In this chapter, we'll be making use of the *Bing Search Application Programming Interface* - or *Bing Search API* for short.
-
-.. note:: According to the `relevant article on Wikipedia <http://en.wikipedia.org/wiki/Application_programming_interface>`_, an *Application Programming Interface (API)* specifies how software components should interact with one another. In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, `Luis Rei provides an excellent tutorial on APIs <http://blog.luisrei.com/articles/rest.html>`_.
+At this stage, our Rango application is looking pretty good - a majority of our required functionality is implemented. In this chapter, we will connect Rango up to Bing's Search API so that users can also search for pages, rather than just used the categories. First let's get started by setting up an account to use Bing's Search API, then construct a wrapper to call Bing's web search functionality before integrating the search into Rango.
 
 The Bing Search API
 -------------------
-The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can then be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application. Easy!
+The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications. Through a straightforward interface, you can request results from Bing's servers to be returned in either XML or JSON. The data returned can then be interpreted by a XML or JSON parser, with the results then rendered as part of a template within your application.
 
-.. note:: Many different web APIs provide the ability to specify in what format results are returned to the requesting computer. For an example, `check out the documentation for the Echo Nest's API <http://developer.echonest.com/raw_tutorials/responses.html>`_. Note that the same data is returned in the two examples - the format in which the data is presented is the only difference.
-
-Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, we need to sign up for an *API key*. The key provides us with access to a total of 5000 free queries per month, which should be more than enough for our web application.
+Although the Bing API can handle requests for different kinds of content, we'll be focusing on web search only for this tutorial - as well as handling JSON responses. To use the Bing Search API, you will need to sign up for an *API key*. The key currently provides subscribers with access to 5000 queries per month, which should be more than enough for our purposes.
 
 Registering for a Bing API Key
 ..............................
-To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already probably have one! You can create your free account and login at https://account.windowsazure.com.
+To register for a Bing API key, you must first register for a free Microsoft account. The account provides you with access to a wide range of Microsoft services. If you already have a Hotmail account, you already have one! You can create your free account and login at https://account.windowsazure.com.
 
 When you account has been created, jump to the `Windows Azure Marketplace Bing Search API page <https://datamarket.azure.com/dataset/5BA839F1-12CE-4CCE-BF57-A49D98D29A44>`_. At the top of the screen, you may first need to click the *Sign On* button - if you have already signed into your Microsoft account, you won't need to provide your account details again. If the text says *Sign Out*, you're already logged in.
 
-Down the right of the page is a list of transactions per month. At the bottom of the list is *5,000 Transactions/month*. Click the sign up button to the right - you should be subscribing for a free service. You should then read the *Publisher Offer Terms*, agree with them and click *Sign Up* to continue. You should then be presented with a page confirming that you have successfully signed up.
+Down the right hand side of the page is a list of transactions per month. At the bottom of the list is *5,000 Transactions/month*. Click the sign up button to the right - you should be subscribing for a free service. You should then read the *Publisher Offer Terms*, and if you agree with them click *Sign Up* to continue. You will  then be presented with a page confirming that you have successfully signed up.
 
 Once you've signed up, click the *Data* link at the top of the page. From there, you should be presented with a list of data sources available through the Windows Azure Marketplace. At the top of the list should be *Bing Search API* - it should also say that you are *subscribed* to the data source. Click the *use* link to the right of the page, and you will then be presented with a screen similar to that shown in Figure :num:`fig-bing-explore`.
 
@@ -39,7 +33,7 @@ This page allows you to try out the Bing Search API by filling out the boxes to 
 	
 	https://api.datamarket.azure.com/Bing/Search/v1/Web?Query=%27rango%27
 
-We must also retrieve our API key so we can authenticate with the Bing servers when posing requests. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be exposed. We'll be using it later, so take a note of it - and keep it safe! If someone obtains your key, they'll be able to use your free query quota.
+We must also retrieve your API key so you can authenticate with the Bing servers when posing requests. To obtain your key, locate the text *Primary Account Key* at the top of the page and click the *Show* link next to it. Your key will then be exposed. We'll be using it later, so take a note of it - and keep it safe! If someone obtains your key, they'll be able to use your free query quota.
 
 .. note:: The Bing API Service Explorer also keeps a tab of how many queries you have left of your monthly quota. Check out the top of the page to see!
 
@@ -117,18 +111,18 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 	    # Return the list of results to the calling function.
 	    return results
 
-The logic of the function above can be broadly split into six main tasks.
+The logic of the function above can be broadly split into six main tasks:
 
-* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
-* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
-* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
-* This string is then parsed into a Python dictionary object using the ``json`` Python package.
-* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
-* The dictionary is returned by the function.
+	* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
+	* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
+	* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
+	* This string is then parsed into a Python dictionary object using the ``json`` Python package.
+	* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
+	* The dictionary is returned by the function.
 
 Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the ``search_url`` variable which we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the ``print`` statement within the ``except`` block.
 
-.. note:: There are many different parameters that the Bing Search API can handle which we don't cover here. If you're interesting in seeing how to tailor your results to a specific market for exampe, check out the `Bing Search API Migration Guide and FAQ <http://datamarket.azure.com/dataset/bing/search>`_.
+.. note:: There are many different parameters that the Bing Search API can handle which we don't cover here. If you're interested in seeing how to tailor your results, check out the `Bing Search API Migration Guide and FAQ <http://datamarket.azure.com/dataset/bing/search>`_.
 
 Putting Search into Rango
 -------------------------
@@ -170,10 +164,10 @@ Let's first create our ``search.html`` template. Add the following HTML markup a
 	</div>
 	{% endblock %}
 
-The template code above performs two key tasks.
+The template code above performs two key tasks:
 
-#. In all scenarios, the template presents a search box and a search buttons within a HTML ``<form>`` for users to enter and submit their search queries.
-#. If a ``results_list`` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
+	#. In all scenarios, the template presents a search box and a search buttons within a HTML ``<form>`` for users to enter and submit their search queries.
+	#. If a ``results_list`` object is passed to the template's context when being rendered, the template then iterates through the object displaying the results contained within.
 
 As you will see from our corresponding view code shortly, a ``results_list`` will only be passed to the template engine when there are results to return. There won't be results for example when a user lands on the search page for the first time - they wouldn't have posed a query yet!
 
@@ -207,11 +201,15 @@ You'll also need to ensure you do the following, too.
 #. Add a mapping between your ``search()`` view and the ``/rango/search/`` URL.
 #. Update the ``base.html`` navigation bar to include a link to the search page.
 
-Exercises (LEIF TODO?)
-----------------------
 
-	* Add a main() function to the *bing_search.py* to test out the BING Search API i.e. so when you run *python bing_search.py* it issues a query.
-	* The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten  results returned. 
-	* Print out the rank, title and url for each result.
+.. note:: According to the `relevant article on Wikipedia <http://en.wikipedia.org/wiki/Application_programming_interface>`_, an *Application Programming Interface (API)* specifies how software components should interact with one another. In the context of web applications, an API is considered as a set of HTTP requests along with a definition of the structures of response messages that each request can return. Any meaningful service that can be offered over the Internet can have its own API - we aren't limited to web search. For more information on web APIs, `Luis Rei provides an excellent tutorial on APIs <http://blog.luisrei.com/articles/rest.html>`_.
+
+Exercises
+---------
+
+	* Add a main() function to the *bing_search.py* to test out the BING Search API  when you run *python bing_search.py*.
+		
+		* The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
+		* Print out the rank, title and url for each result.
 
 

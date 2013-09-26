@@ -1,24 +1,17 @@
 Working with Templates
 ======================
-With the Rango tutorial thus far, we've created several Django HTML templates for different pages in the application. You've probably already noticed that there's an awful lot of redundancy in the HTML templates - and if you haven't, go have a look at your templates now. Do you notice any similarities between the templates?
+So far we've created several Django HTML templates for different pages in the application. You've probably already noticed that there is a lot of repeated HTML code in these templates.
 
-In most applications, there is often a lot of repetition in HTML markup. This isn't a particularly bad thing. Indeed, a well-designed website includes plenty of repetition, providing users of the site with a familiarity - as well as potentially making it easier for users to find what they are looking for. Most websites have repetitive page headers, navigation bars, sidebars and footers. In terms of code, there are often identical scripts which are added to each page. Repetitive navigation bars may require the same JavaScript and styling properties!
+While most sites will have lots of repeated structure (i.e. headers, sidebars, footers, etc) repeating the HTML in each template is a not good way to handle this. So instead of doing the same cut and paste hack job, we can minimize the amount of repetition in our code base by employing *template inheritance* provided by Django's Template Language.
 
-With repetition a key ingredient to developing a good-looking website, Django's template system provides us with a really nifty tool to help us achieve this. It's called *template inheritance*, and is pretty straightforward to use. Think of it like class inheritance in other programming languages like Java - start with a base class, and extend it in different ways to allow for different functionality.
-
-We'll be showing you template inheritance in this section to demonstrate its power, and how you can simplify Rango's templates with such an approach. We'll be following this basic approach.
-
-#. We'll identify reoccurring parts of each template that are repeated across the Rango application.
-#. We'll take the reoccurring stuff and place it in a new *base template*, defined by so-called *blocks*.
-#. With each template in the application, we'll then *inherit* from the base HTML template, and add page-specific HTML and other content into the blocks we define.
+The basic approach to using inheritance in templates is as follows:
+#. Identify the re-occurring parts of each page that are repeated across your application (i.e. header bar, sidebar, footer, content pane)
+#. In a *base template*, provide the skeleton structure of a standard page along with any common content (i.e. the copyright notice that goes in the footer, the logo and title that appears in the section), and then define a number of *blocks* which are subject to change depending on which page the user is viewing.
+#. Then, create specific templates, which inherit from the base template, and specify the contents of each block.
 
 Reoccurring HTML and the Base Template
 --------------------------------------
-Identifying reoccurring HTML can be quite tricky at first - especially if you have crazy-complex templates. It can take several attempts - you may miss aspects first time around, not realising that they may or may not be reoccurring. This is normal: patience is a virtue!
-
-.. note:: You should always aim to extract as much reoccurring content for your base templates. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future far outweighs the initial overhead. Think about it: would you rather maintain one copy of your markup than five copies or more?
-
-While we won't be repeating all of the templates we have created thus far, we have identified the following HTML for you that reoccurs in every page.
+Given the templates that we have created so far it should be pretty obvious that we have been repeating a fair bit of HTML code. Below we have abstracted away any page specific details to show the skeleton structure, we have been repeating within each template:
 
 .. code-block:: html
 	
@@ -35,15 +28,16 @@ While we won't be repeating all of the templates we have created thus far, we ha
 	    </body>
 	</html>
 
-In essence, the identified HTML is the barebones for creating a blank HTML5 page. We identify the page as HTML5 with the ``<!DOCTYPE html>`` document type declaration - and set the title of the page to ``Rango`` like in all previous templates. Differences occur within the ``<body>`` of each page - so we have included only a HTML comment which we will replace in the next section. The ``{% load static %}`` Django template command includes the ``static`` library, which will allow us to include any static media in our base template (or inheriting templates) with minimum hassle.
+Let's make this our base template, for the time being, and save it as ``base.html`` in Rango's ``templates`` directory (e.g. ``templates/rango/base.html``). 
 
-Take this base template and save it as ``base.html`` in Rango's ``templates`` directory (e.g. ``templates/rango/base.html``). Our new base template is now called ``base.html``. Keep that in mind as we progress through the tutorial.
+.. note:: You should always aim to extract as much reoccurring content for your base templates. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future far outweighs the initial overhead. Think about it: would you rather maintain one copy of your markup or multiple copies?
+
 
 Template Blocks
 ---------------
-Now that we've identified our base template, we can prepare it for our inheriting templates. We identified in the previous section that each inheriting template's content should be placed between the base template's ``<body>`` tags - which is identified by the HTML comment we placed.
+Now that we've identified our base template, we can prepare it for our inheriting templates. To do this, we need to include a Template Tag to indicate what can be overridden in the base template - this is done through the use of *blocks*.
 
-We'll be replacing the comment with a Django template block - a portion of the template which can be `overridden by an inheriting template <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_. We can replace the HTML comment we previously placed with a Django block. Let's call it ``body_block`` so we can clearly identify what it should contain. Our template should now look something like the code sample below.
+Add a ``body_block`` to the base template as follows:
 
 .. code-block:: html
 	
@@ -60,7 +54,7 @@ We'll be replacing the comment with a Django template block - a portion of the t
 	    </body>
 	</html>
 
-Note the syntax that is used - it's a standard Django template command, so commands for starting and ending blocks are contained within ``{%`` and ``%}`` tags. To start a block, the command is ``block <NAME>``, where ``<NAME>`` is the name of the block you wish to create. You must also ensure that you close the block with the ``endblock`` command, again enclosed within Django template tags.
+Recall that standard Django template commands are denoted by ``{%`` and ``%}`` tags. To start a block, the command is ``block <NAME>``, where ``<NAME>`` is the name of the block you wish to create. You must also ensure that you close the block with the ``endblock`` command, again enclosed within Django template tags.
 
 You can also specify 'default content' for your blocks, if you so desire. Our ``body_block`` defined above presently has no default content associated with it. This means that if no inheriting template were to employ the use of ``body_block``, nothing would be rendered - as shown in the code snippet below.
 
@@ -79,7 +73,7 @@ You can also specify 'default content' for your blocks, if you so desire. Our ``
 	    </body>
 	</html>
 
-However, we can overcome this by placing default content within the block definition, like so.
+However, we can overcome this by placing default content within the block definition, like so:
 
 .. code-block:: html
 	
@@ -96,7 +90,7 @@ However, we can overcome this by placing default content within the block defini
 	    </body>
 	</html>
 
-If a template were to inherit our base template without employing the use of ``body_block``, the rendered outcome would now look something like the markup shown below.
+If a template were to inherit from the base template without employing the use of ``body_block``, the rendered outcome would now look something like the markup shown below.
 
 .. code-block:: html
 	
@@ -113,56 +107,25 @@ If a template were to inherit our base template without employing the use of ``b
 	    </body>
 	</html>
 
-Hopefully this all makes sense - and for now, we'll be leaving ``body_block`` blank by default. All of our inheriting templates will be making use of ``body_block`` to get their content rendered. You can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, meaning you can alter the title of each page while still inheriting from the same base template.
+Hopefully this all makes sense - and for now, we'll be leaving ``body_block`` blank by default. All of our inheriting templates will be making use of ``body_block``. You can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, meaning you can alter the title of each page while still inheriting from the same base template.
 
-Blocks are a really powerful feature of Django's template system - and it's highly recommended that you have a look at `Django's documentation <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_ to see more of the awesome things you can do with blocks.
+Blocks are a really powerful feature of Django's template system to learn more about them check out the ` official Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_.
 
-Inheriting
-----------
-Now that we've created a block, how do we create a template to inherit from the base template? Here, we'll show you how. For this example, we'll be taking Rango's ``category.html`` template and transforming it into a template which inherits from ``base.html``.
+Template Inheritance
+--------------------
+Now that we've created a base template with a block, we can now update the templates we have created to inherit from the base template. For example, let's re-factor the ``rango/category.html``.
 
-With the ``category.html`` template open in your text editor, we first tell Django's template system that we wish to inherit from a particular template. To do this, we place a Django template command on the first line of the template, called ``extends``:
+To do this, first remove all the repeated HTML code leaving only the HTML and Template Tags/Commands specific to the page. Then at the begging of the template add the following line of code:
 
 .. code-block:: html
 	
 	{% extends 'rango/base.html' %}
 
-As you can see from the example above, we provide one parameter to the ``extends`` command. This is a string containing the name of the template we wish to inherit from - in this case, the ``base.html`` template we created previously.
+The ``extends`` command takes one parameter, the template which is to be extended/inherited from (i.e. ``rango/base/html``)
 
 .. note:: The parameter you supply to the ``extends`` command should be relative from your project's ``templates`` directory. For example, all templates we use for Rango should extend from ``rango/base.html``, not ``base.html``.
 
-With this in place, take a new line or two underneath the ``extends`` command, and add the following so that your template now looks something like the following.
-
-.. code-block:: html
-	
-	{% extends 'rango/base.html' %}
-	
-	{% block body_block %}
-	
-	{% endblock}
-	
-	<!DOCTYPE html>
-	<html>
-	    <head>
-	        <title>Rango</title>
-	    </head>
-
-	    <body>
-	        <h1>{{ category_name }}</h1>
-
-	        {% if pages %}
-	            <ul>
-	                {% for page in pages %}
-	                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-	                {% endfor %}
-	            </ul>
-	        {% else %}
-	            <strong>No pages currently in category.</strong>
-	        {% endif %}
-	    </body>
-	</html>
-
-You can see that we are now introducing ``body_block`` to the template - which overrides the previous definition in our base template. Presently, it overrides with a blank line - but we can easily fix this by moving all the content from within ``category.html``'s ``<body>`` tags to within the ``body_block``, like so:
+Now to customise the ``body_block`` update the template as follows:
 
 .. code-block:: html
 	
@@ -181,23 +144,31 @@ You can see that we are now introducing ``body_block`` to the template - which o
 	    <strong>No pages currently in category.</strong>
 	{% endif %}
 	{% endblock}
+	
 
-After the block ends, remove the remaining HTML content. All that exists within the ``category.html`` template should be the ``extends`` command, and ``body_block`` block. You don't need a well-formatted HTML document, because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to that base to create the complete HTML document which is sent to the client's browser.
+Now that we are inheriting from the ``base.html`` template all that exists within the ``category.html`` template is the ``extends`` command, and ``body_block`` block. You don't need a well-formatted HTML document, because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client's browser.
 
-.. note::  To learn more about the extensive functionality offered by Django's template language, check out the official `Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/>`_. 
+.. note:: 
 
+ 	Templates are very powerful and you can even create your own template tags. Here we have shown how we can minimize the repetition of structure HTML in our templates.
+
+	However, templates are can also to minimize code in views too. For example, if you had a list of items generated from a database table that you would like to be presented on each page, then it is possible to construct templates that make the call to a specific view to render that part of the part. This saves you from calling the functions to retrieve the data and passing that data to the template for every view that displays that list.
+	
+	To learn more about the extensive functionality offered by Django's template language, check out the official `Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/>`_. 
 
 
 Exercises
 ---------
-Update all the other existing templates within Rango's repertoire to extends from our new ``base.html`` template. Follow the exact same process as demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`.
+
+	* Update all the other existing templates within Rango's repertoire to extends from the ``rango/base.html`` template. Follow the same process as demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`.
+
+	* Update ``rango/base.html`` to include links to login, logout, register, add a new category, etc. Remember to check if the user is authenticated to control whether you show login/register or logout/add new category.
+	
 
 .. _fig-rango-template-inheritance:
 
 .. figure:: ../images/rango-template-inheritance.pdf
-	:figclass: align-center
-
+	
 	A UML class diagram demonstrating how your templates should inherit from ``base.html``.
+	
 
-Templates are very powerful, and you can create your own template tags... see Template Tags Django docs.
-They are useful when you have repeated content on each page - so instead of the view passing the data directly to the template, the template can request the additional data it needs.

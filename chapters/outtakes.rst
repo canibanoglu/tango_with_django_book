@@ -64,11 +64,24 @@ User logins also make use of forms - though the number details required is usual
 #. Produce a template which displays a login form, containing a username and password input box. The form should also contain a login button to submit the form to the *same URL*, but using a HTTP ``POST`` request.
 #. Map the login view to a URL.
 
-TEMPALTES
-
+TEMPLATES
+---------
 
 In most applications, there is often a lot of repetition in HTML markup. This isn't a particularly bad thing. Indeed, a well-designed website includes plenty of repetition, providing users of the site with a familiarity - as well as potentially making it easier for users to find what they are looking for. Most websites have repetitive page headers, navigation bars, sidebars and footers. In terms of code, there are often identical scripts which are added to each page. Repetitive navigation bars may require the same JavaScript and styling properties!
 
 In essence, the identified HTML is the barebones for creating a blank HTML5 page. We identify the page as HTML5 with the ``<!DOCTYPE html>`` document type declaration - and set the title of the page to ``Rango`` like in all previous templates. Differences occur within the ``<body>`` of each page - so we have included only a HTML comment which we will replace in the next section. The ``{% load static %}`` Django template command includes the ``static`` library, which will allow us to include any static media in our base template (or inheriting templates) with minimum hassle.
 
 	We'll be replacing the comment with a Django template block - a portion of the template which can be `overridden by an inheriting template <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_. We can replace the HTML comment we previously placed with a Django block. Let's call it ``body_block`` so we can clearly identify what it should contain. Our template should now look something like the code sample below.
+	
+	
+	SESSIONS
+	--------
+	
+	While a majority of data storage requirements will be satisfied through the use of Django's session framework, there `may be scenarios <http://wonko.com/post/why-you-probably-shouldnt-use-cookies-to-store-session-data>`_ where cookies would be a sensible approach. Before committing to cookies, examine the following considerations.
+	
+	
+	exercises
+	
+	- Using cookies will only work with the cookie persists in the user's browser. A more permanent solution is to record the number of times the user visits and to store that in their UserPro
+
+	The ``User`` object which corresponds to the currently logged in user can be accessed at ``request.user``, where ``request`` is a reference to the single required parameter for a view. Modify the existing ``UserProfile`` model you created so that it now includes an additional field to store the number of times a user has visited the website. The end result should mean the number of times each user has visited the site should now also be stored server-side. *Remember, you will need to recreate and synchronise your database!*

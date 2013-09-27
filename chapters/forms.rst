@@ -41,7 +41,9 @@ In ``rango/forms.py`` add the following code:
 	from rango.models import Page, Category
 	
 	class CategoryForm(forms.ModelForm):
-	    name = forms.CharFields(max_length=50, help_text="Please enter the category name.")
+	    name = forms.CharField(max_length=50, help_text="Please enter the category name.")
+	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	    
 	    # An inline class to provide additional information on the form.
 	    class Meta:
@@ -51,7 +53,8 @@ In ``rango/forms.py`` add the following code:
 	class PageForm(forms.ModelForm):
 	    title = forms.CharField(max_length=100, help_text="Please enter the title of the page.")
 	    url = forms.CharField(max_length=200, help_text="Please enter the URL of the page.")
-	
+		views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+		
 	    class Meta:
 	        # Provide an association between the ModelForm and a model
 	        model = Page
@@ -59,8 +62,8 @@ In ``rango/forms.py`` add the following code:
 	        # What fields do we want to include in our form?
 	        # This way we don't need every field in the model present.
 	        # Some fields may allow NULL values, so we may not want to include them...
-	        # Here, we are hiding the foreign keys and no. of views fields.
-	        fields = ('title', 'url')
+	        # Here, we are hiding the foreign key.
+	        fields = ('title', 'url','views')
 
 
 Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our ``PageForm`` class, we've defined ``forms.CharField`` for both the ``title`` and ``url`` fields, as a text entry field is most appropriate. You can see from the parameters we pass that the maximum permissible length of each form field varies - with lengths of 100 and 200 characters.
@@ -88,7 +91,7 @@ With ``CategoryForm`` class defined we're now ready to create a new view to disp
 	    context = RequestContext(request)
 	    
 	    # A HTTP POST?
-	    if request.method == 'POST:
+	    if request.method == 'POST':
 	        form = CategoryForm(request.POST)
 	        
 	        # Have we been provided with a valid form?
@@ -128,6 +131,8 @@ The new ``add_category()`` view adds several key pieces of functionality for han
 Django's form-handling machinery has also been utilised to process the data returned from a user's browser via a HTTP ``POST`` request. It not only handles the saving of form data into the chosen model, but will also automatically generate any error messages for each form field (if any are required). This means that Django will not store any submitted forms with missing information which could potentially cause problems for your database's referential integrity. For example, supplying no value in the category name field will return an error, as the field cannot be blank.
 
 You'll notice from the line in which we call ``render_to_response()`` that we refer to a new template, ``add_category.html``, which will contain the relevant Django template code and HTML for the form and page. 
+
+
 
 Creating the Add Category Template
 ..................................
@@ -169,7 +174,7 @@ Now, what does this code do? You can see that within the ``<body>`` of the HTML 
 
 .. note:: The need for hidden as well as visible form fields is necessitated by the fact that HTTP is a stateless protocol. You can't persist state between different HTTP requests, which can make certain parts of web applications difficult to implement. To overcome this limitation, hidden HTML form fields were created which allows web applications to pass important information to a client (which cannot be seen on the rendered page) in a HTML form, only to be sent back to the originating server when the user submits the form. 
 
-You should also that note of the code snippet: ``{% csrf_token %}``. This is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect and secure the ``POST`` action that is initiated on the subsequent submission of a form. **The CSRF token is required by the Django framework. If you forget to include a CSRF token in your forms, a user may encounter errors when he or she submits the form.** Check out the `official Django documentation  on CSRF tokens<https://docs.djangoproject.com/en/1.5/ref/contrib/csrf/>`_ for more information about this.
+You should also that note of the code snippet: ``{% csrf_token %}``. This is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect and secure the ``POST`` action that is initiated on the subsequent submission of a form. **The CSRF token is required by the Django framework. If you forget to include a CSRF token in your forms, a user may encounter errors when he or she submits the form.** Check out the `official Django documentation on CSRF tokens <https://docs.djangoproject.com/en/1.5/ref/contrib/csrf/>`_ for more information about this.
 
 Mapping the Add Category View
 .............................
@@ -212,15 +217,19 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 
 .. code-block:: python
 
-	def clean(self):
-	    cleaned_data = self.cleaned_data
-	    url = cleaned_data.get('url')
+	class PageForm(forms.ModelForm):
+
+		...
+	
+		def clean(self):
+	    	cleaned_data = self.cleaned_data
+	    	url = cleaned_data.get('url')
 	    
-	    if not url.startswith('http://'):
-	        url = 'http://' + url
+	    	if not url.startswith('http://'):
+	        	url = 'http://' + url
 	    
-	    cleaned_data['url'] = url
-	    return cleaned_data
+	    		cleaned_data['url'] = url
+	    		return cleaned_data
 
 This trivial example shows how we can clean the data being passed through the form before being stored. This is pretty handy, especially when particular fields need to have default values - or data within the form is missing, and we need to handle such data entry problems.
 
@@ -237,7 +246,7 @@ Exercises
 
 Creating an Add Pages View, Template and URL mapping
 ....................................................
-Now that you've successfully included a form to add new categories, the next logical step is to create a form that allows users to add pages. To do this repeat the same workflow above for Pages i..e create a new view (and URL mapping), along with a new template. To get you started, here's the view logic for you
+Now that you've successfully included a form to add new categories, the next logical step is to create a form that allows users to add pages. To do this repeat the same workflow above for Pages i..e create a new view (and URL mapping), a new template, the URL mapping and then a link from the category page. To get you started, here's the view logic for you
 
 .. code-block:: python
 	
@@ -246,7 +255,7 @@ Now that you've successfully included a form to add new categories, the next log
 	def add_page(request, category_name_url):
 	    context = RequestContext(request)
 
-	    category_name = decode_category(category_name_url)
+	    category_name = decode_url(category_name_url)
 	    if request.method == 'POST':
 	        form = PageForm(request.POST)
 	
@@ -277,4 +286,9 @@ Now that you've successfully included a form to add new categories, the next log
 	             'category_name': category_name, 'form': form},
 	             context)
 
-Hint: the add pages view should be accessed from the categories page so that the category_name_url can be passed through as a parameter.
+Hints
+.....
+
+	* Update the category view to pass through the ``category_name_url``
+	* Update the ``category.html`` with a link to ``/rango/category/<category_name_url>/add_page/``
+	* Update ``rango/urls.py`` with a URL mapping to handle the above link.

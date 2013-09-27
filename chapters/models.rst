@@ -65,13 +65,13 @@ In``rango/models.py`` we will define two classes, both of which inherit from ``d
 	    category = models.ForeignKey(Category)
 	    title = models.CharField(max_length=128)
 	    url = models.URLField()
-	    views = models.IntegerField()
+	    views = models.IntegerField(default=0)
 	    
 	    def __unicode__(self):
 	        return self.title
 
 When you define a model, you need to specify the list of attributes and their associated types along with any optional parameters. Django provides a number of built-in fields, some of the most common are:
-	* ``CharField``, a field for storing character data (e.g. strings). Speciy ``max_length`` to provide a maximum number of characters the field can store.
+	* ``CharField``, a field for storing character data (e.g. strings). Specify ``max_length`` to provide a maximum number of characters the field can store.
 	* ``URLField``, much like a ``CharField``, but designed for storing resource URLs. You may also specify a ``max_length`` parameter.
 	* ``IntegerField``, which stores integers.
 	* ``DateField``, which stores a Python ``datetime.date``.
@@ -404,7 +404,7 @@ You should also remember about the nuances of the ``syncdb`` command. Note that 
 
 Exercises
 ---------
-* Update the Category model to include the additional attributes, ``views`` and ``likes``.
+* Update the Category model to include the additional attributes, ``views`` and ``likes`` where the default value  is zero.
 * Re-sync your database, and update your population script so that the Python category has 128 views and 64 likes, the Django category has 64 views and 32 likes, and the Other Frameworks category has 32 views and 16 likes.
 * Undertake the `Part Two of Offical Django Tutorial <https://docs.djangoproject.com/en/1.5/intro/tutorial02/>`_ if you have not done so already to reinforce what you have learnt here and to learn more about customizing the Admin Interface.
 * Customize the Admin Interface - so that when you view the Page model it displays in a list the category, the name of the page and the url.

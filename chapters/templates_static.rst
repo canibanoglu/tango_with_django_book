@@ -316,5 +316,5 @@ The next chapter will look at databases. We'll see how to make use of Django's e
 
 Exercises
 ---------
-* Add another image to your index page
-* Add an about page which contains some text about the project team (with a picture of the team)
+	* Add an about page to your application and link to it from the index page. 
+	* Put a picture on your about page of yourself.

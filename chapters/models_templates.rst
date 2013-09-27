@@ -40,8 +40,10 @@ With the first step out of the way, we then want to modify our ``index()`` funct
 	    context = RequestContext(request)
 	    
 	    # Query the database for a list of ALL categories currently stored.
+	    # Order the categories by no. likes in descending order.
+	    # Retrieve the top 5 only - or all if less than 5.
 	    # Place the list in our context_dict dictionary which will be passed to the template engine.
-	    category_list = Category.objects.ordered_by('-likes')[:5]
+	    category_list = Category.objects.order_by('-likes')[:5]
 	    context_dict = {'categories': category_list}
 	    
 	    # Render the response and send it back!
@@ -76,7 +78,8 @@ With the view updated, all that is left for us to do is update the template ``ra
 	        {% else %}
 	            <strong>No categories at present.</strong>
 	        {% endif %}
-	
+	        
+	        <a href="/rango/about/">About</a>
 	    </body>
 	</html>
 
@@ -111,10 +114,9 @@ URL Design and Mapping
 
 Let's start by considering the URL problem. One way we could handle this problem is to use the unique ID for each category within the URL. For example, we could create URLs like ``/rango/category/1/`` or ``/rango/category/2/``, where the numbers correspond to the categories with unique IDs 1 and 2 respectively. However, these URLs are hardly human readable. Although we could probably infer that the number relates to a category, how would a user know what category relates to unique IDs 1 or 2? The user wouldn't know without trying. 
 
-Instead, we could just use the category name as part of the URL. ``/rango/category/sport/`` should give us a list of pages related to the sport category. An even simpler approach would be to remove ``category`` altogether, leaving URLs such as ``/rango/fun/`` or ``/rango/sport/``. URLs like this are much nicer from a usability point of view because they are readable, meaningful and predictable. Of course, if we go this approach, we will have to handle categories which have multiple words, like 'Other Frameworks', etc.
+Instead, we could just use the category name as part of the URL. ``/rango/category/Python/`` should give us a list of pages related to the Python category. This is a simple, readable and meaningful URL. If we go with this approach, we'll have to handle categories which have multiple words, like 'Other Frameworks', etc.
 
 .. note:: Designing clean URLs is an important aspect of web design. See `Wikipedia's article on Clean URLs <http://en.wikipedia.org/wiki/Clean_URL>`_ for more details.  
-
 
 Category Page Workflow
 ......................
@@ -222,7 +224,8 @@ Now let's have a look at how we actually pass the value of the ``category_name_u
 	
 	urlpatterns = patterns('',
 	    url(r'^$', views.index, name='index'),
-	    url(r'^(?P<category_name_url>\w+)$', views.category, name='category'),) # New!
+	    url(r'^about/$', views.about, name='about'),
+	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),) # New!
 
 As you can see we have added in a rather complex tuple entry call ``category`` that will invoke  ``views.category()`` when the regular expression ``r'^(?P<category_name_url>\w+)$'`` is matched. We set up our regular expression to look for any sequence of word characters (e.g. a-z, A-Z, _, or 0-9) before the end of the URL, or a trailing URL slash - whatever comes first. This value is then passed to the view ``views.category()`` as parameter ``category_name_url``, the only argument after the mandatory ``request`` argument. Essentially, the name you hard-code into the regular expression is the name of the argument that Django looks for in your view's function definition.
 
@@ -271,7 +274,7 @@ We then pass the list of categories - ``category_list`` - to the context of the 
 	            <ul>
 	                {% for category in categories %}
 	                <!-- Following line changed to add an HTML hyperlink -->
-	                <li><a href="/rango/{{ category.url }}">{{ category.name }}</a></li>
+	                <li><a href="/rango/category/{{ category.url }}">{{ category.name }}</a></li>
 	                {% endfor %}
 	            </ul>
 	       {% else %}
@@ -293,7 +296,7 @@ Demo
 
 	What your link structure should now look like. Starting with the Rango homepage, you are then presented with the category detail page. Clicking on a page link takes you to the linked website.
 	
-Let's try it out now by visiting the Rango's homepage. You should see your homepage listing all the categories. The categories should now be clickable links. Clicking on ``Python`` should then take you to the ``Python`` detailed category view, as demonstrated in Figure :num:`fig-rango-links`. If you see a list of links like ``Official Python Tutorial``, then you've successfully set up the new view. Try navigating a category which doesn't exist, like ``/rango/computers``. You should see a message telling you that no pages exist in the category.
+Let's try it out now by visiting the Rango's homepage. You should see your homepage listing all the categories. The categories should now be clickable links. Clicking on ``Python`` should then take you to the ``Python`` detailed category view, as demonstrated in Figure :num:`fig-rango-links`. If you see a list of links like ``Official Python Tutorial``, then you've successfully set up the new view. Try navigating a category which doesn't exist, like ``/rango/category/computers``. You should see a message telling you that no pages exist in the category.
 
 Exercises
 ---------

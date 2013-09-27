@@ -12,7 +12,7 @@
 # serve to show the default.
 
 import sys, os
-import sphinx_bootstrap_theme
+#import sphinx_bootstrap_theme
 sys.path.append(os.path.abspath('sphinx-extensions')) # Added the sphinx-extensions directory so we can include custom extensions (e.g. numfig)
 
 # If extensions (or modules to document with autodoc) are in another directory,

@@ -1,5 +1,5 @@
 .. _tango-too-label:
-Doing the Tango with Rango!
+Doing the Tango with Rango! 
 ===========================
 
 The template code snippets below assume you are using the Twitter's CSS Bootstrap Toolkit.
@@ -159,152 +159,9 @@ Provide categories on every page
 		
 		
 
-Restricting add category/pages 
-...............................
-
-* Decorate the *add_page* and *add_category* views with the  @login_required decorator method.
-	
-	
-	::
-	
-		@login_required
-		def add_category(request):
-			...
-			
-			
-		@login_required	
-		def add_page(request, category_name_url):
-			...
-	
-	
-* Optionally, only show the "add new page" and "add new category" functionality to the user if the user is authenticated.
-* If you don't do this then users will be redirected to the login page (which is fine too).
-	
-	
-	::
-		
-		{% if user.is_authenticated %}
-		<LI><A HREF="/rango/cat_add"> Add category</A></LI>
-		{% endif %}
-	
 
 
 
 
 	
 	
-Add a "Like Button" 
-...................
-
-* Create a new field called, *Likes* as an integer within the *Category* model.
-
-In *models.py*:
-
-::
-
-	class Category(models.Model):
-	    name = models.CharField(max_length=128, unique=True)
-	    likes = models.IntegerField()
-
-	    def __unicode__(self):
-	        return self.name
-
-
-* Update the CategoryForm to only include field 'name':
-
-::
-
-	class CategoryForm(forms.ModelForm):
-		name = forms.CharField(max_length=50, help_text='Please enter the name of the category.')
-		class Meta:
-		    # associate the model, Category, with the ModelForm
-		    model = Category
-	        fields = ('name',)
-
-
-
-
-
-
-
-* In the *category.html* template:
-	* Add in a "Like" button with id="like".
-	* Add in a template tag to display the number of likes: {{% likes %}}
-	* Place this inside a div with id="like_count": <div id="like_count">{{ likes }} </div>
-
-::
-
-	<div>
-	<b id="like_count">{{ likes}}</b> people like this category 
-	<button id ="likes" data-catid="{{category_id}}" class="btn btn-mini btn-primary" type="button">Like</button>
-	<div>
-
-
-
-* Update the *add_category* view to set the default value of likes equal to zero, as well.
-	* Now in the *category* view you will need to provide the template with these category details.
-	
-	::
-
-
-		def category(request, category_name_url):
-			template = loader.get_template('rango/category.html')
-			cat_list = get_category_list()
-			category_name = decode_category(category_name_url)
-			cat = Category.objects.get(name=category_name)
-
-			if cat:
-				# selects all the pages associated with the selected category
-				pages = Page.objects.filter(category=cat)
-				category_id = cat.id
-				likes = cat.likes
-			context_dict = {'cat_list': cat_list, 'category_name_url': category_name_url, 'category_name': category_name, 'category_id': category_id, 'likes': likes, 'pages':pages }
-			context = RequestContext(request, context_dict)
-			return HttpResponse(template.render(context))
-
-
-* Create a view called, *like_category* which will examine the request and pick out the category_id and then increment the number of likes for that category.
-	* Assume that it is a GET request.
-	* Don't forgot to add in a the url mapping; so map the view to *rango/cat_like/*
-
-
-::
-	
-	
-	@login_required
-	def like_category(request):
-	    context = RequestContext(request)
-	    cat_id = None
-	    if request.method == 'GET':
-	        cat_id = request.GET['category_id']
-	    else:
-	        cat_id = request.POST['category_id']
-
-
-	    likes = 0
-	    if cat_id:
-	        c = Category.objects.get(id=int(cat_id))
-	        if c:
-	            likes = c.likes + 1
-	            c.likes = likes
-	            c.save()
-
-	    return HttpResponse(likes)
-
-
-* Now in "ajax-examples.js" you will need to add some JQuery to perform an AJAX GET request.
-	* If the request is successful, then update the #like_count element, and hide the like button.
-
-	::
-	
-	
-		$('#likes').click(function(){
-	        var catid;
-	        catid = $(this).attr("data-catid");
-	         $.get('/rango/cat_like/', {category_id: catid}, function(data){
-	                   $('#like_count').html(data);
-	                   $('#likes').hide();
-	               });
-	    });
-		
-

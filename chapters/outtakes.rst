@@ -108,3 +108,38 @@ In essence, the identified HTML is the barebones for creating a blank HTML5 page
 			* Add a new field into the pages model to track when the page was added.
 			* when a page is added the current date will need to be inserted
 			* to be completed (tbc)
+			
+			
+			
+			
+			
+			
+			Restricting add category/pages 
+			...............................
+
+			* Decorate the *add_page* and *add_category* views with the  @login_required decorator method.
+
+
+				::
+
+					@login_required
+					def add_category(request):
+						...
+
+
+					@login_required	
+					def add_page(request, category_name_url):
+						...
+
+
+			* Optionally, only show the "add new page" and "add new category" functionality to the user if the user is authenticated.
+			* If you don't do this then users will be redirected to the login page (which is fine too).
+
+
+				::
+
+					{% if user.is_authenticated %}
+					<LI><A HREF="/rango/cat_add"> Add category</A></LI>
+					{% endif %}
+
+			

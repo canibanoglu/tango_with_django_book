@@ -24,6 +24,7 @@ How To Tango With Django
    chapters/bing_search
    chapters/tango
    chapters/tango_too
+   chapters/ajax
    chapters/deploy
    chapters/git
    chapters/css_intro

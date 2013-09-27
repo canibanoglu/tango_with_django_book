@@ -234,7 +234,8 @@ Congratulations! You have got Rango up and running. This is a significant landma
 * Revise the procedure and make sure you follow how the URLs are mapped to views.
 * Next create a new view called about page - which returns the following: "Rango Says: Here is the about page." 
 * Now map the this view to ``/rango/about/``. Note you will only have to edit the ``urls.py`` of the rango application.
-* Revise your about view, so that it adds a link from the index page to the about page.
+* Revise the ``index.html`` template to include a link to the about page.
+* In ``about.html`` template include a link back to the main page.
 
 * If you haven't done so already, it is a good point to go off an complete part one of the official `Django Tutorial <https://docs.djangoproject.com/en/1.5/intro/tutorial01/>`_. 
 
@@ -242,7 +243,7 @@ Congratulations! You have got Rango up and running. This is a significant landma
 Hints
 .....
 * The regular expression to match ``about/`` is ``r'^about/'``
-* The HTML to link to a page is ``<a href="/rango/">Back to Index Page</a>``
+* The HTML to link back to the index page is ``<a href="/rango/">Index</a>``
 
 
 

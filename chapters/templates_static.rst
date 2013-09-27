@@ -35,8 +35,8 @@ To tell your Django project where the templates will be housed, open the ``setti
 Note that you are required to use absolute paths to the ``templates`` directory. Now if you are part of a team or working on different systems, this is going to become a problem in the future because you all wont have the same <workspace> directory. Of course, you could add in the template directory for each different setup, but that would be pretty nasty.
 
 .. warning::
-	The road to hell is paved with `hard-code <http://en.wikipedia.org/wiki/Hard_coding>` paths. 
- 	`Hard-coding <http://en.wikipedia.org/wiki/Hard_coding#Overview>`_ paths is considered to be an `anti-pattern <http://sourcemaking.com/antipatterns>`_, and will make your project less `portable <http://en.wikipedia.org/wiki/Software_portability>`_.
+	The road to hell is paved with hard-coded paths. 
+ 	`Hard-coding <http://en.wikipedia.org/wiki/Hard_coding>`_ paths is considered to be an `anti-pattern <http://sourcemaking.com/antipatterns>`_, and will make your project less `portable <http://en.wikipedia.org/wiki/Software_portability>`_.
 
 
 Instead, we can be much smarter and make use of some built-in Python functions to get the absolute path, regardless of where the code is stored. At the expense of a little bit more complexity in setting up our Django project, we can make our lives much easier later on when it comes to setting up and running our project on other machines.

@@ -1,143 +1,15 @@
+.. _css-label:
+
 Cascading Style Sheets
 ======================
 
 If you've worked your way through the book up until this point, you should by now have a pretty good understanding of how the Django framework operates. If we were to ask you to create a new page, the steps involved in doing so should pop straight into your head. Hopefully, anyway.
 
-One important thing that we have neglected up until this point is the way that our Rango application is presented to end users. It's incredibly plain and simple-looking. If you cast your mind back to the first chapter, you'll remember that we made some mock-up wireframes for what we wished Rango to look like. At the moment, it looks nothing like that! So, how do we make our Rango app look pretty - and more importantly, how do we make Rango look like our wireframe mockups? This chapter will address these questions with the use of *Cascading Style Sheets* conjoined with some additional HTML markup.
+One important thing that we have neglected up until this point is the way that our Rango application is presented to end users. It's incredibly plain and simple-looking at the present moment. If you cast your mind back to the first chapter, you'll remember that we made some mock-up wireframes for what we wished Rango to look like. At the moment, it looks nothing like that! So, how do we make our Rango app look pretty - and more importantly, how do we make Rango look like our wireframe mockups? This chapter will address these questions with the use of *Cascading Style Sheets* conjoined with some additional HTML markup.
 
-Cascading Style Sheets: A Crash Course
---------------------------------------
-One thing that web developers like putting on their resumes is something along the lines of ''competent with CSS''. Whether they actually are competent with CSS is often questionable (ouch!), but CSS - an acronym of *Cascading Style Sheets* - is regarded as one of the cornerstones of modern web development. So, what exactly is CSS, and how does one go about using it?
+You may have some prior experience with CSS. This chapter walks you through developing stylesheets that match our wireframes - both from scratch and with the help of a ready-made toolkit. We believe this approach is advantageous to both beginners and more advanced learners of CSS - you can start with a blank sheet and learn how everything fits together, or start using a toolkit to speed up development time. If you're a CSS beginner, check out the CSS Crash Course in Chapter :ref:`css-course-label` and then try out Section :ref:`css-tutorial-label` below. If you find this stuff too easy, you may wish to skip directly to Section :ref:`css-bootstrap-label` instead.
 
-According to `Wikipedia <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_, CSS is a *style sheet language used for describing the presentation semantics of a document written in a markup language.* CSS therefore allows you to define the look and feel of your HTML documents, all while providing a neat separation of document presentation from the document markup itself. Such separation can be pretty handy for several reasons. Most notably, the separation of presentation and markup allows for one *stylesheet* to be used to style several HTML pages. This reduces the overall complexity of your implementation, and makes maintainability of the website easier - much like Django's template inheritance functionality. The separation can also improve the accessibility of your website. For example, different styling rules can be applied for people viewing on a smartphone than on a desktop computer.
-
-To use CSS within webpages, we define a series of CSS *styles* for different HTML elements on a webpage. For each style, we assign one or more *properties*. Properties describe how a particular HTML element should be styled or positioned on the webpage through the use of *values*. For example, we could set the ``font-weight`` property to a value of ``bold`` to make text appear **bold** within the target HTML element. We could also set the ``text-align`` property to a value of ``right`` to make text appear within the HTML element on the right-hand side.
-
-.. note:: There are lots of different CSS properties that you can use in your stylesheets, each providing a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does. If you want to find out more about a particular property, perform a web search starting with ``CSS``, followed by the property name.
-
-This may all seem a bit daunting and confusing to start with, and it may become a bit clearer with an example. If that's the case, have a look at Figure :num:`fig-css-render`. In this illustration, we provide some incredibly basic HTML markup. The page contains only one primary header (``<h1>``) with the text ``Hello world!``
-
-With our markup defined, we then apply a stylesheet. Within the stylesheet demonstrated in Figure :num:`fig-css-render`, we define only one style. The style is applied to **all** ``<h1>`` elements because the CSS *selector* for the style states so. We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ shortly. For now though, you can safely assume the CSS style defined will be applied to our ``<h1>`` tag. The style contains four properties:
-
-- the first property (``font-size``) sets the size of the font to 16pt;
-- the second property (``font-style``) italicises the contents of all ``<h1>`` tags within the document;
-- the third property (``text-align``) centres the text of the ``<h1>`` tags; and
-- the final property (``color``) sets the colour of the text to red via `hexadecimal code <http://html-color-codes.com/>`_ ``#FF0000``.
-
-With all of these properties applied, the resultant page render can be seen in the browser in Figure :num:`fig-css-render`.
-
-.. _fig-css-render:
-
-.. figure:: ../images/css-render.pdf
-	:figclass: align-center
-
-	Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.
-
-.. warning:: As you may have noticed with the example provided in Figure :num:`fig-css-render`, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``. If you've been brought up learning British English, this'll be difficult to adjust to, and will most likely be the source of many frustrating problems when dealing with stylesheets. Just remember: **check your spelling!**
-
-.. note:: As a brief side note, it's worth discussing what *Cascading Style Sheets* actually means - specifically, the *Cascading* part. You may have noticed in the example rendered output in Figure :num:`fig-css-render` that the red text is **bold**, yet no such property is defined in our ``h1`` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For ``<h1>`` elements, the `W3C website provides a typical style that is applied <http://www.w3.org/TR/html-markup/h1.html#h1-display>`_. If you check the typical style, you'll notice that it contains a ``font-weight: bold;`` property and value pairing, explaining where the **bold** text comes from. As we define a further style for ``<h1>`` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for ``font-size``), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out :num:`fig-css-cascading` for a graphical representation of the cascading process.
-
-.. _fig-css-cascading:
-
-.. figure:: ../images/css-cascading.pdf
-	:figclass: align-center
-
-	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
-
-.. warning:: Due to the nature of web development, *what you see isn't necessarily what you'll get*. Today, there are several web browsers that have significant market share. Each of these browsers has its own way of interpreting `web standards <http://en.wikipedia.org/wiki/Web_standards>`_ and styling. Thus, the subsequent rendering of a page may appear (frustratingly) slightly different on one browser when compared to another. Admittedly, the differences have shrunk considerably in recent years as browser developers have sought to improve standards compatibility. No-one more so than Microsoft, the developers of Internet Explorer, `the browser everyone loves to hate <http://www.reddit.com/r/explainlikeimfive/comments/1b91ph/eli5_why_does_everyone_hate_internet_explorer/>`_. To their credit, Internet Explorer is a much better product today than it was even only a few years ago.
-
-Including Stylesheets
-.....................
-Including stylesheets in your webpages is a relatively straightforward process, and involves including a ``<link>`` tag within your HTML's ``<head>``. Check out the HTML markup sample below for the attributes required.
-
-.. code-block:: html
-	
-	<!DOCTYPE html>
-	<html>
-	    <head>
-	        <link rel="stylesheet" type="text/css" href="URL/TO/stylesheet.css" />
-	        <title>Sample Title</title>
-	    </head>
-	    
-	    <body>
-	        <h1>Hello world!</h1>
-	    </body>
-	</html>
-
-Note there are three attributes you should include at minimum:
-
-- ``rel``, which allows you to specify the relationship between the HTML document and the resource you're linking to (i.e., a stylesheet);
-- ``type``, in which you should specify the `MIME type <http://en.wikipedia.org/wiki/Internet_media_type>`_ for CSS; and
-- ``href``, the attribute which you should point to the URL of the stylesheet you wish to include.
-
-**Whatever you do, don't forget to close the tag!** The ``<link>`` tag doesn't require a separate ``</link>`` tag to close; a simple ``/>`` will suffice. If you're interested as to why this is, have a look at `this Stack Overflow question and answer page <http://stackoverflow.com/questions/17347096/doesnt-all-html-tags-need-to-be-closed>`_.
-
-With this tag added, your stylesheet should in included with your HTML page, and the styles within the stylesheet applied. It may be worth performing a quick sanity check and verifying this is the case by writing a simple style and seeing if it is applied to an element.
-
-.. note:: You can also add CSS to your HTML documents *inline*, meaning that the CSS is included as part of your HTML page. However, this isn't generally advised because it in part removes the nice abstraction between presentational semantics (CSS) and content (HTML). If you wish to include inline CSS, check out `this online tutorial <http://www.tizag.com/cssT/inline.php>`_ for further reference.
-
-Basic CSS Selectors
-...................
-CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Take the example from Figure :num:`fig-css-render`. The selector ``h1`` matches to any ``<h1>`` tag. While this may be easy to understand, selectors can get a `whole lot more complex <http://learn.shayhowe.com/advanced-html-css/complex-selectors>`_. Fortunately, we'll be keeping it nice and simple here as we briefly discuss two other basic selectors: the *id selector*, and the *class selector*.
-
-The *id selector* is used to map to a unique element on your webpage. Each element on your webpage can be assigned a unique id via the ``id`` attribute, and it is this identifier that CSS uses to latch styles onto your element. This type of selector begins with a hash symbol (``#``), followed directly by the identifier of the element you wish to match to. Check out Figure :num:`fig-css-id` for an example.
-
-.. _fig-css-id:
-
-.. figure:: ../images/css-id.pdf
-	:figclass: align-center
-
-	An illustration demonstrating the use of an *id selector* in CSS. Note the blue header has an identifier which matches the CSS attribute ``#blue_header``.
-
-.. warning:: Try to use id selectors sparingly. `Ask yourself: <http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/>`_ **do I absolutely need to apply an identifier to this element in order to target it?** If you need to apply it to more than one element, the answer will always be **no**. Too many identifiers can make for a messy HTML document. If you lose track and start identifying elements with the same identifier, you'll open yourself up for a whole world of pain.
-
-The alternative option is to use *class selectors*. This approach is similar to that of *id selectors*, with the difference that you can legitimately target multiple elements with the same class. If you have a group of HTML elements that you wish to apply the same style to, use a class-based approach. The selector for using this method is to precede the name of your class with a period (``.``) before opening up the style with curly braces (``{ }``). Check out Figure :num:`fig-css-class` for an example.
-
-.. _fig-css-class:
-
-.. figure:: ../images/css-class.pdf
-	:figclass: align-center
-
-	An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the ``.blue`` CSS style to override the red text of the ``h1`` style.
-
-Experimenting
-.............
-CSS can be a tricky thing to master at the best of times. Fortunately for you, there are many tools which you can make use of to make the development of your website easier. For example, `JSFiddle <http://jsfiddle.net>`_ allows you to add markup and CSS to a really cool web-based interface and observe the changes your CSS styles make as you progress. It's a great learning tool, and `we highly recommend trying it out <http://jsfiddle.net/8fPgT/>`_ to see what it can do for you. As a basic guide, enter markup into the top-left box, enter CSS into the top-right box, and click *Run* to see what the output is in the bottom-right.
-
-.. note:: We'll be using some JSFiddles as we work through different parts of the CSS tutorial. You can load them up and experiment by modifying the CSS styles to see what your changes do to the resultant output.
-
-Selecting Colours
-.................
-You will have seen already we make use of properties that can change the colour of text and backgrounds. In this tutorial, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
-
-.. _fig-css-colours:
-
-.. figure:: ../images/css-colours.pdf
-	:figclass: align-center
-	
-	Illustration of some basic colours with their corresponding hexadecimal and RGB values. Illustration adapted from `W3Schools <http://www.w3schools.com/cssref/css_colors.asp>`_.
-
-There are also many different websites which you can visit that can tell you what codes to enter into your stylesheets - you aren't limited to the nine examples above. Try out `html-color-codes.com <http://html-color-codes.com/>`_ for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as `color-hex.com <http://www.color-hex.com/color-wheel/>`_ which gives you fine-grain control over the colours you can choose.
-
-.. note:: If you aren't too clued up on hexadecimal or RGB colouring, check out `this thorough tutorial <http://www.quackit.com/css/css_color_codes.cfm>`_.
-
-Additional Reading
-..................
-What we've discussed in this section is by no means a definitive guide to CSS. There are `300-page books <http://www.amazon.co.uk/Professional-CSS-Cascading-Sheets-Design/dp/047017708X>`_ devoted to CSS alone! What we have provided you with here is a very brief introduction showing you the very basics of what CSS is and how you can use it.
-
-As you develop your web applications, you'll undoubtedly run into issues and frustrating problems with styling web content. This is part of the learning experience, and you still have a bit to learn. We strongly recommend that you invest some time trying out several online tutorials about CSS - there isn't really any need to buy a book (unless you want to).
-
-- The *W3C* `provides a neat tutorial on CSS <http://www.w3.org/Style/Examples/011/firstcss.en.html>`_, taking you by the hand and guiding you through the different stages required. They also introduce you to several new HTML elements along the way, and show you how to style them accordingly.
-
-- `W3Schools also provides some cool CSS tutorials <http://www.w3schools.com/css/css_examples.asp>`_. Instead of guiding you through the process of creating a webpage with CSS, *W3Schools* has a series of mini-tutorials and code examples to show you to to achieve a particular feature, such as setting a background image. We highly recommend that you have a look here.
-
-- `html.net has a series of lessons on CSS <http://html.net/tutorials/css/>`_ which you can work through. Like W3Schools, the tutorials on *html.net* are split into different parts, allowing you to jump into a particular part you may be stuck with.
-
-- It's also worth having a look at `CSSeasy.com <http://csseasy.com/>`_'s collection of tutorials, providing you with the basics on how to develop different kinds of page layouts.
-
-This list is by no means exhaustive, and a quick web search will indeed yield much more about CSS for you to chew on. Just remember: CSS can be tricky to learn, and there may be times where you feel you want to throw your computer through the window. We say this is pretty normal - but take a break if you get to that stage. We'll be tackling some more advanced CSS stuff as we progress through the tutorial in the next few sections.
-
-.. note:: With an increasing array of devices equipped with more and more powerful processors, we can make our web-based content do more. To keep up, `CSS has constantly evolved <http://www.w3schools.com/css3/css3_intro.asp>`_ to provide new and intuitive ways to express the presentational semantics of our SGML-based markup. To this end, support `for relatively new CSS properties <http://www.quackit.com/css/css3/properties/>`_ may be limited on several browsers, which can be a source of frustration. The only way to reliably ensure that your website works across a wide range of different browsers and platforms is to `test, test and test some more! <http://browsershots.org/>`_
+.. _css-tutorial-label:
 
 CSS and Rango: A Tutorial
 -------------------------
@@ -874,8 +746,10 @@ The first style maps to all hyperlinks (or anchors, hence the ``<a>``) within th
 	
 	Cropped screenshots of our modified navigation bar hyperlinks. Now they're much more readable - and they even change colour when you hover over them. How exciting!
 
-Ready-Made Toolkits
--------------------
+.. _css-bootstrap-label:
+
+Working with Twitter Bootstrap
+------------------------------
 Over the past few years, web development has become a much easier job than it was previously. As browsers have slowly adopted W3C standards and implemented them *correctly* (see `this Wikipedia article <http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug>`_ about Internet Explorer), we've seen an explosion in ready-made toolkits that provide developers with much of the CSS scaffolding for you.
 
 One of the most notable success stories in this particular area is the `Twitter Bootstrap <http://getbootstrap.com/>`_ project. After only six months of being released, it had become the most popular project on GitHub, and many developers have adopted the Bootstrap project to help with the development of their websites.

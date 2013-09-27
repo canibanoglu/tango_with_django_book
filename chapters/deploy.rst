@@ -184,7 +184,7 @@ Underneath the *Static files* header, perform the following.
 
 #. Click ``Enter URL`` and enter ``/static/admin``, followed by return.
 #. Click the corresponding ``Enter path`` text. Set this to ``/home/<username>/.virtualenvs/rango/lib/python2.7/site-packages/django/contrib/admin/static/admin``, where ``<username>`` should be replaced with your PythonAnywhere username. You may also need to change ``rango`` if this is not the name of your application's virtual environment. Remember to hit return to confirm the path.
-#. Repeat the two steps above for the URL ``/static/`` and path ``/home/<username>/tango_with_django_project/static``, with the path setting pointing to the ``static`` directory of your web application.
+#. Repeat the two steps above for the URL ``/static/`` and path ``/home/<username>/tango_with_django/tango_with_django_project/static``, with the path setting pointing to the ``static`` directory of your web application.
 
 With these changes saved, reload your web application by clicking the *Reload* button at the top of the page. Don't forget about potential ``HTTP 502 - Bad Gateway`` errors!
 

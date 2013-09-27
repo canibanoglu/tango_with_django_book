@@ -17,10 +17,7 @@ To make Rango more coherent and integrated it would be nice to:
 	* Track the click throughs of Pages and Categories i.e.
 		* Count the number of times a page and category is viewed via Rango
 
-
-		
-
-To do this, it is a good idea to formulate a work flow for each task.Breaking tasks down into sub-tasks will simplify the problems and make it easier to implement. In this chapter, we will provide you with the workflow for each task, then in the following chapter, we have included the code and notes on how to go about implementing the code for each task.
+To do this, it is a good idea to formulate a work flow for each task. Breaking tasks down into sub-tasks will simplify the problems and make it easier to implement. In this chapter, we will provide you with the workflow for each task, then in the following chapter, we have included the code and notes on how to go about implementing the code for each task.
 
 Integrate the browsing and searching with categories
 ---------------------------------------------------- 

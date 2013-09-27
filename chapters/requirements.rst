@@ -10,7 +10,7 @@ For this tutorial, you'll require the following key pieces of software.
 * Python 2.7.5
 * Django 1.5.4
 
-As Django is a web application framework written in the Python programming language, you will be required to have a working knowledge of Python. If you haven't used Python before or you simply wish to brush up on your skills, the we highly recommend that you check out and work through one or more of the following guides:
+As Django is a web application framework written in the Python programming language, you will be required to have a working knowledge of Python. If you haven't used Python before or you simply wish to brush up on your skills, then we highly recommend that you check out and work through one or more of the following guides:
 
 * **A quick tutorial** - Learn Python in 10 Minutes by Stavros, http://www.korokithakis.net/tutorials/python/
 * **The Official Python Tutorial**, http://docs.python.org/2/tutorial/

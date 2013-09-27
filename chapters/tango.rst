@@ -3,34 +3,27 @@
 Making Rango Tango! Exercises
 =============================
 
-So far you have added in different pieces of functionality to Rango. You have seen a number of key components within the Django framework, however at the moment, Rango is not very cohesive, or very impressive. To make Rango a bit more coherent and integrated you will need to:
+So far we have been adding in different pieces of functionality to Rango. We've been building up the application in this manner to get you familiar with the Django Framework and to learn about how to construct the various parts of a website that you are likely to do in your own projects. With respect to Rango, however, the application at the moment is not very cohesive. In this chapter we challenge you to improve the application and its user experience by bringing together some of the functionality that we have already implemented along with added some other functionality to further improve the user experience.
+
+To make Rango more coherent and integrated it would be nice to:
 
 	* Integrate the browsing and searching with categories, i.e.: 
 		* Let users search within/on a category page 
 		* Provide categories on every page
-
-	* Provide services for Registered Users
-		* Let users edit and view their profile 
-		* Let users add category/pages (only for registered users)
 		
-	* Track the click throughs of Pages within Rango categories
-		* Count the number of times a page is viewed via Rango
-
-	* Update the Index page to reflect the dynamic and changing content in Rango
-		* List the most recently added Pages on the Index page
-		* List the most viewed Pages on the Index page
+	* Provide services for Registered Users
+		* Let users view their profile	
+		
+	* Track the click throughs of Pages and Categories i.e.
+		* Count the number of times a page and category is viewed via Rango
 
 	* Make the application more dynamic with AJAX
 		* Add inline category suggestions
 		* Add a "Like Button" to let registered users "like" a particular category
-		
 		* Add an "Add Button" to let registered users quickly and easier add a Page to the Category in which they are searching.
 		
 
-For each of these items it will help to make a task todo list. Breaking tasks down into sub-tasks will make it easier to implement and also to appreciate the steps involved. 
-
-Lets go through a task list for each of these items - given the list of todos it should be pretty straightforward to go off and implement most of the functionality associated with each item from what you have already learnt in this tutorial.
-
+To do this, it is a good idea to formulate a work flow for each task.Breaking tasks down into sub-tasks will simplify the problems and make it easier to implement. In this chapter, we will provide you with the workflow for each task, then in the following chapter, we have included the code and notes on how to go about implementing the code for each task.
 
 Integrate the browsing and searching with categories
 ---------------------------------------------------- 
@@ -84,21 +77,6 @@ Let users view their profile
 	* Create a view called, *profile*, this view will obtain the data required to render the user profile template/pages.
 	* Create a url mapping of the form, *rango/profile/* that maps to the *profile* view.
 
-Let users edit their profile 
-.............................
-
-	* tba
-
-
-Let users add category/pages (only for registered users)
-........................................................
-
-Currently there are no restrictions placed upon users of Rango with regards to adding categories and pages. But let's put a stop to that by doing the following:
-
-	* Decorate the *add_page* and *add_category* views with the  @login_required decorator method.
-	* Optionally, only show the "add new page" and "add new category" functionality to the user if the user is authenticated.
-	* If you don't do this then users will be redirected to the login page (which is fine too).
-
 
 	
 Track the click throughs of Pages within Rango categories
@@ -115,24 +93,13 @@ Currently, Rango provides a direct link to external pages. This is not very good
 		
 	* Update the *category.html* so that it uses *rango/goto/?page_id=XXX&url=YYY* instead of directly providing the url YYY for users to click.
 
-
-Dynamically Generating the Index page
--------------------------------------
-
-To list the most recently added Pages and the most viewed Pages on the Index page you will need to:
-
-	* Add a new field into the pages model to track when the page was added.
-	* when a page is added the current date will need to be inserted
-	* to be completed (tbc)
-
 Make the application more dynamic with AJAX
 -------------------------------------------
 To make the interaction with the Rango application more seamless you can add in a number of features that use AJAX. If you haven't used AJAX before or would like to know more about it before using it, check out the AJAX tutorial provided by the W3C Schools: http://www.w3schools.com/ajax/default.ASP
 
 It provides a pretty good introduction to how existing technologies are integrated to reduce the number of page loads, and instead let only parts of a web page be reloaded.
 
-To simplify the AJAX components you can use a library like JQuery. If you are using the Twitter CSS Bootstrap toolkit then JQuery will already be added in. 
-Otherwise, download the latest version of JQuery and include it within your application.
+To simplify the AJAX components you can use a library like JQuery. If you are using the Twitter CSS Bootstrap toolkit then JQuery will already be added in. Otherwise, download the latest version of JQuery and include it within your application.
 
 To include JQuery within your application, in the static folder create a *js* folder and plonk the JQuery javascript file (jquery.js) here. Then in your *base* template in the <head> element, include:
 

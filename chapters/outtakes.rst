@@ -91,3 +91,20 @@ In essence, the identified HTML is the barebones for creating a blank HTML5 page
 	
 	
 	.. note:: Most web APIs provide the ability to specify in what format results are returned to the requesting computer. For an example, `check out the documentation for the Echo Nest's API <http://developer.echonest.com/raw_tutorials/responses.html>`_. Note that the same data is returned in the two examples - the format in which the data is presented is the only difference.
+	
+	
+	
+	
+	* Update the Index page to reflect the dynamic and changing content in Rango
+		* List the most recently added Pages on the Index page
+		* List the most viewed Pages on the Index page
+	
+	
+		Dynamically Generating the Index page
+		-------------------------------------
+
+		To list the most recently added Pages and the most viewed Pages on the Index page you will need to:
+
+			* Add a new field into the pages model to track when the page was added.
+			* when a page is added the current date will need to be inserted
+			* to be completed (tbc)

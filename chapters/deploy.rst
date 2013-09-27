@@ -221,7 +221,7 @@ When debugging, you may find it useful to delete or move the log files so that y
 Exercises
 ---------
 
-* Congratulations you've completed the book on How to Tango with Django. Tweet a link to your application to @tangowithdjango as we'd love to know you've succeeded!
+* Congratulations you've successfully deployed Rango. Tweet a link to your application to @tangowithdjango as we'd love to know you've succeeded!
 
 
 

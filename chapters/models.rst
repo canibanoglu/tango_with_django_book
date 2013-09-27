@@ -45,8 +45,7 @@ The only other value we need to set is the ``NAME`` key/value pair, which we hav
 For SQLite databases, the remaining keys of ``USER``, ``PASSWORD``, ``HOST`` and ``PORT`` are not required. 
 
 .. note::  While we have used an SQLite engine here and it is fine for getting started it is not the best option when you go to deploy your application. Instead, it is better to use a more robust and scalable database engine. 
-Django comes with out of the box support for several other popular database engines, such as  `PostgreSQL <http://www.postgresql.org/>`_ and `MySQL <http://www.mysql.com/>`_. See  `Django's official documentation
- on Database Engines <https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-DATABASE-ENGINE>`_ for more details. 
+Django comes with out of the box support for several other popular database engines, such as  `PostgreSQL <http://www.postgresql.org/>`_ and `MySQL <http://www.mysql.com/>`_. See the `official Django documentation on Database Engines <https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-DATABASE-ENGINE>`_ for more details. 
 
 Creating Models
 ---------------
@@ -198,7 +197,7 @@ which will start an instance of the Python interpreter and load in the projects 
 
 Here, we first import the model that we want to manipulate, then print out all the existing categories (of which there are none, because our table is empty). Then we create and save a Category, before printing out all the categories again.
 
-.. note:: The example we provide above is only a very basic taster on database-related activities you can perform in the Django shell. If you have not done so already, it is good time to complete part one of the `Official Django Tutorial to learn more about interacting with the models <https://docs.djangoproject.com/en/1.5/intro/tutorial01/>'_. Also check out the `Official Django documentation on the list of available commands <https://docs.djangoproject.com/en/1.5/ref/django-admin/#available-commands>`_ for working with models.
+.. note:: The example we provide above is only a very basic taster on database-related activities you can perform in the Django shell. If you have not done so already, it is good time to complete part one of the `Official Django Tutorial to learn more about interacting with the models <https://docs.djangoproject.com/en/1.5/intro/tutorial01/>`_. Also check out the `Official Django documentation on the list of available commands <https://docs.djangoproject.com/en/1.5/ref/django-admin/#available-commands>`_ for working with models.
 
 Configuring the Admin Interface
 -------------------------------

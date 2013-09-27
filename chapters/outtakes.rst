@@ -142,4 +142,20 @@ In essence, the identified HTML is the barebones for creating a blank HTML5 page
 					<LI><A HREF="/rango/cat_add"> Add category</A></LI>
 					{% endif %}
 
+CSS
+
+*style sheet language used for describing the presentation semantics of a document written in a markup language.* CSS therefore allows you to define the look and feel of your HTML documents, all while providing a neat separation of document presentation from the document markup itself. Such separation can be pretty handy for several reasons. Most notably, the separation of presentation and markup allows for one *stylesheet* to be used to style several HTML pages. This reduces the overall complexity of your implementation, and makes maintainability of the website easier - much like Django's template inheritance functionality. The separation can also improve the accessibility of your website. For example, different styling rules can be applied for people viewing on a smartphone than on a desktop computer.
+			
+			
+			
+			While this may be easy to understand, selectors can get a `whole lot more complex <http://learn.shayhowe.com/advanced-html-css/complex-selectors>`_.
+			
+			
+			
+			Experimenting
+			-------------
+			CSS can be a tricky thing to master at the best of times. Fortunately for you, there are many tools which you can make use of to make the development of your website easier. For example, `JSFiddle <http://jsfiddle.net>`_ allows you to add markup and CSS to a really cool web-based interface and observe the changes your CSS styles make as you progress. It's a great learning tool, and `we highly recommend trying it out <http://jsfiddle.net/8fPgT/>`_ to see what it can do for you. As a basic guide, enter markup into the top-left box, enter CSS into the top-right box, and click *Run* to see what the output is in the bottom-right.
+
+			.. note:: We'll be using some JSFiddles as we work through different parts of the CSS tutorial. You can load them up and experiment by modifying the CSS styles to see what your changes do to the resultant output.
+
 			

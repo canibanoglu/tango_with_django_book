@@ -170,8 +170,31 @@ Now if you visit the Rango homepage, and inspect the developer tools provided by
 
 Session Based Cookies
 ---------------------
-TODO(leifos): add example
+In the previous example, we used client side cookies, however a more secure way is to store any such data on the server side, and use the session id cookie/token which is stored on the client side (but is effectively anonymous) as the key to unlock the data.
 
+To use session based cookies you need to:
+
+* make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains 'django.contrib.sessions.middleware.SessionMiddleware'. 
+* configure your session backend. By default a database backend is assumed - so you will have to have your database set up and ensure that it is synchronised. See the ``official Django Documentation on Sessions <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`_ for other backend configurations.
+
+Now if you want to check if the cookie has been stored you can do so with the following code in your view:
+
+.. code-block:: python
+	
+	if request.session.get('last_visit'):
+		# the session has a value for the last visit
+		last_visit_time = request.session.get('last_visit')
+		visits = request.session.get('visits', 0)
+		if (datetime.now() - last_visit_time).days > 0:
+			request.session['visits'] = visits + 1
+		
+	else:
+		# the get returns None, and the session does not have a value for the last visit.
+		request.session['last_visit'] = datetime.now()
+		request.session['visits'] = 1
+		
+		
+TODO(leifos): check this code. Storing cookies on the server side also has the advantage that the type information is not lost - so there is no need to type cast the string to the desired type.
 
 Browser-Length and Persistent Sessions
 --------------------------------------
@@ -203,12 +226,16 @@ If client-side cookies are the right approach for you then work through the foll
 If you need more secure cookies, then use session based cookies:
 TODO(leifos): add workflow
 
+#. Make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains 'django.contrib.sessions.middleware.SessionMiddleware'. 
+#. Configure your session backend ``SESSION_ENGINE``. See the ``official Django Documentation on Sessions <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`_ for the various backend configurations.
+#. Check to see if the cookie exists via ``requests.sessions.get()``
+#. Update or set the cookie via the session dictionary, ``requests.session['<cookie_name>']``
 
 
 Exercises
 ---------
+- Change your cookies from client side to server side to make your application more secure. Clear the browser's cache and cookies, then check to make sure can't see the ``last_visit`` and ``visits`` variables in the browser. Note you will still see the ``sessionid`` cookie.
 - Update the *about* page view and template telling the visitors how many times they have visited the site.
-
 - Include in this page a count of the number of times the user has visited the page, utilising the cookie we created above. Hint: You'll have to pass the value from the cookie to the template context for it to be rendered as part of the page (see below)
 
 Hint

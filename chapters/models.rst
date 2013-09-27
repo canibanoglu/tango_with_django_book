@@ -407,4 +407,12 @@ Exercises
 * Update the Category model to include the additional attributes, ``views`` and ``likes``.
 * Re-sync your database, and update your population script so that the Python category has 128 views and 64 likes, the Django category has 64 views and 32 likes, and the Other Frameworks category has 32 views and 16 likes.
 * Undertake the `Part Two of Offical Django Tutorial <https://docs.djangoproject.com/en/1.5/intro/tutorial02/>`_ if you have not done so already to reinforce what you have learnt here and to learn more about customizing the Admin Interface.
-* Customize the Admin Interface - so that for the Pages table the list view also displays the category name and the category url name (i.e. the encoded category name).
+* Customize the Admin Interface - so that when you view the Page model it displays both the category and the name of the page.
+
+Hint
+....
+	* To customize the Admin Interface you will need to edit the ``rango/admin.py`` and create a PageAdmin class that inherits from admin.ModelAdmin. 
+	* Then set ``list_display = ('category','title')`` in the PageAdmin class
+	* Finally, register it with Django's Admin, ``admin.site.register(Page, PageAdmin)``
+
+

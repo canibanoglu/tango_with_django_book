@@ -116,7 +116,7 @@ Then update the ``index(request)`` view function as follows:
 	    
 	    # Construct a dictionary to pass to the template engine as its context.
 	    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-	    context_dict = {'boldmessage': "I am bold font from the context"}
+	    context_dict = {'boldmessage': "I am from the context"}
 	    
 	    # Return a rendered response to send to the client.
 	    # We make use of the shortcut function to make our lives easier.
@@ -125,7 +125,7 @@ Then update the ``index(request)`` view function as follows:
 
 In the view, we use the RequestContext helper function to get access to Django specific values, then we create a dictionary to store any data we want to send through to the template, then finally we call ``render_to_response``  passing through the dictionary and the context to the specified template. The ``render_to_response`` function will take this data and mash it together with the template to produce a HTML page, in this case, and then return it as a HttpResponse.
 
-When a template file is loaded with the Django templating system, a context is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In our template above, we have a template variable name called ``boldmessage``. In our ``index(request)`` view example, the string ``I am bold font from the context`` is mapped to template variable ``boldmessage``. The string ``I am bold font from the context`` therefore replaces any instance of ``{{ boldmessage }}`` within the template.
+When a template file is loaded with the Django templating system, a context is created. In simple terms, a template context is essentially a Python dictionary that maps template variable names with Python variables. In our template above, we have a template variable name called ``boldmessage``. In our ``index(request)`` view example, the string ``I am from the context`` is mapped to template variable ``boldmessage``. The string ``I am from the context`` therefore replaces any instance of ``{{ boldmessage }}`` within the template.
 
 Now that you have updated the view to employ the use of your template, run the Django development server and visit http://127.0.0.1:8000/rango/. You should see your template rendered in all its glory, just like the example shown in Figure :num:`fig-rango-hello-world-template`. 
 

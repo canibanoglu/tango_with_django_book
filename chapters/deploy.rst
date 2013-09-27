@@ -158,6 +158,8 @@ To configure the WSGI script, navigate to the *Web* tab in PythonAnywhere's dash
 	if path not in sys.path:
 	    sys.path.append(path)
 	
+	os.chdir(path)
+	
 	# TELL DJANGO WHERE YOUR SETTINGS MODULE IS LOCATED
 	os.environ['DJANGO_SETTINGS_MODULE'] = 'tango_with_django_project.settings'
 	

@@ -195,7 +195,7 @@ Now that you have your Django project set up to handle static media, you can now
 To demonstrate how to include static media, open up ``index.html`` located in the ``templates/rango`` directory. Modify the HTML source code as follows (the two lines that we add are shown with a HTML comment next to them for easy identification):
 
 .. code-block:: html
-    
+
 	<!DOCTYPE html>
 	
 	{% load static %} <!-- New line -->
@@ -208,7 +208,8 @@ To demonstrate how to include static media, open up ``index.html`` located in th
 	    
 	    <body>
 	        <h1>Rango says...</h1>
-	        hello world! <strong>{{ boldmessage }}</strong>
+	        hello world! <strong>{{ boldmessage }}</strong><br />
+	        <a href="/rango/about/">About</a><br />
 	        <img src="{% static "rango.jpg" %}" alt="Picture of Rango" /> <!-- New line -->
 	    </body>
 	
@@ -285,7 +286,7 @@ With your ``urls.py`` file updated, we now need to modify our ``settings.py`` fi
 .. code-block:: python
 	
 	MEDIA_URL = '/media/'
-	MEDIA_ROOT = PROJECT_PATH + '/media/' # Absolute path to the media directory
+	MEDIA_ROOT = os.path.join(PROJECT_PATH, '/media/') # Absolute path to the media directory
 
 The first variable, ``MEDIA_URL`` defines the base URL from which all media files will be accessible on your development server. Setting the ``MEDIA_URL`` for example to ``/media/`` will mean that user uploaded files will be available from the URL ``http://127.0.0.1:8000/media/``. ``MEDIA_ROOT`` is used to tell Django where uploaded files should be stored on your local disk. In the example above, we set this variable to the result of joining our ``PROJECT_PATH`` variable defined in Section :num:`model-setup-templates-label` with ``/media/``. This gives an absolute path of ``<workspace>/tango_with_django_project/media/``.
 
@@ -316,4 +317,5 @@ The next chapter will look at databases. We'll see how to make use of Django's e
 
 Exercises
 ---------
-	* On your about page add a picture.
+	* Convert the about page to use a template too from a template called ``about.html``.
+	* Within the ``about.html`` template, add a picture stored within your project's static media.

@@ -5,11 +5,11 @@ Overview
 
 The aim of this book is to provide you with a practical guide to web development in Django. The book is designed primarily for students providing a walk-through of the steps required in setting up your development environment and getting one of your first web applications up and running and finally deployed on a web server.
 
-This book seeks to complement the official Django Tutorials, and many of the other excellent online tutorials. By putting everything together in one place, this book fills in many of the gaps in the official Django documentation, providing an example based design driven approach to learning the Django framework. Furthermore, this book provides an introduction to many of the aspect required to master web application development. 
+This book seeks to complement the official Django Tutorials, and many of the other excellent online tutorials. By putting everything together in one place, this book fills in many of the gaps in the official Django documentation providing an example based design driven approach to learning the Django framework. Furthermore, this book provides an introduction to many of the aspect required to master web application development. 
 
 
 Why work with this book
-.......................
+-----------------------
 **This book will save you time**. On many occasions we've seen clever students get stuck, spending hours trying to fight with Django and other aspect of web development, usually because a key piece of information was not provided or something was not clear. While the occasional blip might set you back 10-15 minutes, sometimes they can take hours to resolve. We've tried to remove as many of these hurdles as possible. This will mean you can get on with developing your application, and not figuring out another piece of the puzzle. 
 
 **This book will lower the learning curve**. Web application frameworks can save you a lot of hassle and lot of time, well, that is, if you know how to use them! Often the learning curve is steep. This book tries to get you going, and going fast. By showing you how to put together a web application with all the bells and whistle from the onset, the book shortens this curve. 
@@ -20,7 +20,7 @@ Why work with this book
 
 
 What you will learn
-...................
+-------------------
 In this book, we will be taking an exampled based approach (or inquiry based learning). The book will show you how to design a web application called **Rango** (see design brief below), and along the way show you how to:
 
 	* Setup a development environment (using the terminal, Pip installer, working with Git, etc.)
@@ -46,7 +46,7 @@ http://www.tangowithdjango.com/rango/
 
 
 Technologies and Services
-.........................
+-------------------------
 
 Through the course of this book, we will used various technologies and external services, including:
 
@@ -67,12 +67,12 @@ We've selected these technologies and services as they are either fundamental to
 
 
 Rango: Initial Design and Specification
-.......................................
+---------------------------------------
 
 As previously mentioned the focus of this book will be to develop an application called **Rango**. As we develop this application, it will cover the core components that need to be developed when building any web application.
 
 Design Brief
-------------
+............
 Your client would like you to create a website, called **Rango** that lets users browse through user defined categories to access various web pages. In Spanish, the word rango is used to mean "a league ranked by quality" or "position in a social hierarchy" (see https://www.vocabulary.com/dictionary/es/rango )
 
 	* For the **main page** of the site, they would like visitors to be able to see:
@@ -194,6 +194,28 @@ Summary
 These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies these steps are common to most database driven web sites, so it is good idea to become familiar with and comfortable producing such specifications and designs.
 
 If you already have Python 2.7.5 and Django 1.5.4 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter, otherwise, continue going through the setup stages.
+
+Working with the Official Django Tutorials
+..........................................
+
+In the table below we suggest undertaking the Tutorials as part of the exercises associated with the chapters below in order to re-enforce your understanding of the framework and to build up your skills.
+
++--------------------+--------------------------+
+| Tango With Django  | Official Django Tutorial |
++====================+==========================+
+| Chapter 3          | Part 1 - Models          |
++--------------------+--------------------------+
+| Chapter 5          | Part 2 - Admin           |
++--------------------+--------------------------+
+| Chapter 6          | Part 3 - URLS and Views  |
++--------------------+--------------------------+
+| Chapter 7          | Part 4 - Templates       |
++--------------------+--------------------------+
+| Chapter 18         | Part 5 - Testing         |
++--------------------+--------------------------+
+| Chapter 11         | Part 6 - CSS             |
++--------------------+--------------------------+
+
 
 
 

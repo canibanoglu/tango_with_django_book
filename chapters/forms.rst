@@ -231,7 +231,9 @@ Exercises
 	- What happens when you try to add a category that already exists?
 	- What happens when you visit a category that does not exist?
 	- How could you gracefully handle when a user visits a category that does not exist?
-
+	- Undertake the `Part Four of Offical Django Tutorial <https://docs.djangoproject.com/en/dev/intro/tutorial04/>`_ if you have not done so already to reinforce what you have learnt here.
+		
+	
 
 Creating an Add Pages View, Template and URL mapping
 ....................................................

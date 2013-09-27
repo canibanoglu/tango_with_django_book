@@ -411,7 +411,7 @@ Exercises
 
 Hint
 ....
-	* To customize the Admin Interface you will need to edit the ``rango/admin.py`` and create a PageAdmin class that inherits from admin.ModelAdmin. 
+	* To customize the Admin Interface you will need to edit ``rango/admin.py`` and create a PageAdmin class that inherits from admin.ModelAdmin. 
 	* Then set ``list_display = ('category','title')`` in the PageAdmin class
 	* Finally, register it with Django's Admin, ``admin.site.register(Page, PageAdmin)``
 

@@ -316,5 +316,4 @@ The next chapter will look at databases. We'll see how to make use of Django's e
 
 Exercises
 ---------
-	* Add an about page to your application and link to it from the index page. 
-	* Put a picture on your about page of yourself.
+	* On your about page add a picture.

@@ -104,6 +104,12 @@ There are also many different websites which you can visit that can tell you wha
 
 .. warning:: As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``.
 
+Fonts
+-----
+serif/sans serif fonts
+font selection (multiple fonts, first one available is chosen)
+core web fonts
+can use new fonts (google fonts)
 
 The Cascade
 -----------
@@ -116,7 +122,20 @@ It's worth pointing out where the *Cascading* comes into play. You may have noti
 
 	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
 
+Basic Positioning
+-----------------
 
+Relative Positioning
+....................
+
+Absolute Positioning
+....................
+
+Styling Lists
+-------------
+
+Styling Links
+-------------
 
 Additional Reading
 ------------------

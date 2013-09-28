@@ -12,7 +12,18 @@ AJAX essentially is a combination of technologies that are integrated together t
 
 To simplify the AJAX components you can use a library like JQuery. If you are using the Twitter CSS Bootstrap toolkit then JQuery will already be added in. Otherwise, download the latest version of JQuery and include it within your application.
 
-To include JQuery within your application, in the static folder create a *js* folder and plonk the JQuery javascript file (``jquery.js``) here along with an empty file called ``rango-ajax.js``, which will house our javascript code. Then in your *base* template in the <head> element, include:
+To include JQuery within your application, in the static folder create a *js* folder and plonk the JQuery javascript file (``jquery.js``) here along with an file called ``rango-ajax.js``, which will house our javascript code. In ``rango-ajax.js``, add the following javascript:
+
+.. code-block:: javascript
+
+	$(document).ready(function() {
+	
+		// JQuery code to be added in here.
+	
+	});
+
+
+Then in your *base* template in the <head> element, include:
 
 .. code-block:: html
 	<script src="{% static "/js/jquery.js" %}"></script>
@@ -153,12 +164,7 @@ Workflow
 
 To do this you will need to do the following:
 
-* Create a parameterised function called *get_category_list* such that its definition is as follows:
-
- - ``def get_category_list(max_results=0, starts_with=''):``
- - Update the function such that it returns all categories in Category if ``max_results`` equals zero and ``start_with`` is an empty string or null.
- - However, if ``max_results`` is greater than zero (assuming it is an integer) then the maximum number of results returned is determined by ``max_results``.
- - If ``starts_with`` is non-empty, then all categories that start with this string are returned up to the number of ``max_results`` (unless ``max_results`` is zero, in which case all matching categories are returned)
+* Create a parameterised function called ``get_category_list(max_results=0, starts_with='')`` that returns all the categories starting with ``starts_with`` if ``max_results=0`` otherwise it returns up to ``max_results`` categories.
  - The function returns a list of category objects annotated with the encoded category denoted by the attribute, ``url``
 
 
@@ -177,7 +183,7 @@ With the mapping, view, and template for this view in place, you will need to up
 
  - Above this <div> add an input box for a user to enter the letters of a category, i.e.:
 
-	``<INPUT type="text" size="30" name="suggestion" value="" id="suggestion">``
+	``<input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />``
 	
 
 * With these elements added into the templates, you can add in some JQuery to update the categories list as the user types.
@@ -187,6 +193,99 @@ With the mapping, view, and template for this view in place, you will need to up
  - Then use the JQuery ``.get()`` function i.e. ``$(this).get( ... )``
  - If the call is successful, replace the content of the <div> with id="cats" with the data received.
  - Here you can use the JQuery ``.html()`` function i.e. ``$('#cats').html( data )``
+
+
+Parameterise the Get Category List function
+...........................................
+In this helper function we use a filter to find all the categories that start with the string supplied.
+
+.. code-block:: python
+
+	def get_category_list(max_results=0, starts_with=''):
+		cat_list = []
+		if starts_with:
+		cat_list = Category.objects.filter(name__startswith=starts_with)
+		else:
+		cat_list = Category.objects.all()
+		
+		if max_results > 0:
+			if len(cat_list) > max_results:
+				cat_list = cat_list[:max_results]
+		
+		for cat in cat_list:
+			cat.url = encode_url(cat.name)
+			
+		return cat_list
+
+Create a Suggest Category View
+..............................
+Using the ``get_category_list`` function we can now create a view that returns the top 8 matching results as follows: 
+
+.. code-block:: python
+	
+	def suggest_category(request):
+		context = RequestContext(request)
+		cat_list = []
+		starts_with = ''
+		if request.method == 'GET':
+			starts_with = request.GET['suggestion']
+		else:
+			starts_with = request.POST['suggestion']
+		
+			cat_list = get_category_list(8, starts_with)
+			
+		return render_to_response('rango/category_list.html', {'cat_list': cat_list }, context)
+
+Note here we are re-using the ``rango/category_list.html`` template :-).
+
+
+Map View to URL
+...............
+Add the following code to ``urlpatterns`` in ``rango/urls.py``:
+
+.. code-block:: python
+
+	url(r'^category_suggest/$', views.suggest_category, name='suggest_category'),
+
+
+
+Update Base Template
+....................
+In the base template in the sidebar div add in the following HTML code:
+
+.. code-block:: html
+
+	{% if cat_list %}
+		<ul class="nav nav-list">
+			<li class="nav-header">Find a Category</li>
+			<form>
+			<label></label>
+			<li><input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" /></li>
+			</form>
+		</ul>
+		<div id="cats">
+			{% include 'rango/category_list.html' with cat_list=cat_list %}
+		</div>	
+	{% endif %}
+
+Here we have added in an input box with ``id="suggestion"`` and div with ``id="Cats"`` in which we will display the response. We don't need to add a button as we will be adding an event handler on keyup to the input box which will send the suggestion request.
+
+
+Add AJAX to request suggestions
+...............................
+Add the following JQuery code to the ``js/rango-ajax.js``:
+
+.. code-block:: javascript
+	
+	$('#suggestion').keyup(function(){
+		var query;
+		query = $(this).val();
+		$.get('/rango/category_suggest/', {suggestion: query}, function(data){
+                 $('#cats').html(data);
+		});
+	});
+
+Here, we attached an event handler to the HTML input element with ``id="suggestion"`` to trigger when a keyup event occurs. When it does the contents of the input box is obtained and placed into the ``query`` variable. Then a AJAX GET request is made calling ``/rango/category_suggest/`` with the ``query`` as the parameter. On success, the HTML element with id="cats" i.e. the div, is updated with the category list html.
 
 
 Exercises

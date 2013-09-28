@@ -609,8 +609,7 @@ Exercises
 This chapter has covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's ``django.contrib.auth`` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base ``django.contrib.auth.models.User`` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult  `Django's official documentation on Authentication <https://docs.djangoproject.com/en/1.5/topics/auth/>`_.
 
 
-	* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages.
-	* Move the add category link into the logged in links section so it only appears when you login.
+	* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages. You'll also have ensure links to add/edit pages appear only if the user browsing the website is logged in.
 	* Provide informative error messages when users incorrectly enter their username or password.
 	
 	* However, in most applications you are going to require different levels of security when registering and managing users - for example, making sure the user enters an email address that they have access to, or sending users passwords that they have forgotten. While we could extend the current approach and build all the necessary infrastructure to support such functionality a ``django-registration`` application has been developed which greatly simplifies the process - visit ``https://django-registration.readthedocs.org/en/latest/`` to find out more about using this package.

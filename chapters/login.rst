@@ -400,14 +400,14 @@ All of these functions and classes are provided by Django, and as such you'll ne
 Creating a Login Template
 .........................
 
-With our new view created, we'll need to create a new template allowing users to login. While we know that the template will live in the ``templates/rango/`` directory, we'll leave you to figure out the name. Look at the code example above to work out the name. In your new template file, add the following code:
+With our new view created, we'll need to create a new template allowing users to login. While we know that the template will live in the ``templates/rango/`` directory, we'll leave you to figure out the name of the file. Look at the code example above to work out the name. In your new template file, add the following code:
 
 .. code-block:: html
 	
 	<!DOCTYPE html>
 	<html>
 	    <head>
-			<!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
+	        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
 	        <title>Rango</title>
 	    </head>
 
@@ -438,16 +438,18 @@ With your login template created, we can now match up the ``user_login()`` view 
 	
 	urlpatterns = patterns('',
 	    url(r'^$', views.index, name='index'),
+	    url(r'^about/$', views.about, name='about'),
+	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),
 	    url(r'^add_category/$', views.add_category, name='add_category'),
+	    url(r'^category/(?P<category_name_url>\w+)/add_page/$', views.add_page, name='add_page'),
 	    url(r'^register/$', views.register, name='register'),
-	    url(r'^login/$', views.user_login, name='login'), # THIS IS OUR NEW ENTRY
-	    url(r'^(?P<category_name_url>\w+)', views.category, name='category'),)
-
+	    url(r'^login/$', views.user_login, name='login'),
+	    )
 
 Link up the Login page to the Index page
 ........................................
 
-Our final step is to provide users of Rango with a handy link to access the login page. To do this, we'll edit the ``index.html`` template inside of the ``templates/rango/`` directory. Find the previously created category addition and registration links, and add the following hyperlink underneath.
+Our final step is to provide users of Rango with a handy link to access the login page. To do this, we'll edit the ``index.html`` template inside of the ``templates/rango/`` directory. Find the previously created category addition and registration links, and add the following hyperlink underneath. You may wish to include a line break (``<br />``) before the link.
 
 .. code-block:: python
 	
@@ -464,13 +466,12 @@ Replace this header with the following markup and Django template code. Note tha
 .. code-block:: python
 	
 	{% if user.is_authenticated %}
-		<h1>Rango says.. hello {{ user.username }}!</h1>
+	<h1>Rango says... hello {{ user.username }}!</h1>
 	{% else %}
-		<h1>Rango says.. hello world!</h1>
+	<h1>Rango says... hello world!</h1>
 	{% endif %}
 
-
-As you can see we have used  Django's Template Language to check if the user is authenticated with ``{% if user.is_authenticated %}``. The context variable which we pass through to the template will include a user variable if the user is logged in - so we can check whether they are authenticated or not. If so they will receive a personalised greeting in the header, i.e. ``Rango says.. hello leifos!``. Otherwise, the generic ``Rango says..hello world!`` header is displayed.
+As you can see we have used  Django's Template Language to check if the user is authenticated with ``{% if user.is_authenticated %}``. The context variable which we pass through to the template will include a user variable if the user is logged in - so we can check whether they are authenticated or not. If so they will receive a personalised greeting in the header, i.e. ``Rango says... hello leifos!``. Otherwise, the generic ``Rango says... hello world!`` header is displayed.
 
 Demo
 ....
@@ -536,7 +537,7 @@ We'll also add in another pattern to Rango's ``urlpatterns`` tuple in the ``urls
 	    url(r'^restricted/', views.restricted, name='restricted'),
 	    url(r'^(?P<category_name_url>\w+)', views.category, name='category'),)
 
-We'll also need to handle the scenario where a user attempts to access the ``restricted()`` view, but is not logged in. Where do we take the user? Django allows us to specify this in our project's ``settings.py`` file, located in the project configuration directory. In ``settings.py``, define the variable ``LOGIN_URL`` with the URL you'd like to redirect users to that aren't logged in, i.e. the login page located at ``/rango/login/``:
+We'll also need to handle the scenario where a user attempts to access the ``restricted()`` view, but is not logged in. What do we do with the user? The simplest approach is to redirect his or her browser. Django allows us to specify this in our project's ``settings.py`` file, located in the project configuration directory. In ``settings.py``, define the variable ``LOGIN_URL`` with the URL you'd like to redirect users to that aren't logged in, i.e. the login page located at ``/rango/login/``:
 
 .. code-block:: python
 	
@@ -573,28 +574,34 @@ With the view created, map the URL ``/rango/logout/`` to the ``user_logout()`` v
 	
 	urlpatterns = patterns('',
 	    url(r'^$', views.index, name='index'),
+	    url(r'^about/$', views.about, name='about'),
+	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),
 	    url(r'^add_category/$', views.add_category, name='add_category'),
+	    url(r'^category/(?P<category_name_url>\w+)/add_page/$', views.add_page, name='add_page'),
 	    url(r'^register/$', views.register, name='register'),
 	    url(r'^login/$', views.user_login, name='login'),
-	    url(r'^logout/$', views.user_logout, name='logout'), # OUR NEW MAPPING
-	    url(r'^restricted/', views.restricted, name='restricted'),
-	    url(r'^(?P<category_name_url>\w+)', views.category, name='category'),)
+	    url(r'^restricted/$', views.restricted, name='restricted'),
+	    url(r'^logout/$', views.user_logout, name='logout'),
+	    )
 
 Now that all the machinery for logging a user out has been completed, it'd be handy to provide a link from the homepage to allow users to simply click a link to logout. However, let's be smart about this: is there any point providing the logout link to a user who isn't logged in? Perhaps not - it may be more beneficial for a user who isn't logged in to be given the chance to register, for example.
 
-Like in the previous section, we'll be modifying Rango's ``index.html`` template, and making use of the ``user`` object in the template's context to determine what links we want to show. Find your growing list of links at the bottom of the page, and put this markup in.
+Like in the previous section, we'll be modifying Rango's ``index.html`` template, and making use of the ``user`` object in the template's context to determine what links we want to show. Find your growing list of links at the bottom of the page and replace it with the following HTML markup and Django template code. Note we also add a link to our restricted page at ``/rango/restricted/``.
 
 .. code-block:: html
 	
 	{% if user.is_authenticated %}
 	<a href="/rango/restricted/">Restricted Page</a><br />
-	<a href="/rango/logout/">Logout</a>
+	<a href="/rango/logout/">Logout</a><br />
 	{% else %}
-	<a href="/rango/register/">Register</a><br />
-	<a href="/rango/login/">Login</a>
+	<a href="/rango/register/">Register Here</a><br />
+	<a href="/rango/login/">Login</a><br />
 	{% endif %}
+	
+	<a href="/rango/about/">About</a><br/>
+	<a href="/rango/add_category/">Add a New Category</a><br />
 
-Simple - when a user is logged in/authenticated, he or she is presented with links to the restricted page and the logout view. If he or she isn't, they are presented with links to either register or login. You will want to alter your previous list of links, removing the login and register links you had. This will help to prevent any confusion.
+Simple - when a user is authenticated and logged in, he is she can see the ``Restricted Page`` and ``Logout`` links. If he or she isn't logged in, ``Register Here`` and ``Login`` are presented. As ``About`` and ``Add a New Category`` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
 
 Exercises
 ---------
@@ -602,9 +609,9 @@ Exercises
 This chapter has covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's ``django.contrib.auth`` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base ``django.contrib.auth.models.User`` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult  `Django's official documentation on Authentication <https://docs.djangoproject.com/en/1.5/topics/auth/>`_.
 
 
-	* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages
+	* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages.
+	* Move the add category link into the logged in links section so it only appears when you login.
 	* Provide informative error messages when users incorrectly enter their username or password.
-	* Add an additional password field to the registration form so that you can check to make sure the passwords match.
 	
 	* However, in most applications you are going to require different levels of security when registering and managing users - for example, making sure the user enters an email address that they have access to, or sending users passwords that they have forgotten. While we could extend the current approach and build all the necessary infrastructure to support such functionality a ``django-registration`` application has been developed which greatly simplifies the process - visit ``https://django-registration.readthedocs.org/en/latest/`` to find out more about using this package.
 	

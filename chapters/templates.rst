@@ -116,7 +116,7 @@ Abstracting Further
 ...................
 Now that you have an understanding of Django blocks, let's take the opportunity to abstract our base template a little bit further. Reopen the ``base.html`` template and modify it to look like the following.
 
-.. code_block:: html
+.. code-block:: html
 	
 	{% load static %}
 

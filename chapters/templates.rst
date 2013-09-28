@@ -118,7 +118,36 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 
 .. code_block:: html
 	
-	
+	{% load static %}
+
+	<!DOCTYPE html>
+	<html>
+	    <head>
+	        <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+	    </head>
+
+	    <body>
+	        {% block body_block %}This is body_block's default content.{% endblock %}
+	        
+	        <div>
+	            {% if user.is_authenticated %}
+	            <a href="/rango/restricted/">Restricted Page</a><br />
+	            <a href="/rango/logout/">Logout</a><br />
+	            <a href="/rango/add_category/">Add a New Category</a><br />
+	            {% else %}
+	            <a href="/rango/register/">Register Here</a><br />
+	            <a href="/rango/login/">Login</a><br />
+	            {% endif %}
+	        
+	            <a href="/rango/about/">About</a><br />
+	        </div>
+	    </body>
+	</html>
+
+We introduce two new features into the template.
+
+* The first is a new Django template block, ``title``. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not make use of this feature, the title is defaulted to ``Rango - How to Tango with Django!``
+* We also copy the list of links from our current ``index.html`` template and paste them into a HTML ``<div>`` tag underneath our ``body_block`` block. This will ensure the links are present across all pages inheriting from the base template.
 
 Template Inheritance
 --------------------

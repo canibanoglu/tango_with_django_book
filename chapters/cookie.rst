@@ -198,19 +198,19 @@ Now if you want to check if the cookie has been stored you can do so by accessin
 	        # The session has a value for the last visit
 	        last_visit_time = request.session.get('last_visit')
 	        visits = request.session.get('visits', 0)
-	
-	        if (datetime.now() - last_visit_time).days > 0:
+	        
+	        if (datetime.now() - datetime.strptime(last_visit_time[:-7], "%Y-%m-%d %H:%M:%S")).days > 0:
 	            request.session['visits'] = visits + 1
 	    else:
 	        # The get returns None, and the session does not have a value for the last visit.
-	        request.session['last_visit'] = datetime.now()
+	        request.session['last_visit'] = str(datetime.now())
 	        request.session['visits'] = 1
 	    #### END NEW CODE ####
 	
 	    # Render and return the rendered response back to the user.
 	    return render_to_response('rango/index.html', context_dict, context)
 
-.. note:: An added advantage of storing session information server side is that type information is not lost. There is no need for you to typecast the string to the desired type!
+.. note:: A nice extra advantage to storing session data server-side is that you don't need to always cast data from strings to the desired type. Be careful though: this only seems to hold for simple data types such as strings, integers, floats and booleans.
 
 Browser-Length and Persistent Sessions
 --------------------------------------
@@ -229,9 +229,9 @@ Basic Considerations and Workflow
 ---------------------------------
 When using cookies within your Django application, there's a few things you should consider:
 
-	* First, consider what type of cookies your web application requires. Does the information you wish to store need to persist over a series of user browser sessions, or can it be safely disregarded upon the end of one session?
-	* Think carefully about the information you wish to store using cookies. Remember, storing information in cookies by their definition means that the information will be stored on client's computers, too. This is a potentially huge security risk: you simply don't know how compromised a user's computer will be. Consider server-side alternatives if potentially sensitive information is involved.
-	* As a follow-up to the previous bullet point, remember that users may set their browser's security settings to a high level which could potentially block your cookies. As your cookies could be blocked, your site may function incorrectly. You *must* cater for this scenario - *you have no control over the client browser's setup*.
+* First, consider what type of cookies your web application requires. Does the information you wish to store need to persist over a series of user browser sessions, or can it be safely disregarded upon the end of one session?
+* Think carefully about the information you wish to store using cookies. Remember, storing information in cookies by their definition means that the information will be stored on client's computers, too. This is a potentially huge security risk: you simply don't know how compromised a user's computer will be. Consider server-side alternatives if potentially sensitive information is involved.
+* As a follow-up to the previous bullet point, remember that users may set their browser's security settings to a high level which could potentially block your cookies. As your cookies could be blocked, your site may function incorrectly. You *must* cater for this scenario - *you have no control over the client browser's setup*.
 
 If client-side cookies are the right approach for you then work through the following steps:
 
@@ -240,19 +240,16 @@ If client-side cookies are the right approach for you then work through the foll
 #. If the cookie doesn't exist, or you wish to update the cookie, pass the value you wish to save to the response you generate. ``response.set_cookie('<cookie_name>', value)`` is the function you call, where two parameters are supplied: the name of the cookie, and the ``value`` you wish to set it to.
 
 If you need more secure cookies, then use session based cookies:
-TODO(leifos): add workflow
 
 #. Make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains 'django.contrib.sessions.middleware.SessionMiddleware'. 
-#. Configure your session backend ``SESSION_ENGINE``. See the ``official Django Documentation on Sessions <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`_ for the various backend configurations.
+#. Configure your session backend ``SESSION_ENGINE``. See the `official Django Documentation on Sessions <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`_ for the various backend configurations.
 #. Check to see if the cookie exists via ``requests.sessions.get()``
 #. Update or set the cookie via the session dictionary, ``requests.session['<cookie_name>']``
-
 
 Exercises
 ---------
 - Change your cookies from client side to server side to make your application more secure. Clear the browser's cache and cookies, then check to make sure can't see the ``last_visit`` and ``visits`` variables in the browser. Note you will still see the ``sessionid`` cookie.
-- Update the *about* page view and template telling the visitors how many times they have visited the site.
-- Include in this page a count of the number of times the user has visited the page, utilising the cookie we created above. 
+- Update the *About* page view and template telling the visitors how many times they have visited the site.
 
 Hint
 ....
@@ -261,17 +258,15 @@ You'll have to pass the value from the cookie to the template context for it to 
 
 .. code-block:: python
 	
-	# check, then get the number of visits
-	if request.COOKIES.has_key( 'visits' ):
-	    v = request.COOKIES[ 'visits' ]
+	# If the visits session varible exists, take it and use it.
+	# If it doesn't, we haven't visited the site so set the count to zero.
+	if request.session['visits']:
+	    count = request.session['visits']
 	else:
-	    v = 0
+	    count = 0
 
 	# remember to include the visit data
-	return render_to_response('rango/about.html', {'visits': v}, context)
-
-
-
+	return render_to_response('rango/about.html', {'visits': count}, context)
 
 .. rubric:: Footnotes
 

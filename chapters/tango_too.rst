@@ -242,7 +242,7 @@ Create a new view called ``track_url`` in ``rango/views.py`` which takes a param
 				except:
 					pass
 					
-	    return redirect(url)
+		return redirect(url)
 	
 	
 Mapping URL

@@ -2,35 +2,35 @@
 
 Cascading Style Sheets
 ======================
+In this chapter, we shall start to add some style to Rango. First we shall do this by creating our own style sheets to give you a feel for how to use CSS. Then we will use the Twitter Bootstrap Toolkit to skin Rango. If you haven't used CSS before it is worth going through the basic guide to CSS we have provided a Crash Course in Chapter :ref:`css-course-label` and then working through these tutorials. However, if you are familiar with the CSS basics you can dive straight in. Of course, if you've already used CSS then you might want to skip straight to the Bootstrap section
+:ref:`css-bootstrap-label` .
 
-If you've worked your way through the book up until this point, you should by now have a pretty good understanding of how the Django framework operates. If we were to ask you to create a new page, the steps involved in doing so should pop straight into your head. Hopefully, anyway.
-
-One important thing that we have neglected up until this point is the way that our Rango application is presented to end users. It's incredibly plain and simple-looking at the present moment. If you cast your mind back to the first chapter, you'll remember that we made some mock-up wireframes for what we wished Rango to look like. At the moment, it looks nothing like that! So, how do we make our Rango app look pretty - and more importantly, how do we make Rango look like our wireframe mockups? This chapter will address these questions with the use of *Cascading Style Sheets* conjoined with some additional HTML markup.
-
-You may have some prior experience with CSS. This chapter walks you through developing stylesheets that match our wireframes - both from scratch and with the help of a ready-made toolkit. We believe this approach is advantageous to both beginners and more advanced learners of CSS - you can start with a blank sheet and learn how everything fits together, or start using a toolkit to speed up development time. If you're a CSS beginner, check out the CSS Crash Course in Chapter :ref:`css-course-label` and then try out Section :ref:`css-tutorial-label` below. If you find this stuff too easy, you may wish to skip directly to Section :ref:`css-bootstrap-label` instead.
 
 .. _css-tutorial-label:
 
-CSS and Rango: A Tutorial
--------------------------
-Now that you've got the very basics of CSS, let's start modifying our plain looking Rango application to make it look much more professional. We'll be taking you through the process step-by-step, introducing you to new concepts - both in terms of CSS and HTML - as we go along. Ultimately, we'll be updating Rango's homepage so that it looks like our initial homepage wireframe, which you can find all the way back at the start of this book.
+CSS and Rango
+-------------
+Assuming you have some basic CSS knowledge, we'll be taking you through the process
+of designing a style sheet for Rango so it looks similar to the screen shots in Chapter one.
 
 Creating and Referencing the Stylesheet
 .......................................
-Let's get started! First, we need to create a new CSS file in which we will store Rango's styles and reference it in our base template. In our Django project's ``static`` directory, create a new subdirectory called ``css``. This will allow us to store all of our CSS files neatly in one location, without mixing them up with other kinds of static files. Within the new ``css`` directory, create a file called ``base.css``.
+Let's get started! First, we need to create a CSS file in which we will store Rango's styles and reference it from the base template. In our Django project's ``static`` directory, create a new subdirectory called ``css``. This will allow us to store all of our CSS files neatly in one location, without mixing them up with other kinds of static files. Within the new ``css`` directory, create a file called ``base.css``.
 
-.. note:: Do you remember that we discussed serving static media files earlier in the book? If you do, you should be able to recall that we set up static media files to be served from the URL ``static/``. This means that our new ``base.css`` file should be accessible from the URL ``http://127.0.0.1:8000/static/css/base.css`` - but don't forget to change the server and port if you use different settings. Try it out now!
 
 We now create a reference to the ``base.css`` file in Rango's ``base.html`` template. Open the template from Rango's ``templates`` directory, and modify the ``<head>`` portion of the file to include a new ``<link>`` tag, just like in the example below.
 
 .. code-block:: html
 	
 	<head>
-	    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
-	    <title>Rango</title>
+		...
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+	    ...
 	</head>
 
-Note how we point the ``<link>`` tag to the ``base.css`` file `from the root of our navigable website <http://stackoverflow.com/questions/7613274/why-would-a-developer-place-a-forward-slash-at-the-start-of-each-relative-path>`_ with the inclusion of a preceding forward slash. Without the forward slash, the browser would attempt to look for the file from the location of the page being viewed.
+
+.. note:: Do you remember that we discussed serving static media files earlier in the book? If you do, you should be able to recall that we set up static media files to be served from the URL ``static/``. This means that our new ``base.css`` file should be accessible from the URL ``http://127.0.0.1:8000/static/css/base.css`` - but don't forget to change the server and port if you use different settings. Try it out now!
+
 
 Some Basic CSS Tweaks
 .....................

@@ -16,9 +16,9 @@ Given the templates that we have created so far it should be pretty obvious that
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -33,6 +33,8 @@ Let's make this our base template, for the time being, and save it as ``base.htm
 
 .. note:: You should always aim to extract as much reoccurring content for your base templates. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future far outweighs the initial overhead. Think about it: would you rather maintain one copy of your markup or multiple copies?
 
+.. warning:: Remember that your page ``<!DOCTYPE html>`` declaration absolutely must be placed on the first line for your page! Not doing so will mean your markup will not comply with the W3C HTML5 guidelines.
+
 
 Template Blocks
 ---------------
@@ -42,9 +44,9 @@ Add a ``body_block`` to the base template as follows:
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -61,9 +63,9 @@ You can also specify 'default content' for your blocks, if you so desire. Our ``
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -78,9 +80,9 @@ However, we can overcome this by placing default content within the block defini
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -95,9 +97,9 @@ If a template were to inherit from the base template without employing the use o
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango</title>
@@ -118,9 +120,9 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 
 .. code-block:: html
 	
-	{% load static %}
-
 	<!DOCTYPE html>
+	{% load static %}
+	
 	<html>
 	    <head>
 	        <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
@@ -128,8 +130,10 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 
 	    <body>
 	        <div>
-	            {% block body_block %}This is body_block's default content.{% endblock %}
+	            {% block body_block %}{% endblock %}
 	        </div>
+	        
+	        <hr />
 	        
 	        <div>
 	            <ul>
@@ -151,7 +155,7 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 We introduce two new features into the template.
 
 * The first is a new Django template block, ``title``. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not make use of this feature, the title is defaulted to ``Rango - How to Tango with Django!``
-* We also copy the list of links from our current ``index.html`` template and paste them into a HTML ``<div>`` tag underneath our ``body_block`` block. This will ensure the links are present across all pages inheriting from the base template.
+* We also bring across the list of links from our current ``index.html`` template and place them into a HTML ``<div>`` tag underneath our ``body_block`` block. This will ensure the links are present across all pages inheriting from the base template. The links are preceded by a *horizontal rule* (``<hr />``) which provides a visual separation between the ``body_block`` content and the links. 
 
 Also note that we enclose the ``body_block`` within a HTML ``<div>`` tag - we'll be explaining the meaning of the ``<div>`` tag in Chapter :ref:`css-label`. Our links are also converted to an unordered HTML list through use of the ``<ul>`` and ``<li>`` tags.
 
@@ -165,9 +169,9 @@ To do this, first remove all the repeated HTML code leaving only the HTML and Te
 	
 	{% extends 'rango/base.html' %}
 
-.. note:: The parameter you supply to the ``extends`` command should be relative from your project's ``templates`` directory. For example, all templates we use for Rango should extend from ``rango/base.html``, not ``base.html``.
-
 The ``extends`` command takes one parameter, the template which is to be extended/inherited from (i.e. ``rango/base.html``). We can then modify the ``category.html`` template so it looks like the following complete example.
+
+.. note:: The parameter you supply to the ``extends`` command should be relative from your project's ``templates`` directory. For example, all templates we use for Rango should extend from ``rango/base.html``, not ``base.html``.
 
 .. code-block:: html
 	

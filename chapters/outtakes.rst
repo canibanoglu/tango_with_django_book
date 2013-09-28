@@ -159,3 +159,7 @@ CSS
 			.. note:: We'll be using some JSFiddles as we work through different parts of the CSS tutorial. You can load them up and experiment by modifying the CSS styles to see what your changes do to the resultant output.
 
 			
+
+			* Update the "like" functionality so that the application keeps track of what each user likes. i.e. you will have to add in another model to record whether the user likes a category.
+
+

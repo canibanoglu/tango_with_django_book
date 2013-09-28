@@ -160,11 +160,11 @@ Now, let's add our new view, ``category``:
 	        # Can we find a category with the given name?
 	        # If we can't, the .get() method raises a DoesNotExist exception.
 	        # So the .get() method returns one model instance or raises an exception.
-	        category_model = Category.objects.get(name=category_name)
+	        category = Category.objects.get(name=category_name)
 	        
 	        # Retrieve all of the associated pages.
 	        # Note that filter returns >= 1 model instance.
-	        pages = Page.objects.filter(category=category_model)
+	        pages = Page.objects.filter(category=category)
 	        
 	        # Adds our results list to the template context under name pages.
 	        context_dict['pages'] = pages

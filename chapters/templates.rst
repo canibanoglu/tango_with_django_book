@@ -187,9 +187,14 @@ The ``extends`` command takes one parameter, the template which is to be extende
 	    {% else %}
 	        <strong>No pages currently in category.</strong>
 	    {% endif %}
+	    
+	    {% if user.is_authenticated %}
+	       <a href="/rango/category/{{category_name_url}}/add_page/">Add a Page</a>
+	    {% endif %}
+	    
 	{% endblock %}
 
-Now that we inherit from ``base.html``, all that exists within the ``category.html` template is the ``extends`` command, the ``title`` block and the ``body_block`` block. You don't need a well-formatted HTML document because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client's browser.
+Now that we inherit from ``base.html``, all that exists within the ``category.html`` template is the ``extends`` command, the ``title`` block and the ``body_block`` block. You don't need a well-formatted HTML document because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client's browser.
 
 .. note:: 
 

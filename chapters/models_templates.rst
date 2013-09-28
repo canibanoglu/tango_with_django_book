@@ -303,7 +303,6 @@ Exercises
 
 	* Modify the index page to also include the top 5 most viewed pages.
 	* The encoding and decoding of the Category name to a URL is pretty sloppy. Create a better way for encoding/decoding the url/name so that it handles special characters and ignores case.
-	* Now, instead of messing about with the url encoding/decoding in the View, fix your code to let the Model handle this responsibility directly.
 	* Undertake the `Part Three of Offical Django Tutorial <https://docs.djangoproject.com/en/1.5/intro/tutorial03/>`_ if you have not done so already to reinforce what you have learnt here.
 
 Hints

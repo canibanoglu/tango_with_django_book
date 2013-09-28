@@ -55,8 +55,8 @@ The ``User`` model comes complete with five primary attributes. They are:
 The model also comes with other attributes such as ``is_active`` (which determines whether a particular account is active or not). Check the `official Django documentation on the user model <https://docs.djangoproject.com/en/1.5/ref/contrib/auth/#django.contrib.auth.models.User>`_ for a full list of attributes provided by the base ``User`` model.
 
 
-Addition User Attributes
-------------------------
+Additional User Attributes
+--------------------------
 However, what if all the provided attributes that the ``User`` model provides isn't enough? For our Rango application, we want to include two more additional attributes for each user account. Specifically, we wish to include:
 
 - a ``URLField``, allowing a user of Rango to specify their own website; and
@@ -133,8 +133,6 @@ In ``rango/forms.py``, add the following classes:
 
 .. code-block:: python
 	
-	from models.rango import UserProfile
-	
 	class UserForm(forms.ModelForm):
 	    password = forms.CharField(widget=forms.PasswordInput())
 	    
@@ -149,6 +147,13 @@ In ``rango/forms.py``, add the following classes:
 
 Here, we added **two** classes: one representing an input form for a ``User`` model, the other for the ``UserProfile`` model. Recall how additional fields were combined with the base ``User`` model - not with inheritance, but by linking the two models together with a one-to-one relationship, hence the need for two forms.
 
+Don't forget to include the required classes at the top of the ``forms.py`` module!
+
+.. code-block:: python
+	
+	from models.rango import UserProfile
+	from django.contrib.auth.models import User
+
 Recall that the attribute ``model`` in the ``Meta`` class within the inherited ``ModelForm`` associates the model to the form, and ``fields`` dictates what fields will be displayed on the form. 
 
 Within ``UserForm``, we have set the form field of ``password`` to be a ``forms.PasswordInput()`` widget, which will hide the user's input when they type into the field.
@@ -161,7 +166,7 @@ Next we need to handle both the rendering of the form, and the processing of for
 
 .. code-block:: python
 	
-	from rango.models import UserForm, UserProfileForm
+	from rango.forms import UserForm, UserProfileForm
 	
 	def register(request):
 	    # Like before, get the request's context.
@@ -196,7 +201,7 @@ Next we need to handle both the rendering of the form, and the processing of for
 	            
 	            # Did the user provide a profile picture?
 	            # If so, we need to get it from the input form and put it in the UserProfile model.
-	            if 'picture' in request.FILE:
+	            if 'picture' in request.FILES:
 	                profile.picture = request.FILES['picture']
 	            
 	            # Now we save the UserProfile model instance.
@@ -244,10 +249,10 @@ Now create a new template file, ``rango/register.html`` and add the following co
 	        <h1>Register with Rango</h1>
 
 	        {% if registered %}
-	        <strong><a href="/rango/">Rango</a> says:</strong> thank you for registering!
-	        Click <a href="/rango/" >here</a> to go to the homepage.<br />
+	        Rango says: <strong>thank you for registering!</strong>
+	        <a href="/rango/" >Return to the homepage.</a><br />
 	        {% else %}
-	        <strong><a href="/rango/">Rango</a> says:</strong> register here!<br />
+	        Rango says: <strong>register here!</strong><br />
 
 	        <form id="user_form" method="post" action="/rango/register/"
 	                enctype="multipart/form-data">
@@ -259,11 +264,11 @@ Now create a new template file, ``rango/register.html`` and add the following co
 	                 making everything look neater. -->
 	            {{ user_form.as_p }}
 	            {{ profile_form.as_p }}
-
-	            <input type="submit" name="submit" value="Register">
+	            
+	            <!-- Provide a button to click to submit the form. -->
+	            <input type="submit" name="submit" value="Register" />
 	        </form>
 	        {% endif %}
-
 	    </body>
 	</html>
 
@@ -282,9 +287,12 @@ Now we can add a URL mapping to our new view. In ``rango/urls.py`` modify the ``
 	
 	urlpatterns = patterns('',
 	    url(r'^$', views.index, name='index'),
+	    url(r'^about/$', views.about, name='about'),
+	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),
 	    url(r'^add_category/$', views.add_category, name='add_category'),
-	    url(r'^register/$', views.register, name='register'), # NEW PATTERN HERE
-	    url(r'^(?P<category_name_url>\w+)', views.category, name='category'),)
+	    url(r'^category/(?P<category_name_url>\w+)/add_page/$', views.add_page, name='add_page'),
+	    url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
+	    )
 
 The newly added pattern points the URL ``/rango/register/`` to the ``register()`` view. 
 

@@ -17,7 +17,6 @@ Given the templates that we have created so far it should be pretty obvious that
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -45,7 +44,6 @@ Add a ``body_block`` to the base template as follows:
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -64,7 +62,6 @@ You can also specify 'default content' for your blocks, if you so desire. Our ``
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -81,7 +78,6 @@ However, we can overcome this by placing default content within the block defini
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -98,7 +94,6 @@ If a template were to inherit from the base template without employing the use o
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -121,7 +116,6 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 .. code-block:: html
 	
 	<!DOCTYPE html>
-	{% load static %}
 	
 	<html>
 	    <head>
@@ -212,10 +206,13 @@ Now that we inherit from ``base.html``, all that exists within the ``category.ht
 Exercises
 ---------
 
-	* Update all the other existing templates within Rango's repertoire to extends from the ``rango/base.html`` template. Follow the same process as demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`.
-
-	* Update ``rango/base.html`` to include links to login, logout, register, add a new category, etc. Remember to check if the user is authenticated to control whether you show login/register or logout/add new category.
+	* Update all other existing templates within Rango's repertoire to extend from the ``rango/base.html`` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`. While you're at it, make sure you remove the links from our ``index.html`` template. We don't need them anymore!
 	
+	* Convert the restricted page to use a template. Call the template ``restricted.html``, and ensure that it too extends from our ``base.html`` template.
+	
+	* Add another link to our growing link collection that allows users to navigate back to Rango's homepage from anywhere on the website.
+	
+.. note:: Remember to add ``{% load static %}`` to the top of each template that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them - *you can't make use of modules included in templates you extend from!*
 
 .. _fig-rango-template-inheritance:
 

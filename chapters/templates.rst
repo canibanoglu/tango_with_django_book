@@ -212,12 +212,12 @@ Exercises
 	
 	* Add another link to our growing link collection that allows users to navigate back to Rango's homepage from anywhere on the website.
 	
-.. note:: Remember to add ``{% load static %}`` to the top of each template that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them - *you can't make use of modules included in templates you extend from!*
+.. warning:: Remember to add ``{% load static %}`` to the top of each template that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them - *you can't make use of modules included in templates you extend from!*
 
 .. _fig-rango-template-inheritance:
 
 .. figure:: ../images/rango-template-inheritance.pdf
 	
-	A UML class diagram demonstrating how your templates should inherit from ``base.html``.
+	A class diagram demonstrating how your templates should inherit from ``base.html``.
 	
 

@@ -4,14 +4,15 @@ So far we've created several Django HTML templates for different pages in the ap
 
 While most sites will have lots of repeated structure (i.e. headers, sidebars, footers, etc) repeating the HTML in each template is a not good way to handle this. So instead of doing the same cut and paste hack job, we can minimize the amount of repetition in our code base by employing *template inheritance* provided by Django's Template Language.
 
-The basic approach to using inheritance in templates is as follows:
+The basic approach to using inheritance in templates is as follows.
+
 #. Identify the re-occurring parts of each page that are repeated across your application (i.e. header bar, sidebar, footer, content pane)
 #. In a *base template*, provide the skeleton structure of a standard page along with any common content (i.e. the copyright notice that goes in the footer, the logo and title that appears in the section), and then define a number of *blocks* which are subject to change depending on which page the user is viewing.
-#. Then, create specific templates, which inherit from the base template, and specify the contents of each block.
+#. Create specific templates - all of which inherit from the base template - and specify the contents of each block.
 
 Reoccurring HTML and the Base Template
 --------------------------------------
-Given the templates that we have created so far it should be pretty obvious that we have been repeating a fair bit of HTML code. Below we have abstracted away any page specific details to show the skeleton structure, we have been repeating within each template:
+Given the templates that we have created so far it should be pretty obvious that we have been repeating a fair bit of HTML code. Below we have abstracted away any page specific details to show the skeleton structure that we have been repeating within each template.
 
 .. code-block:: html
 	
@@ -109,7 +110,15 @@ If a template were to inherit from the base template without employing the use o
 
 Hopefully this all makes sense - and for now, we'll be leaving ``body_block`` blank by default. All of our inheriting templates will be making use of ``body_block``. You can place as many blocks in your templates as you so desire. For example, you could create a block for the page title, meaning you can alter the title of each page while still inheriting from the same base template.
 
-Blocks are a really powerful feature of Django's template system to learn more about them check out the ` official Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_.
+Blocks are a really powerful feature of Django's template system to learn more about them check out the `official Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/#id1>`_.
+
+Abstracting Further
+...................
+Now that you have an understanding of Django blocks, let's take the opportunity to abstract our base template a little bit further. Reopen the ``base.html`` template and modify it to look like the following.
+
+.. code_block:: html
+	
+	
 
 Template Inheritance
 --------------------

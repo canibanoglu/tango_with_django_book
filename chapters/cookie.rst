@@ -30,11 +30,9 @@ The passing of information in the form of cookies can open up potential security
 
 .. note:: Because of the potentially sensitive nature of cookies, lawmakers have taken a particularly keen interest in them. In particular, EU lawmakers in 2011 introduced an EU-wide 'cookie law', where all hosted sites within the EU should present a cookie warning message when a user visits the site for the first time. Check out Figure :num:`fig-bbcnews-cookies`, demonstrating such a warning on the BBC News webiste. You can read about `the law here <http://www.ico.org.uk/for_organisations/privacy_and_electronic_communications/the_guide/cookies>`_.
 
-
-
 Sessions and the Stateless Protocol
 -----------------------------------
-All correspondence between web browsers (clients) and servers is achieved through the `HTTP protocol <http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol>`_. As we *very briefly* touched upon in a previous chapter, HTTP is a `stateless protocol <http://en.wikipedia.org/wiki/Stateless_protocol>`_. This therefore means that a client computer running a web browser must establish a new network connection (a TCP connection) to the server each time a resource is requested (HTTP ``GET``) or sent (HTTP ``POST``) [#stateless_http11]_.
+All correspondence between web browsers (clients) and servers is achieved through the `HTTP protocol <http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol>`_. As we *very briefly* touched upon in Chapter :ref:`forms-label`, HTTP is a `stateless protocol <http://en.wikipedia.org/wiki/Stateless_protocol>`_. This therefore means that a client computer running a web browser must establish a new network connection (a TCP connection) to the server each time a resource is requested (HTTP ``GET``) or sent (HTTP ``POST``) [#stateless_http11]_.
 
 Without a persistent connection between client and server, the software on both ends cannot simply rely on connections alone to *hold session state*. For example, the client would need to tell the server each time who is logged on to the web application on a particular computer. This is known as a form of *dialogue* between the client and server, and is the basis of a *session* - a `semi-permanent exchange of information <http://en.wikipedia.org/wiki/Session_(computer_science)>`_. Being a stateless protocol, HTTP makes holding session state pretty challenging (and frustrating) - but there are luckily several techniques we can use to circumnavigate this problem. 
 
@@ -73,7 +71,7 @@ To test out cookies, you can make use of some convenience methods provided by Dj
 
 We'll use two pre-existing views for this simple exercise, ``index()`` and ``register()``. You'll need to make sure that you are logged out of Rango if you've implemented the user authentication functionality. Instead of displaying anything on the pages themselves, we'll be making use of the terminal output from the Django development server to verify whether cookies are working correctly. After we successfully determine that cookies are indeed working, we can remove the code we add to restore the two views to their previous state.
 
-In Rango's ``views.py`` file, locate your ``index()`` view. Add the following line to the view. To ensure the line is executed, make sure you put it as the first line of the view.
+In Rango's ``views.py`` file, locate your ``index()`` view. Add the following line to the view. To ensure the line is executed, make sure you put it as the first line of the view, outside any conditional blocks.
 
 .. code-block:: python
 	
@@ -98,6 +96,8 @@ With these small changes saved, run the Django development server and navigate t
 
 If the message isn't displayed, you'll want to check your browser's security settings. The settings may be preventing the browser from accepting the cookie.
 
+.. note:: You can delete the code you added in this section - we only used it to demonstrate cookies in action.
+
 Client Side Cookies: A Site Counter Example
 -------------------------------------------
 Now we know cookies work let's implement a very simple site visit counter. To achieve this, we're going to be creating two cookies. One to track the number of times the user has visited the Rango website, and the other to track the last time he or she accessed the site. Keeping track of the date and time of the last access will allow us to only increment the site counter once per day, for example.
@@ -108,46 +108,46 @@ The sensible place to assume a user enters the Rango site is at the index page. 
 	
 	def index(request):
 	    context = RequestContext(request)
-	    
+	
 	    category_list = Category.objects.all()
 	    context_dict = {'categories': category_list}
-	    
+	
 	    for category in category_list:
-	        category.url = category.name.replace(' ', '_')
-	    
-	    # NEW CODE
+	        category.url = encode_url(category.name)
+	
+	    page_list = Page.objects.order_by('-views')[:5]
+	    context_dict['pages'] = page_list
+	
+	    #### NEW CODE ####
 	    # Obtain our Response object early so we can add cookie information.
 	    response = render_to_response('rango/index.html', context_dict, context)
-	    
+	
 	    # Get the number of visits to the site.
 	    # We use the COOKIES.get() function to obtain the visits cookie.
 	    # If the cookie exists, the value returned is casted to an integer.
 	    # If the cookie doesn't exist, we default to zero and cast that.
 	    visits = int(request.COOKIES.get('visits', '0'))
-	    
+	
 	    # Does the cookie last_visit exist?
 	    if request.COOKIES.has_key('last_visit'):
 	        # Yes it does! Get the cookie's value.
 	        last_visit = request.COOKIES['last_visit']
-	        
 	        # Cast the value to a Python date/time object.
 	        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
-	        
+	
 	        # If it's been more than a day since the last visit...
 	        if (datetime.now() - last_visit_time).days > 0:
-	            # Reassign the value for the visits cookie to be 1 greater than before.
-	            response.set_cookie('visits' visits+1)
-	            
-	            # Reassign the value of last_visit to the current date/time.
+	            # ...reassign the value of the cookie to +1 of what it was before...
+	            response.set_cookie('visits', visits+1)
+	            # ...and update the last visit cookie, too.
 	            response.set_cookie('last_visit', datetime.now())
 	    else:
-	        # last_visit doesn't exist.
-	        # Create it, setting the value to the current date/time.
+	        # Cookie last_visit doesn't exist, so create it to the current date/time.
 	        response.set_cookie('last_visit', datetime.now())
-	    
-	    # Return the response back to the client, updating any cookies that need changed.
+	
+	    # Return response back to the user, updating any cookies that need changed.
 	    return response
-	    # END NEW CODE
+	    #### END NEW CODE ####
 
 For reading through the code, you will see that a majority of the code deals with checking the current date and time. For this, you'll need to include Python's ``datetime`` module by adding the following import statement at the top of the ``views.py`` file.
 
@@ -168,33 +168,49 @@ In the added code we check to see if the cookie ``last_visit`` exists. If it doe
 
 Now if you visit the Rango homepage, and inspect the developer tools provided by your browser, you should be able to see the cookies ``visits`` and ``last_visit``. Figure :num:`fig-cookie-visits` demonstrates the cookies in action.
 
-Session Based Cookies
----------------------
-In the previous example, we used client side cookies, however a more secure way is to store any such data on the server side, and use the session id cookie/token which is stored on the client side (but is effectively anonymous) as the key to unlock the data.
+Session Data
+------------
+In the previous example, we used client side cookies. However, a more secure way to save session information is to store any such data on the server side. We can then use the session ID cookie which is stored on the client side (but is effectively anonymous) as the key to unlock the data.
 
-To use session based cookies you need to:
+To use session based cookies you need to perform the following steps.
 
-* make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains 'django.contrib.sessions.middleware.SessionMiddleware'. 
-* configure your session backend. By default a database backend is assumed - so you will have to have your database set up and ensure that it is synchronised. See the ``official Django Documentation on Sessions <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`_ for other backend configurations.
+#. Make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains ``django.contrib.sessions.middleware.SessionMiddleware``. 
+#. Configure your session backend. By default a database backend is assumed - so you will have to have your database set up and ensure that it is synchronised. See the `official Django Documentation on Sessions <https://docs.djangoproject.com/en/1.5/topics/http/sessions/>`_ for other backend configurations.
 
-Now if you want to check if the cookie has been stored you can do so with the following code in your view:
+Now if you want to check if the cookie has been stored you can do so by accessing the ``request.session`` object, where ``request`` is the name of your view's required parameter. Check out the modified ``index()`` function below to see how to do this.
 
 .. code-block:: python
 	
-	if request.session.get('last_visit'):
-		# the session has a value for the last visit
-		last_visit_time = request.session.get('last_visit')
-		visits = request.session.get('visits', 0)
-		if (datetime.now() - last_visit_time).days > 0:
-			request.session['visits'] = visits + 1
-		
-	else:
-		# the get returns None, and the session does not have a value for the last visit.
-		request.session['last_visit'] = datetime.now()
-		request.session['visits'] = 1
-		
-		
-TODO(leifos): check this code. Storing cookies on the server side also has the advantage that the type information is not lost - so there is no need to type cast the string to the desired type.
+	def index(request):
+	    context = RequestContext(request)
+	
+	    category_list = Category.objects.all()
+	    context_dict = {'categories': category_list}
+	
+	    for category in category_list:
+	        category.url = encode_url(category.name)
+
+	    page_list = Page.objects.order_by('-views')[:5]
+	    context_dict['pages'] = page_list
+	
+	    #### NEW CODE ####
+	    if request.session.get('last_visit'):
+	        # The session has a value for the last visit
+	        last_visit_time = request.session.get('last_visit')
+	        visits = request.session.get('visits', 0)
+	
+	        if (datetime.now() - last_visit_time).days > 0:
+	            request.session['visits'] = visits + 1
+	    else:
+	        # The get returns None, and the session does not have a value for the last visit.
+	        request.session['last_visit'] = datetime.now()
+	        request.session['visits'] = 1
+	    #### END NEW CODE ####
+	
+	    # Render and return the rendered response back to the user.
+	    return render_to_response('rango/index.html', context_dict, context)
+
+.. note:: An added advantage of storing session information server side is that type information is not lost. There is no need for you to typecast the string to the desired type!
 
 Browser-Length and Persistent Sessions
 --------------------------------------

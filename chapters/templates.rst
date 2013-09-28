@@ -127,19 +127,23 @@ Now that you have an understanding of Django blocks, let's take the opportunity 
 	    </head>
 
 	    <body>
-	        {% block body_block %}This is body_block's default content.{% endblock %}
+	        <div>
+	            {% block body_block %}This is body_block's default content.{% endblock %}
+	        </div>
 	        
 	        <div>
+	            <ul>
 	            {% if user.is_authenticated %}
-	            <a href="/rango/restricted/">Restricted Page</a><br />
-	            <a href="/rango/logout/">Logout</a><br />
-	            <a href="/rango/add_category/">Add a New Category</a><br />
+	                <li><a href="/rango/restricted/">Restricted Page</a></li>
+	                <li><a href="/rango/logout/">Logout</a></li>
+	                <li><a href="/rango/add_category/">Add a New Category</a></li>
 	            {% else %}
-	            <a href="/rango/register/">Register Here</a><br />
-	            <a href="/rango/login/">Login</a><br />
+	                <li><a href="/rango/register/">Register Here</a></li>
+	                <li><a href="/rango/login/">Login</a></li>
 	            {% endif %}
-	        
-	            <a href="/rango/about/">About</a><br />
+	                
+	                <li><a href="/rango/about/">About</a></li>
+	            </ul>
 	        </div>
 	    </body>
 	</html>
@@ -149,48 +153,49 @@ We introduce two new features into the template.
 * The first is a new Django template block, ``title``. This will allow us to specify a custom page title for each page inheriting from our base template. If an inheriting page does not make use of this feature, the title is defaulted to ``Rango - How to Tango with Django!``
 * We also copy the list of links from our current ``index.html`` template and paste them into a HTML ``<div>`` tag underneath our ``body_block`` block. This will ensure the links are present across all pages inheriting from the base template.
 
+Also note that we enclose the ``body_block`` within a HTML ``<div>`` tag - we'll be explaining the meaning of the ``<div>`` tag in Chapter :ref:`css-label`. Our links are also converted to an unordered HTML list through use of the ``<ul>`` and ``<li>`` tags.
+
 Template Inheritance
 --------------------
-Now that we've created a base template with a block, we can now update the templates we have created to inherit from the base template. For example, let's re-factor the ``rango/category.html``.
+Now that we've created a base template with a block, we can now update the templates we have created to inherit from the base template. For example, let's refactor the template ``rango/category.html``.
 
-To do this, first remove all the repeated HTML code leaving only the HTML and Template Tags/Commands specific to the page. Then at the begging of the template add the following line of code:
+To do this, first remove all the repeated HTML code leaving only the HTML and Template Tags/Commands specific to the page. Then at the beginning of the template add the following line of code:
 
 .. code-block:: html
 	
 	{% extends 'rango/base.html' %}
-
-The ``extends`` command takes one parameter, the template which is to be extended/inherited from (i.e. ``rango/base/html``)
 
 .. note:: The parameter you supply to the ``extends`` command should be relative from your project's ``templates`` directory. For example, all templates we use for Rango should extend from ``rango/base.html``, not ``base.html``.
 
-Now to customise the ``body_block`` update the template as follows:
+The ``extends`` command takes one parameter, the template which is to be extended/inherited from (i.e. ``rango/base.html``). We can then modify the ``category.html`` template so it looks like the following complete example.
 
 .. code-block:: html
 	
 	{% extends 'rango/base.html' %}
 	
-	{% block body_block %}
-	<h1>{{ category_name }}</h1>
+	{% block title %}{{ category_name }}{% endblock %}
 	
-	{% if pages %}
+	{% block body_block %}
+	    <h1>{{ category_name }}</h1>
+	    
+	    {% if pages %}
 	    <ul>
 	        {% for page in pages %}
 	        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
 	        {% endfor %}
 	    </ul>
-	{% else %}
-	    <strong>No pages currently in category.</strong>
-	{% endif %}
-	{% endblock}
-	
+	    {% else %}
+	        <strong>No pages currently in category.</strong>
+	    {% endif %}
+	{% endblock %}
 
-Now that we are inheriting from the ``base.html`` template all that exists within the ``category.html`` template is the ``extends`` command, and ``body_block`` block. You don't need a well-formatted HTML document, because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client's browser.
+Now that we inherit from ``base.html``, all that exists within the ``category.html` template is the ``extends`` command, the ``title`` block and the ``body_block`` block. You don't need a well-formatted HTML document because ``base.html`` provides all the groundwork for you. All you're doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client's browser.
 
 .. note:: 
 
- 	Templates are very powerful and you can even create your own template tags. Here we have shown how we can minimize the repetition of structure HTML in our templates.
+ 	Templates are very powerful and you can even create your own template tags. Here we have shown how we can minimise the repetition of structure HTML in our templates.
 
-	However, templates are can also to minimize code in views too. For example, if you had a list of items generated from a database table that you would like to be presented on each page, then it is possible to construct templates that make the call to a specific view to render that part of the part. This saves you from calling the functions to retrieve the data and passing that data to the template for every view that displays that list.
+	However, templates are can also to minimise code within views too. For example, if you had a list of items generated from a database table that you would like to be presented on each page, it is then possible to construct templates that make the call to a specific view to render that part of the part. This saves you from calling the functions to retrieve the data and passing that data to the template for every view that displays that list.
 	
 	To learn more about the extensive functionality offered by Django's template language, check out the official `Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/>`_. 
 

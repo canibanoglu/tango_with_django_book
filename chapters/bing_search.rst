@@ -113,12 +113,12 @@ To start, let's create a new Python module called ``bing_search.py`` within our 
 
 The logic of the function above can be broadly split into six main tasks:
 
-	* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
-	* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
-	* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
-	* This string is then parsed into a Python dictionary object using the ``json`` Python package.
-	* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
-	* The dictionary is returned by the function.
+* First, the function prepares for connecting to Bing by preparing the URL that we'll be requesting.
+* The function then prepares authentication, making use of your Bing API key. Make sure you replace ``<api_key>`` with your actual Bing API key, otherwise you'll be going nowhere!
+* We then connect to the Bing API through the command ``urllib2.urlopen(search_url)``. The results from the server are read and saved as a string.
+* This string is then parsed into a Python dictionary object using the ``json`` Python package.
+* We loop through each of the returned results, populating a ``results`` dictionary. For each result, we take the ``title`` of the page, the ``link`` or URL and a short ``summary`` of each returned result.
+* The dictionary is returned by the function.
 
 Notice that results are passed from Bing's servers as JSON. This is because we explicitly specify to use JSON in our initial request - check out the ``search_url`` variable which we define. If an error occurs when attempting to connect to Bing's servers, the error is printed to the terminal via the ``print`` statement within the ``except`` block.
 
@@ -139,30 +139,41 @@ Let's first create our ``search.html`` template. Add the following HTML markup a
 	
 	{% extends "rango/base.html" %}
 
-	{% block header_block %}
-	    Search
-	{% endblock %}
+	{% load static %}
+
+	{% block title %}Search{% endblock %}
 
 	{% block body_block %}
-	<div class="c-container">
-
-	    <form id="search_form" method="post" action="/rango/search/">
-	        {% csrf_token %}
-	        Search:
-	        <input type="text" size="50" name="query" value="" id="query" />
-	        <input type="submit" name="submit" value="Search" />
-	    </form>
-
-	    {% if result_list %}
-	        {% for result in result_list %}
-	            <p>
-	                <a href="{{ result.link }}">{{ result.title }}</a><br />
-	                <em>{{ result.summary }}</em>
-	            </p>
-	        {% endfor %}
-	    {% endif %}
+	<div class="hero-unit">
+	    <h1>Search with Rango</h1>
+	    <br/>
+	
+	    <div class="container-fluid">
+	        <form class="form-signin span8" id="user_form" method="post" action="/rango/search/">
+	            {% csrf_token %}
+	            <!-- Display the search form elements here -->
+	            <input type="text" size="50" name="query" value="" id="query" />
+	            <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+	            <br />
+	        </form>
+	
+	        {% if result_list %}
+	        <!-- Display search results in an ordered list -->
+	        <div style="clear: both;">
+	            <ol>
+	            {% for result in result_list %}
+	                <li>
+	                    <strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
+	                    <em>{{ result.summary }}</em>
+	                </li>
+	            {% endfor %}
+	            </ol>
+	        </div>
+	        {% endif %}
+	    </div>
 	</div>
 	{% endblock %}
+
 
 The template code above performs two key tasks:
 

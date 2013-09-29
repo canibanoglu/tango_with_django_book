@@ -290,5 +290,68 @@ Here, we attached an event handler to the HTML input element with ``id="suggesti
 
 Exercises
 ---------
-	* To let registered users quickly and easily add a Page to the Category put an "Add" button next to each search result.
+To let registered users quickly and easily add a Page to the Category put an "Add" button next to each search result.
+* Update the ``category.html`` template:
+ - Add a mini-button next to each search result (if the user is authenticated), garnish the button with the title and url data, so that the JQuery can pick it out.
+ - Put a <div> with ``id="page"`` around the pages in the category so that it can be updated when pages are added.
+ - Remove that link to add button, if you like. 
+* Create a view auto_add_page that accepts a parameterised GET request (title, url, catid) and adds it to the category
+* Map an url to the view ``url(r'^auto_add_page/$', views.auto_add_page, name='auto_add_page'),``
+* Add an event handler to the button using JQuery - when added hide the button. The response could also update the pages listed on the category page, too.
+
+
+Hints
+.....
+
+HHTML Template code: 
+
+.. code-block:: html
+	
+	{% if user.is_authenticated %}
+		<button data-catid="{{category.id}}" data-title="{{ result.title }}" data-url="{{ result.link }}" class="rango-add btn btn-mini btn-info" type="button">Add</button>
+	{% endif %}
+
+JQuery code:
+
+.. code-block: javascript
+
+	$('.rango-add').click(function(){
+	    var catid = $(this).attr("data-catid");
+		var url = $(this).attr("data-url");
+        	var title = $(this).attr("data-title");
+        	var me = $(this)
+	    	$.get('/rango/auto_add_page/', {category_id: catid, url: url, title: title}, function(data){
+	                   	$('#pages').html(data);
+	                   	me.hide();
+	               		});
+	    				});
+
+Note here we are assigned the event handler to all the buttons with class ``rango-add``.
+
+View code:
+
+.. code-block:: python
+	
+	@login_required
+	def auto_add_page(request):
+	    context = RequestContext(request)
+	    cat_id = None
+	    url = None
+	    title = None
+	    context_dict = {}
+	    if request.method == 'GET':
+	        cat_id = request.GET['category_id']
+	        url = request.GET['url']
+	        title = request.GET['title']
+	        if cat_id:
+	            category = Category.objects.get(id=int(cat_id))
+	            p = Page.objects.get_or_create(category=category, title=title, url=url)
+
+	            pages = Page.objects.filter(category=category).order_by('-views')
+
+	            # Adds our results list to the template context under name pages.
+	            context_dict['pages'] = pages
+
+	    return render_to_response('rango/page_list.html', context_dict, context)
+	
 

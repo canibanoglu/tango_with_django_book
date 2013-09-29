@@ -24,7 +24,7 @@ To include JQuery within your application, in the static folder create a *js* fo
 	});
 
 
-Then in your *base* template in the <head> element, include:
+Then in your *base* template include:
 
 .. code-block:: html
 	<script src="{% static "/js/jquery.js" %}"></script>
@@ -37,7 +37,6 @@ If you aren't familiar with JQuery it is worth checking out http://jquery.com an
 Add a "Like Button" 
 --------------------
 It would be nice to let user, who are registered, denote that they "like" a particular category. In the following workflow, we will let users "like" categories, but we will not be keeping track of what categories they have "liked", we'll be trusting them not to click the like button multiple times.
-
 
 Workflow
 ........
@@ -66,15 +65,15 @@ To prepare the template we will need to add in the "Like" button with id="like" 
 
 .. code-block:: html
 	
-	<div>
+	<p>
 	
-	<b id="like_count">{{ category.likes }}</b> people like this category.
+	<b id="like_count">{{ category.likes }}</b> people like this category
 	
 	{% if user.is_authenticated %}
 		<button id ="likes" data-catid="{{category.id}}" class="btn btn-mini btn-primary" type="button">Like</button>
-	{% end if %}
+	{% endif %}
 	
-	<div>
+	</p>
 
 
 Update the Category View
@@ -115,14 +114,13 @@ Create a view called, ``like_category`` in ``rango/views.py`` which will examine
 	    cat_id = None
 	    if request.method == 'GET':
 	        cat_id = request.GET['category_id']
-	    else:
-	        cat_id = request.POST['category_id']
 
 	    likes = 0
 	    if cat_id:
 	        category = Category.objects.get(id=int(cat_id))
 	        if category:
-	            category.likes = category.likes + 1
+				likes = category.likes + 1
+	            category.likes =  likes 
 	            category.save()
 		
 	    return HttpResponse(likes)
@@ -205,9 +203,9 @@ In this helper function we use a filter to find all the categories that start wi
 	def get_category_list(max_results=0, starts_with=''):
 		cat_list = []
 		if starts_with:
-		cat_list = Category.objects.filter(name__startswith=starts_with)
+			cat_list = Category.objects.filter(name__startswith=starts_with)
 		else:
-		cat_list = Category.objects.all()
+			cat_list = Category.objects.all()
 		
 		if max_results > 0:
 			if len(cat_list) > max_results:
@@ -246,7 +244,7 @@ Add the following code to ``urlpatterns`` in ``rango/urls.py``:
 
 .. code-block:: python
 
-	url(r'^category_suggest/$', views.suggest_category, name='suggest_category'),
+	url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
 
 
 
@@ -256,14 +254,15 @@ In the base template in the sidebar div add in the following HTML code:
 
 .. code-block:: html
 
-	{% if cat_list %}
+	
 		<ul class="nav nav-list">
 			<li class="nav-header">Find a Category</li>
 			<form>
 			<label></label>
-			<li><input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" /></li>
+			<li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
 			</form>
 		</ul>
+	{% if cat_list %}
 		<div id="cats">
 			{% include 'rango/category_list.html' with cat_list=cat_list %}
 		</div>	
@@ -281,7 +280,7 @@ Add the following JQuery code to the ``js/rango-ajax.js``:
 	$('#suggestion').keyup(function(){
 		var query;
 		query = $(this).val();
-		$.get('/rango/category_suggest/', {suggestion: query}, function(data){
+		$.get('/rango/suggest_category/', {suggestion: query}, function(data){
                  $('#cats').html(data);
 		});
 	});

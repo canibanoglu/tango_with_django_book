@@ -2,13 +2,13 @@
 
 A CSS Crash Course
 ==================
-Cascading Style Sheets (CSS) are used to describe the presentation of a HTML document (i.e. its look and feel).
+In web development, we use *Cascading Style Sheets (CSS)* to describe the presentation of a HTML document (i.e. its look and feel).
 
-Each element within a HTML document can be styled - the CSS describes how elements are to be rendered. This is done by ascribing *values* to the different *properties* associated with an element. For example, the ``font-weight`` property could be set to ``bold`` to make the text appear **bold** within the specified HTML element. We could also set the ``text-align`` property to a value of ``right`` to make text appear within the HTML element on the right-hand side.
+Each element within a HTML document can be *styled*. The CSS for a given HTML element describes how it is to be rendered on screen. This is done by ascribing *values* to the different *properties* associated with an element. For example, the ``font-size`` property could be set to ``24pt`` to make any text contained within the specified HTML element to appear at 24pt. We could also set the ``text-align`` property to a value of ``right`` to make text appear within the HTML element on the right-hand side.
 
-.. note:: There are lots of different CSS properties that you can use in your stylesheets, each providing a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does.
+.. note:: There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does.
 
-The CSS works by following a Select and Apply pattern: for the element specified, apply the styling. Take a look at the following example in Figure :num:`fig-css-render`, we have some HTML which has some ``<h1>`` tags. In the CSS, we have specified that tags of ``h1`` get styled.  We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ shortly. For now though, you can assume the CSS style defined will be applied to our ``<h1>`` tags. The style contains four properties:
+CSS works by following a *Select and Apply pattern*. For a specified element, apply the styling. Take a look at the following example in Figure :num:`fig-css-render`, we have some HTML which has some ``<h1>`` tags. In the CSS code example, we specify that all ``h1`` are styled.  We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ shortly. For now though, you can assume the CSS style defined will be applied to our ``<h1>`` tags. The style contains four properties:
 
 - the first property (``font-size``) sets the size of the font to 16pt;
 - the second property (``font-style``) italicises the contents of all ``<h1>`` tags within the document;
@@ -24,13 +24,11 @@ With all of these properties applied, the resultant page render can be seen in t
 
 	Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.
 
-
-.. note:: Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting `web standards <http://en.wikipedia.org/wiki/Web_standards>`_ and so the pages may be rendered differently.
-
+.. note:: Due to the nature of web development, *what you see isn't necessarily what you'll get*. This is because different browsers have their own way of interpreting `web standards <http://en.wikipedia.org/wiki/Web_standards>`_ and so the pages may be rendered differently. This quirk can unfortunately lead to plenty of frustration.
 
 Including Stylesheets
 ---------------------
-Including stylesheets in your webpages is a relatively straightforward process, and involves including a ``<link>`` tag within your HTML's ``<head>``. Check out the HTML markup sample below for the attributes required.
+Including stylesheets in your webpages is a relatively straightforward process, and involves including a ``<link>`` tag within your HTML's ``<head>``. Check out the minimal HTML markup sample below for the attributes required within a ``<link>`` tag.
 
 .. code-block:: html
 	
@@ -46,7 +44,7 @@ Including stylesheets in your webpages is a relatively straightforward process, 
 	    </body>
 	</html>
 
-Note there are three attributes you should include at minimum:
+As can be seen from above, there are at minimum three attributes which you must supply to the ``<link>`` tag:
 
 - ``rel``, which allows you to specify the relationship between the HTML document and the resource you're linking to (i.e., a stylesheet);
 - ``type``, in which you should specify the `MIME type <http://en.wikipedia.org/wiki/Internet_media_type>`_ for CSS; and
@@ -58,7 +56,11 @@ With this tag added, your stylesheet should in included with your HTML page, and
 
 Basic CSS Selectors
 -------------------
-CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Take the example from Figure :num:`fig-css-render`. The selector ``h1`` matches to any ``<h1>`` tag and is an *element selector*. So any HTML element such as body, h1, h2, h3, p, div, etc can be styled in a similar manner. However, to be more specific two other selectors are commonly used: *id selectors* and  *class selectors*.
+CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Here, we cover three basic forms of CSS selector: *element selectors*, *id selectors* and *class selectors*.
+
+Element Selectors
+-----------------
+Taking the CSS example from Figure :num:`fig-css-render`, we can see that the selector ``h1`` matches to any ``<h1>`` tag. Any selector referencing a tag like this can be called an *element selector*. We can apply element selectors to any HTML element such as ``body``, ``h1``, ``h2``, ``h3``, ``p``, ``div``. These can be all styled in a similar manner. However, using element selectors is pretty crude - styles are applied to *all* instances of a particular tag. We usually want a more fine-grained approach to selecting what elements we style, and this is where *id selectors* and *class selectors* come into play.
 
 ID Selectors
 ............
@@ -83,12 +85,26 @@ The alternative option is to use *class selectors*. This approach is similar to 
 
 	An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the ``.blue`` CSS style to override the red text of the ``h1`` style.
 
-.. warning:: Try to use id selectors sparingly. `Ask yourself: <http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/>`_ **do I absolutely need to apply an identifier to this element in order to target it?** If you need to apply it to more than one element, the answer will always be **no**, in which case you a class selector or element selector.
+.. warning:: Try to use id selectors sparingly. `Ask yourself: <http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/>`_ *do I absolutely need to apply an identifier to this element in order to target it?* If you need to apply it to more than one element, the answer will always be **no**. In cases like this, you should use a class or element selector.
 
+Fonts
+-----
+Due to wide variation of available fonts available, using fonts within webpages has historically been a pitfall when it comes to web development. If one user has a particular font installed on their computer but another user doesn't, this makes selecting fonts to use for your website a difficult task. Fortunately, CSS makes addressing this task easy thanks to the ``font-family`` property.
+
+The value you specify for ``font-family`` can be a list of possible fonts - and the first one your computer or other device can render is the font that is used. Text within the specified HTML element subsequently has the selected font applied. The example CSS shown below applies *Arial* if the font exists. If it doesn't, it looks for *Helvetica*. If that font doesn't exist, any available `sans-serif font <http://en.wikipedia.org/wiki/Sans-serif>`_ is applied.
+
+
+.. code-block:: css
+	
+	h1 {
+	    font-family: 'Arial', 'Helvetica', sans-serif;
+	}
+
+In 1996, Microsoft started the `Core fonts for the Web <http://en.wikipedia.org/wiki/Core_fonts_for_the_Web>`_ initiative, with the aim of guaranteeing a particular set of fonts to be present on all computers. Today however, you can use pretty much any font you like - check out `Google Fonts <http://www.google.com/fonts>`_ for examples of the typesets you can use.
 
 Selecting Colours
 -----------------
-You will have seen already we make use of properties that can change the colour of text and backgrounds. In this tutorial, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
+When styling webpages, you can customise the colours of any element to suit your needs - from text colours to background colours, it can all be customised. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
 
 .. _fig-css-colours:
 
@@ -101,9 +117,15 @@ There are also many different websites which you can visit that can tell you wha
 
 .. note:: If you aren't too clued up on hexadecimal or RGB colouring, check out `this thorough tutorial <http://www.quackit.com/css/css_color_codes.cfm>`_.
 
+.. warning:: As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``. If you have grown up in Great Britain, double check your spelling and be prepared to spell it the *wrong way!* Hah!
 
-.. warning:: As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``.
+- applying colours to your elements is a straightforward process. what property you use depends on the aspect you wish to change!
 
+- for text, use the colour property.
+- backgrounds can be changed using the background property.
+	- can also apply background images to your elements. check out this page.
+- borders of elements 1px solid ???
+	- so width style colour.
 
 The Cascade
 -----------
@@ -116,7 +138,20 @@ It's worth pointing out where the *Cascading* comes into play. You may have noti
 
 	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
 
+Basic Positioning
+-----------------
 
+Relative Positioning
+....................
+
+Absolute Positioning
+....................
+
+Styling Lists
+-------------
+
+Styling Links
+-------------
 
 Additional Reading
 ------------------

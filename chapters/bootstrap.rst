@@ -1,6 +1,6 @@
 Bootstrapping Rango
 ===================
-In this chapter we will be styling Rango using the Bootstrap 2.3.2 toolkit - we wont be going into the details about how it works and we will be assuming you have some familiarity with CSS. If you don't, check out the CSS chapter so that you understand the basics and then check out some Bootstrap tutorials. However, you should be able to go through this section and piece things together.
+In this chapter, we will be styling Rango using the *Twitter Bootstrap 2.3.2* toolkit. We won't go into the details about how Bootstrap works, and we will be assuming you have some familiarity with CSS. If you don't, check out the CSS chapter so that you understand the basics and then check out some Bootstrap tutorials. However, you should be able to go through this section and piece things together.
 
 To get started take a look at the `Bootstrap 2.3.2 website <http://getbootstrap.com/2.3.2/index.html>`_ - it provides you with sample code and examples of the different components and how to style them by added in the appropriate style tags, etc.
 
@@ -8,63 +8,62 @@ On the Bootstrap website they provide a number of `example layouts <http://getbo
 
 To style rango we have identified that the `fluid style <http://getbootstrap.com/2.3.2/examples/fluid.html>`_ more or less meets our needs in terms of the layout of Rango, i.e. it has a menu bar at the top, a side bar (which we will use to show categories) and a main content pane, see: http://getbootstrap.com/2.3.2/examples/fluid.html
 
-Setting up  the Base Template
------------------------------
-Before we can set up the base template to use this style we need to download Bootstrap, JQuery and the Fluid Template.
+Setting up The Base Template
+----------------------------
+Before we can set up the base template to use this style we need to download Bootstrap, *JQuery* and the *Fluid Template.*
 
 Download Bootstrap 
 ..................
-Go to the `Bootstrap 2.3.2 website <http://getbootstrap.com/2.3.2/index.html>`_ and download the toolkit. When you unzip the files you will see that in the directory you have a ``imgs``, ``js`` and ``css`` directory plus associated files. Copy these subdirectories in your static folder, so that you will be able to reference them via ``/static/css/bootstrap.css`` for example.
+Go to the `Bootstrap 2.3.2 website <http://getbootstrap.com/2.3.2/index.html>`_ and download the toolkit. When you unzip the files you will see that in the directory you have a ``imgs``, ``js`` and ``css`` directory plus associated files. Copy the three subdirectories in Rango's ``static`` folder so that you will be able to reference them via the URL ``/static/imgs``, ``/static/js/`` and ``/static/css/``.
 
 Download JQuery
 ...............
-Now go to the `JQuery website <http://jquery.com>'_ and download the latest version of JQuery. Put the ``js`` file in to the ``static/js/`` directory.
+Now go to the `JQuery website <http://jquery.com>`_ and download the latest 2.x version of JQuery. Put the ``js`` file in to the ``static/js/`` directory.
 
 Including CSS/JS in Base Template
 .................................
-If you download or look at the source for http://getbootstrap.com/2.3.2/examples/fluid.html, you'll notice that in the <head> section there is some additional <style> code. Copy the CSS inside these style tags and create a new CSS file in ``static/css/`` called ``boostrap-fluid-adj .css`` i.e:
+If you download or look at the source for http://getbootstrap.com/2.3.2/examples/fluid.html, you'll notice that in the ``<head>`` section there is some additional ``<style>`` code. Copy the CSS inside these style tags and create a new CSS file in ``/static/css/`` called ``boostrap-fluid-adj.css``. Your code should look similar to the example shown below.
 
 .. code-block:: css
 	
-	
 	body {
-  		padding-top: 60px;
-  		padding-bottom: 40px;
-		}
+	padding-top: 60px;
+	padding-bottom: 40px;
+	}
+
 	.sidebar-nav {
-  		padding: 9px 0;
+	padding: 9px 0;
 	}
 
 	@media (max-width: 980px) {
-  	/* Enable use of floated navbar text */
-  	.navbar-text.pull-right {
-    	float: none;
-    	padding-left: 5px;
-    	padding-right: 5px;
-  		}
-		}
+	    /* Enable use of floated navbar text */
+	    .navbar-text.pull-right {
+	    float: none;
+	    padding-left: 5px;
+	    padding-right: 5px;
+	    }
+	}
 
-By adding it to a file we can minimize the code in our template. Now update the <head> section of ``base.html`` as follows:
+By adding it to a file we can minimise the code in our template. Now update the ``<head>`` section of ``base.html`` as follows:
 
 .. code-block:: html
 	
 	<head>
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    	<!-- Bootstrap -->
-    	<link href="{% static 'css/bootstrap-fluid-adj.css'%} " rel="stylesheet">
-    	<link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet" media="screen">
-    	<link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
-		
-    	<title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
-		</head>
- 
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <!-- Bootstrap -->
+	    <link href="{% static 'css/bootstrap-fluid-adj.css'%} " rel="stylesheet">
+	    <link href="{% static 'css/bootstrap.min.css'%} " rel="stylesheet" media="screen">
+	    <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+	    
+	    <title>Rango - {% block title %}How to Tango with Django!{% endblock %}</title>
+	</head>
 
-Note how we are including all these files through by externally linking them in. We will also need to include the js files. Instead of adding them to the <head> section, we will added them in at the bottom of ``base.html`` just before we close the <body> tag:
+Note how we are including all these files through by externally linking them in. We will also need to include the js files. Instead of adding them to the ``<head>`` section, we will added them in at the bottom of ``base.html`` just before we close the ``<body>`` tag, just like in the example below.
 
 .. code-block:: html
 	
-	<script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	    <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+	    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 	</body>
 	</html>
 
@@ -298,6 +297,7 @@ Update the ``login.html`` template as follows:
 
     </div> <!-- /container -->
 	</div>
+	{% endblock %}
 
 We've made the following changes:
 * ``form-signin`` and ``span4`` classes has been added to the form

@@ -3,29 +3,28 @@
 Making Rango Tango! Exercises
 =============================
 
-So far we have been adding in different pieces of functionality to Rango. We've been building up the application in this manner to get you familiar with the Django Framework and to learn about how to construct the various parts of a website that you are likely to do in your own projects. With respect to Rango, however, the application at the moment is not very cohesive. In this chapter we challenge you to improve the application and its user experience by bringing together some of the functionality that we have already implemented along with added some other functionality to further improve the user experience.
+So far we have been adding in different pieces of functionality to Rango. We've been building up the application in this manner to get you familiar with the Django Framework, and to learn about how to construct the various parts of a website that you are likely to make in your own projects. Rango however at the present moment is not very cohesive. In this chapter, we challenge you to improve the application and its user experience by bringing together functionality that we've already implemented alongside some awesome new additions.
 
-To make Rango more coherent and integrated it would be nice to:
+To make Rango more coherent and integrated it would be nice to add the following functionality.
 
-* Integrate the browsing and searching with categories i.e.:
- - Provide categories on every page
- - Provide some way to search through categories (see AJAX chapter)
- - Instead of have a disconnected search page, let users search for pages within a category so that they can then add these pages to the category (see AJAX chapter) 
+* Integrate the browsing and searching within categories, i.e.:
+ - provide categories on every page;
+ - provide some way to search through categories (see Chapter :ref:`ajax-label`); and
+ - instead of have a disconnected search page, let users search for pages within a category so that they can then add these pages to the category (see Chapter :ref:`ajax-label`)
 	
-* Provide services for Registered Users i.e.:
+* Provide services for Registered Users, i.e.:
  - Let users view their profile	
  - Let users edit their profile
  - Let users see the list of users and their profiles.
 		
-* Track the click throughs of Categories and Pages i.e.
+* Track the click throughs of Categories and Pages, i.e.
  - Count the number of times a category is viewed
  - Count the number of times a page is viewed via Rango
- - Collect likes for categories (see AJAX chapter)
+ - Collect likes for categories (see Chapter :ref:`ajax-label`)
 
-Note: we wont be working through all of these right now (as some we will take care of in the AJAX chapter) and some will be left as additional exercises. 
+.. note:: We won't be working through all of these tasks right now. Some will be taken care of in Chapter :ref:`ajax-label`, while some will be left to you to complete as additional exercises.
 
-Now before we start add this additional functionality we will make a todo list to plan our work flow for each task. Breaking tasks down into sub-tasks will greatly simplify
-the implementation and mean that we are attacking each one with a clear plan. In this chapter, we will provide you with the workflow for a number of the above tasks. From what you have learnt so far you should be able to fill in the gaps and implement most of it on your own. In the following chapter, however, we have included the code walk through along with notes on how we have implemented each task.
+Before we start to add this additional functionality we will make a todo list to plan our workflow for each task. Breaking tasks down into sub-tasks will greatly simplify the implementation and mean that we are attacking each one with a clear plan. In this chapter, we will provide you with the workflow for a number of the above tasks. From what you have learnt so far, you should be able to fill in the gaps and implement most of it on your own. The following chapter however includes the code walkthrough, along with notes on how we have implemented each task.
 
 
 Provide categories on every page

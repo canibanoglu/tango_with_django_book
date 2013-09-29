@@ -1,4 +1,5 @@
-	
+.. _ajax-label:
+
 AJAX, Django and JQuery
 =======================
 

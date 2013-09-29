@@ -20,7 +20,7 @@ How To Tango With Django
    chapters/login
    chapters/templates
    chapters/cookie
-   chapters/css
+   chapters/bootstrap
    chapters/bing_search
    chapters/tango
    chapters/tango_too
@@ -28,6 +28,7 @@ How To Tango With Django
    chapters/deploy
    chapters/git
    chapters/css_intro
+   chapters/css
    chapters/javascript
    chapters/test
 

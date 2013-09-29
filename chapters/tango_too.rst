@@ -40,7 +40,7 @@ In the sidebar div add {% include "rango/category_list.html" %} so that the ``ba
 	   {% endblock %}
 		<div id="cats">
 		   {% if cat_list %}
-			<ul class="nav nav-list"><li>Category List</li><ul>	
+			<ul class="nav nav-list"><li>Category List</li></ul>	
 			   {% include 'rango/category_list.html' with cat_list=cat_list %}
 		   {% endif %}
 		</div>	
@@ -77,6 +77,8 @@ Then call this function in each of the views that you want to display the catego
 		
 		return render_to_response('rango/index.html', context_dict, context)
 	
+Note: to add the category list to all the other pages you will need to do some refactoring to pass in all the context variables.
+	
 .. #########################################################################	
 
 Search within a category page 
@@ -96,11 +98,10 @@ Take the search form from ``search.html`` and put it into the ``category.html`` 
 
 .. code-block:: html
 	
-	<form id="search_form" method="post" action="/rango/search/">
-	   {% csrf_token %}
-	   Search:
-	   <input type="text" size="50" name="query" value="" id="query">
-	   <input type="submit" name="submit" value="submit" />
+	<form class="span8 form-search" id="search_form" method="post" action="/rango/category/{{ category_name_url }}/">
+		{% csrf_token %}
+        <input type="text" class="input-long search-query"  name="query" value="" id="query" />
+        <button type="submit" class="btn btn-success" name="submit" value="Search">Search</button>
 	</form>
 
 
@@ -110,12 +111,18 @@ Also include a div to house the results:
 	
 	<div>
 	{% if result_list %}
-	   {% for result in result_list %}
-		<p>
-		<a href="{{result.link}}">{{result.title}} </a> <br/>
-		{{result.summary}}
-		</p>
-	   {% endfor %}
+    			<br />
+	<!-- Display search results in an ordered list -->
+	<div style="clear: both;">
+		<ol>
+		{% for result in result_list %}
+			<li>
+				<strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
+				<p>{{ result.summary }}</p>
+			</li>
+		{% endfor %}
+		</ol>
+	</div>
 	{% endif %}
 	</div>
 
@@ -165,14 +172,14 @@ Create a new template called, ``profile.html``. In this template add the followi
 
 .. code-block:: html
 	
-	{% block content %}
-	   
+	{% block body_block %}
+	   <div class="hero-unit">
 	   <h1> Profile <h1> <br/>
 	   <h2>{{user.username}}</h2>
-
-	   <a href="{{userprofile.website}}">{{userprofile.website}}</a>
-	   <img src="{% media '{{userprofile.picture}}' %}  />
-
+	   <p>Email: {{user.email}}</p>
+	   <p>Website: <a href="{{userprofile.website}}">{{userprofile.website}}</a> </p>
+	   <img src="{{userprofile.picture}}"  />
+	   </div>
 	{% endblock %}
 
 
@@ -182,17 +189,22 @@ Create a view called, ``profile``, and add the following code:
 
 .. code-block:: python
 
+	from django.contrib.auth.models import User
+
 	@login_required
 	def profile(request):
 		context = RequestContext(request)
 		cat_list = get_category_list()
+		context_dict = {'cat_list':cat_list}
 		u = User.objects.get(username=request.user)
 		try:
 			up = UserProfile.objects.get(user=u)
 		except:
 			up = None
-	
-		return render_to_response('rango/profile.html', {'user':u, 'userprofile': up, 'cat_list': cat_list }, context)
+		
+		context_dict['user'] = u
+		context_dict['userprofile'] = up
+		return render_to_response('rango/profile.html', context_dict, context)
 
 Mapping Profile URL/View
 ...................
@@ -227,6 +239,8 @@ Create a new view called ``track_url`` in ``rango/views.py`` which takes a param
 
 .. code-block:: python	
 
+	from django.shortcuts import redirect
+
 	def track_url(request):
 		context = RequestContext(request)
 		page_id = None
@@ -244,14 +258,15 @@ Create a new view called ``track_url`` in ``rango/views.py`` which takes a param
 					
 		return redirect(url)
 	
-	
+Note that you have to import the Django Shortcut to redirect the user to the page that they clicked.	
+
 Mapping URL
 ...........
 In ``rango/urls.py`` add the following code to ``urlpatterns``:
 
 .. code-block:: python
 	
-	url(r'^rango/goto/$', views.track_url, name='track_url'),
+	url(r'^goto/$', views.track_url, name='track_url'),
 
 
 Updating the Category Template
@@ -263,11 +278,24 @@ Update the ``category.html`` so that it uses ``rango/goto/?page_id=XXX`` instead
 	{% if pages %}
 		<ul>
 		{% for page in pages %}
-			<li><b> {{page.views}}</b> 
-			<a href="/rango/goto/?page_id={{page.id}}">{{page.title}}</a></li>
+			<li>
+			<a href="/rango/goto/?page_id={{page.id}}">{{page.title}}</a>
+			            {% if page.views > 1 %}
+			                - ({{ page.views }} views)
+			            {% elif  page.views == 1 %}
+			                - ({{ page.views }} view)
+			            {% endif %}
+			</li>
 		{% endfor %}
 		</ul>
 	{% else %}
 		<p>No pages in category.</p>
 	{% endif %}
+
+Here you can see that in the template we have added some control statements to display ``view`` or ``views`` or nothing depending on the number of ``page.views``.
+
+
+Updating Category View
+......................
+Since we are tracking the number of click throughs you can now update the ``category`` so that you order the pages by the number of views. Also, click on a number of pages, and check out the Top Five Pages on the index page. 
 

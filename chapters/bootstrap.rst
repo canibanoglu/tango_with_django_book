@@ -170,7 +170,8 @@ Now that we have the ``base.html`` all set up and ready to go, we can do a reall
 
 .. _fig-about-page-before:
 
-.. figure:: ../images/ch4-about.png
+.. figure:: ../images/ch4-rango-about.png
+	:scale: 80%
 	:figclass: align-center
 
 	A screenshot of the About page without style.
@@ -179,17 +180,19 @@ Now that we have the ``base.html`` all set up and ready to go, we can do a reall
 .. _fig-about-page-after:
 
 .. figure:: ../images/ch11-bootstrap-about.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the About page with Bootstrap Styling applied.
 
 
-With all pages fitted with hero unit ``<div>``s Rango you should be looking pretty good. However, you will notice that some of the page still look pretty ugly, especially the pages with forms.
+With all pages fitted with hero unit ``<div>``s Rango you should be looking pretty good. However, you will notice that some of the page still look pretty ugly, especially the pages with forms (see the figure below). Later in this chapter we will update theses forms.
 
 
-.. _fig-about-page-after:
+.. _fig-register-initial:
 
 .. figure:: ../images/ch11-bootstrap-register-initial.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the Registration page with Bootstrap Styling applied but not customised.
@@ -199,15 +202,74 @@ Also you'll probably have noticed the sidebar is empty. In the next chapter we w
 
 Index Page
 ..........
+Since we have just encapsulated the content into a hero unit ``<div>`` we haven't really capitalise on the classes and styling that Bootstrap gives us. So here we have taken the columns from the fluid page and used them to house the top categories and top pages. Since the original page has three columns, we have taken two and made them slightly better by adjust the class so that the span is 6 for each instead of 4, so we can update the index.html template to be:
 
-AF94717Bd19GPOryktdcDKDbiviTZUOfKnY6G1vLyvE
+.. code-block:: html
+
+	{% block body_block %}
+	<div class="hero-unit">
+	    <h1>Ready to Rango</h1>
+	    <p>Find, Add, Share and Rango useful links and resources.</p>
+	</div>
+
+	<div class="row-fluid">
+	    <div class="span6">
+	        <h2>Top Five Categories</h2>
+	        {% if categories %}
+	        <ul>
+	            {% for category in categories %}
+	            <li><a href="/rango/category/{{ category.url }}">{{ category.name }}</a></li>
+	            {% endfor %}
+	        </ul>
+	        {% else %}
+	        <strong>No categories at present.</strong>
+	        {% endif %}
+
+	    </div>
+	    <!--/span-->
+	    <div class="span6">
+	        <h2>Top Five Pages</h2>
+	        {% if pages %}
+	        <ul>
+	            {% for page in pages %}
+	            <li><a href="{{ page.url}}">{{ page.title }}</a> - {{ page.category}} ({{ page.views }} view(s))</li>
+	            {% endfor %}
+	        </ul>
+	        {% else %}
+	        <strong>No pages at present.</strong>
+	        {% endif %}
+
+	    </div>
+	    <!--/span-->
+	</div><!--/row-->
+
+
+	{% endblock %}
+
+The page should look a lot better now.
+
+.. _fig-index-page-before:
+
+.. figure:: ../images/ch11-bootstrap-index-initial.png
+	:scale: 70%
+	:figclass: align-center
+
+	A screenshot of the Index page with a Hero Unit.
+
+
+.. _fig-index-page-after:
+
+.. figure:: ../images/ch11-bootstrap-index-rows.png
+	:scale: 70%
+	:figclass: align-center
+
+	A screenshot of the Index page with customised Bootstrap Styling.
+
 
 Login Page
-..........
-
-Customize the form
-
-http://getbootstrap.com/2.3.2/examples/signin.html
+----------
+Now let's turn our attention to the login page. On the Bootstrap website you can see they have already made a `nice login form <http://getbootstrap.com/2.3.2/examples/signin.html>`_, see http://getbootstrap.com/2.3.2/examples/signin.html . If you take a look at the source, you'll notice that there are a number of classes that we need to include to pimp out basic log in form.
+Update the ``login.html`` template as follows:
 
 
 .. code-block:: html
@@ -234,29 +296,143 @@ http://getbootstrap.com/2.3.2/examples/signin.html
 		<button class="btn btn-primary" type="submit">Sign in</button>
 	</form>
 
-
     </div> <!-- /container -->
-
 	</div>
+
+We've made the following changes:
+* ``form-signin`` and ``span4`` classes has been added to the form
+* ``form-sigin-heading`` class  as been put in the <h2> tag to head up the form.
+* the input elements have had ``input-block-level`` classes added which control their width, along with placeholder text.
+* then the input element has been changed for a button element.
+
+In the button, we have set the class to ``btn`` and ``btn-primary``. If you check out the `Bootstrap toolkit page on Base CSS <http://getbootstrap.com/2.3.2/base-css.html>`_ you can see there are lots of different colours that can be assigned to buttons, see http://getbootstrap.com/2.3.2/base-css.html#buttons .
+
+.. _fig-register-page-after:
+
+.. figure:: ../images/ch11-bootstrap-login-custom.png
+	:scale: 70%
+	:figclass: align-center
+
+	A screenshot of the login page with customised Bootstrap Styling.
 
 
 
 Other Form based Templates
 ...........................
-To add_category.html and add_page.html apply the following updates:
+You can apply similar changes to ``add_category.html`` and ``add_page.html`` templates. For the ``add_category.html`` template, we can set it up as follows:
 
-* Contain the form 
-* Add btn and btn-primary class to input
-* add span6 class to form
-* add breaks before form, after the field text tag, and before the input element to space out the elements.
+.. code-block:: html
+
+	{% block body_block %}
+	<div class="hero-unit">
+	    <h1>Add a Category</h1>
+	    <br/>
+	    <div class="container">
+	        <form class="span6" id="category_form" method="post" action="/rango/add_category/">
+	            {% csrf_token %}
+	            {% for hidden in form.hidden_fields %}
+	            {{ hidden }}
+	            {% endfor %}
+
+	            {% for field in form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text}}<br/>
+	            {{ field }}
+	            {% endfor %}
+
+	            <br/>
+	            <input class="btn btn-primary" type="submit" name="submit" value="Create Category"/>
+	        </form>
+	    </div>
+	</div>
+	{% endblock %}
+
+And similarly for the ``add_page.html`` template (not shown).
 
 
 Register Template
-.................
+-----------------
+The ``register.html`` template requires a bit more work. Currently, the template uses Django helper methods to convert the UserForm and ``UserProfileForm`` into html. However, we want a bit more control over the elements and how they are presented. This will require updating the ``UserForm`` and ``UserProfileForm`` as well as the ``register.html`` template.
+
+Update the forms as follows:
+
+.. code-block:: python
+
+	class UserForm(forms.ModelForm):
+	    username = forms.CharField(help_text="Please enter a username.")
+	    email = forms.CharField(help_text="Please enter your email.")
+	    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter a password.")
+
+	    class Meta:
+	        model = User
+	        fields = ['username', 'email', 'password']
+
+	class UserProfileForm(forms.ModelForm):
+
+	    website = forms.URLField(help_text="Please enter your website.", required=False)
+	    picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+
+	    class Meta:
+	        model = UserProfile
+	        fields = ['website', 'picture']
+
+Update the ``register.html`` template as follows:
+
+.. code-block:: html
+
+	
+	{% block body_block %}
+	<div class="hero-unit">
+	    <h1>Register with Rango</h1>
+	    <br/>
+
+	    <div class="container">
+	        {% if registered %}
+	        <p> Thank you for registering.
+
+	        <p><a href="/rango/login/">Login</a> when you are ready to rango.</p>
+	        {% else %}
+
+	        <form class="form-signin span8" id="user_form" method="post" action="/rango/register/"
+	              enctype="multipart/form-data">
+	            {% csrf_token %}
+	            <h2 class="form-signin-heading">Sign up Here</h2>
+	            <!-- Display each form here -->
+
+	            {% for field in user_form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text}}<br/>
+	            {{ field }}<br/>
+	            {% endfor %}
 
 
+	            {% for field in profile_form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text}}<br/>
+	            {{ field }}<br/>
+	            {% endfor %}
+
+	            <br/>
+	            <!-- Provide a button to click to submit the form. -->
+	            <input class="btn btn-primary" type="submit" name="submit" value="Register"/>
+	        </form>
+	        {% endif %}
+	    </div>
+	</div>
+	{% endblock %}
 
 
+You're registration form should be looking a lot better now and something like the figure below.
+
+Now that Rango is starting to look better we can go back and add in the extra functionality that will really pull the application together.
+
+.. _fig-register-page-custom:
+
+.. figure:: ../images/ch11-bootstrap-register-custom.png
+	:scale: 70%
+	:figclass: align-center
+
+	A screenshot of the Registration page with customised Bootstrap Styling.
 
 
 

@@ -171,6 +171,7 @@ Now that we have the ``base.html`` all set up and ready to go, we can do a reall
 .. _fig-about-page-before:
 
 .. figure:: ../images/ch4-rango-about.png
+	:scale: 80%
 	:figclass: align-center
 
 	A screenshot of the About page without style.
@@ -179,6 +180,7 @@ Now that we have the ``base.html`` all set up and ready to go, we can do a reall
 .. _fig-about-page-after:
 
 .. figure:: ../images/ch11-bootstrap-about.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the About page with Bootstrap Styling applied.
@@ -190,6 +192,7 @@ With all pages fitted with hero unit ``<div>``s Rango you should be looking pret
 .. _fig-register-initial:
 
 .. figure:: ../images/ch11-bootstrap-register-initial.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the Registration page with Bootstrap Styling applied but not customised.
@@ -248,6 +251,7 @@ The page should look a lot better now.
 .. _fig-index-page-before:
 
 .. figure:: ../images/ch11-bootstrap-index-initial.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the Index page with a Hero Unit.
@@ -256,6 +260,7 @@ The page should look a lot better now.
 .. _fig-index-page-after:
 
 .. figure:: ../images/ch11-bootstrap-index-rows.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the Index page with customised Bootstrap Styling.
@@ -304,7 +309,8 @@ In the button, we have set the class to ``btn`` and ``btn-primary``. If you chec
 
 .. _fig-register-page-after:
 
-.. figure:: ../images/ch11-bootstrap-login.png
+.. figure:: ../images/ch11-bootstrap-login-custom.png
+	:scale: 70%
 	:figclass: align-center
 
 	A screenshot of the login page with customised Bootstrap Styling.
@@ -348,7 +354,85 @@ Register Template
 -----------------
 The ``register.html`` template requires a bit more work. Currently, the template uses Django helper methods to convert the UserForm and ``UserProfileForm`` into html. However, we want a bit more control over the elements and how they are presented. This will require updating the ``UserForm`` and ``UserProfileForm`` as well as the ``register.html`` template.
 
+Update the forms as follows:
 
+.. code-block:: python
+
+	class UserForm(forms.ModelForm):
+	    username = forms.CharField(help_text="Please enter a username.")
+	    email = forms.CharField(help_text="Please enter your email.")
+	    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter a password.")
+
+	    class Meta:
+	        model = User
+	        fields = ['username', 'email', 'password']
+
+	class UserProfileForm(forms.ModelForm):
+
+	    website = forms.URLField(help_text="Please enter your website.", required=False)
+	    picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+
+	    class Meta:
+	        model = UserProfile
+	        fields = ['website', 'picture']
+
+Update the ``register.html`` template as follows:
+
+.. code-block:: html
+
+	
+	{% block body_block %}
+	<div class="hero-unit">
+	    <h1>Register with Rango</h1>
+	    <br/>
+
+	    <div class="container">
+	        {% if registered %}
+	        <p> Thank you for registering.
+
+	        <p><a href="/rango/login/">Login</a> when you are ready to rango.</p>
+	        {% else %}
+
+	        <form class="form-signin span8" id="user_form" method="post" action="/rango/register/"
+	              enctype="multipart/form-data">
+	            {% csrf_token %}
+	            <h2 class="form-signin-heading">Sign up Here</h2>
+	            <!-- Display each form here -->
+
+	            {% for field in user_form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text}}<br/>
+	            {{ field }}<br/>
+	            {% endfor %}
+
+
+	            {% for field in profile_form.visible_fields %}
+	            {{ field.errors }}
+	            {{ field.help_text}}<br/>
+	            {{ field }}<br/>
+	            {% endfor %}
+
+	            <br/>
+	            <!-- Provide a button to click to submit the form. -->
+	            <input class="btn btn-primary" type="submit" name="submit" value="Register"/>
+	        </form>
+	        {% endif %}
+	    </div>
+	</div>
+	{% endblock %}
+
+
+You're registration form should be looking a lot better now and something like the figure below.
+
+Now that Rango is starting to look better we can go back and add in the extra functionality that will really pull the application together.
+
+.. _fig-register-page-custom:
+
+.. figure:: ../images/ch11-bootstrap-register-custom.png
+	:scale: 70%
+	:figclass: align-center
+
+	A screenshot of the Registration page with customised Bootstrap Styling.
 
 
 

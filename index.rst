@@ -20,7 +20,7 @@ How To Tango With Django
    chapters/login
    chapters/templates
    chapters/cookie
-   chapters/boostrap
+   chapters/bootstrap
    chapters/bing_search
    chapters/tango
    chapters/tango_too

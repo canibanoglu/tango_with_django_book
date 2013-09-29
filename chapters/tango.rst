@@ -58,7 +58,7 @@ Another useful feature to add is a profile page, where users can view details of
 
 * First, create a template called ``profile.html``. In this template, add in the fields associated with the user profile and the user (i.e. username, email, website and picture).
 * Create a view called ``profile()``. This view will obtain the data required to render the user profile template.
-* Map the URL ``rango/profile/`` to your new ``profile()`` view.
+* Map the URL ``/rango/profile/`` to your new ``profile()`` view.
 * In the base template add a link called *Profile* into the menu bar, preferably on the right-hand side with other user-related links. This should only be available to users who are logged in (i.e. ``{% if user.is_authenticated %}``).
 	
 Track Page Click Throughs
@@ -66,11 +66,11 @@ Track Page Click Throughs
 Currently, Rango provides a direct link to external pages. This is not very good if you want to track the number of times each page is clicked and viewed. To count the number of times a page is viewed via Rango you will need to perform the following steps.
 
 * Create a new view called ``track_url()``, and map it to URL ``/rango/goto/``.
-* The ``track_url()`` view will examine the HTTP ``GET`` request parameters and pull out the ``page_id``. The HTTP ``GET`` requests will look something like ``rango/goto/?page_id=1``.
+* The ``track_url()`` view will examine the HTTP ``GET`` request parameters and pull out the ``page_id``. The HTTP ``GET`` requests will look something like ``/rango/goto/?page_id=1``.
  - Your view should then be able to find the relevant ``Page`` model for the selected page, and add 1 to the associated ``views`` field.
  - The view will then redirect the user to the specified URL using Django's ``redirect`` method.
  - In the scenario where no parameters are in the HTTP ``GET`` request for ``page_id``, or the parameters do not return a ``Page`` object, redirect the user to Rango's homepage.
-* Update the ``category.html`` so that it uses ``rango/goto/?page_id=XXX`` instead of using the direct URL.
+* Update the ``category.html`` so that it uses ``/rango/goto/?page_id=XXX`` instead of using the direct URL.
 
 Hint
 ....

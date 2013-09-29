@@ -163,3 +163,9 @@ CSS
 			* Update the "like" functionality so that the application keeps track of what each user likes. i.e. you will have to add in another model to record whether the user likes a category.
 
 
+			 	<div id="cats">
+		   		{% if cat_list %}
+					<ul class="nav nav-list"><li>Category List</li></ul>
+			    	{% include 'rango/category_list.html' with cat_list=cat_list %}
+		   		{% endif %}
+				</div>

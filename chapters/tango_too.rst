@@ -294,3 +294,8 @@ Update the ``category.html`` so that it uses ``rango/goto/?page_id=XXX`` instead
 
 Here you can see that in the template we have added some control statements to display ``view`` or ``views`` or nothing depending on the number of ``page.views``.
 
+
+Updating Category View
+......................
+Since we are tracking the number of click throughs you can now update the ``category`` so that you order the pages by the number of views. Also, click on a number of pages, and check out the Top Five Pages on the index page. 
+

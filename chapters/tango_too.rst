@@ -15,69 +15,66 @@ Creating a Category List Template
 .................................
 Create a ``category_list.html`` template so that it looks like the code below:
 
-
 .. code-block:: html
 	
 	<ul class="nav nav-list">
-	   {% if cat_list %}
-		{% for cat in cat_list %}
-		  <li><a href="/rango/category/{{ cat.url }}">{{ cat.name }}</a></li>
-		{% endfor %}
-	   {% else %}
-		<li>No categories at present.</li>
+	    {% if cat_list %}
+	        {% for cat in cat_list %}
+	            <li><a href="/rango/category/{{ cat.url }}">{{ cat.name }}</a></li>
+	        {% endfor %}
+	    {% else %}
+	        <li>No categories at present.</li>
 	   {% endif %}
 	</ul>
 
-
 Updating the Base Template
 ..........................
-In the sidebar div add {% include "rango/category_list.html" %} so that the ``base.html`` contains:
+In the sidebar ``<div>``, add ``{% include "rango/category_list.html" %}`` so that the ``base.html`` contains:
 
 .. code-block:: html
 	
 	<div class="well sidebar-nav">
 	   {% block sidebar %}
 	   {% endblock %}
-		<div id="cats">
-		   {% if cat_list %}
-			<ul class="nav nav-list"><li>Category List</li></ul>	
-			   {% include 'rango/category_list.html' with cat_list=cat_list %}
-		   {% endif %}
-		</div>	
-	</div><!--/.well -->
-
+	   <div id="cats">
+	       {% if cat_list %}
+	           <ul class="nav nav-list"><li>Category List</li></ul>
+	           {% include 'rango/category_list.html' with cat_list=cat_list %}
+	       {% endif %}
+	    </div>
+	</div>
 
 Creating Get Category List Function
 ...................................
-In ``rango/views.py``, create a function called *get_category_list* that returns the list of categories.
+In ``rango/views.py``, create a function called ``get_category_list()`` that returns the list of categories.
 
 .. code-block:: python
 	
 	def get_category_list():
-		cat_list = []
-		cat_list = Category.objects.all()
-		for cat in cat_list:
-			cat.url = encode_url(cat.name)
-			
-		return cat_list
+	    cat_list = Category.objects.all()
+	    
+	    for cat in cat_list:
+	        cat.url = encode_url(cat.name)
+	    
+	    return cat_list
 
 Updating Views
 ..............
-Then call this function in each of the views that you want to display the category list in the sidebar, and pass the list into the context dictionary. For example, to have the categories showing on the index page, update the index view as follows:
+Then call this function in each of the views that you want to display the category list in the sidebar, and pass the list into the context dictionary. For example, to have the categories showing on the index page, alter the ``index``() view as follows:
 	
 .. code-block:: python
 	
 	def index(request): 
-		context = RequestContext(request)
-		cat_list = get_category_list()
-		
-		context_dict['cat_list'] = cat_list
-		
-		....
-		
-		return render_to_response('rango/index.html', context_dict, context)
+	    context = RequestContext(request)
+	    cat_list = get_category_list()
+	    
+	    context_dict['cat_list'] = cat_list
+	    
+	    ....
+	    
+	    return render_to_response('rango/index.html', context_dict, context)
 	
-Note: to add the category list to all the other pages you will need to do some refactoring to pass in all the context variables.
+Note: to add the category list to all the other pages, you will need to do some refactoring to pass in all the context variables.
 	
 .. #########################################################################	
 
@@ -89,8 +86,7 @@ First we will need to remove the global search functionality and only let users 
 
 Decommissioning Generic Search
 ..............................
-
-Remove the generic *search* link from the menu bar by editing the ``base.html`` template, you can also remove the URL mapping in ``rango/urls.py``.
+Remove the generic *Search* link from the menu bar by editing the ``base.html`` template. You can also remove or comment out the URL mapping in ``rango/urls.py``.
 
 Creating Search Form Template
 .............................

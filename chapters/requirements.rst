@@ -92,8 +92,6 @@ To list the files that are in a directory you can issue the command `ls`. And to
 
 The output also contains information on the permissions associated to the directory, who created it (leif), the group (staff), the size, date/time and name. 
 
-#TODO(leifos): add link that describes this in more detail.
-
 Below we have provided a summary of some of the other commands that you will find useful. One last thing that you will find useful, is that sometimes it is helpful to be able to edit files within your console. A simple CLI editor is called pico or nano (depending on the operating system). It is easy to use and can be picked up within minutes (unlike vi, for instance).
 
 

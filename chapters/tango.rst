@@ -82,4 +82,4 @@ If you're unsure of how to retrieve the ``page_id`` *querystring* from the HTTP 
 	    if 'page_id' in request.GET:
 	        page_id = request.GET['page_id']
 
-First, always check the request method is of type ``GET``. ``request.get`` exposes a dictionary which contains values passed as part of the request. If ``page_id`` exists within the dictionary, you can easily pull the required value out with ``request.GET['page_id']``.
+Always check the request method is of type ``GET`` first, then you can access the dictionary ``request.GET`` which contains values passed as part of the request. If ``page_id`` exists within the dictionary, you can pull the required value out with ``request.GET['page_id']``.

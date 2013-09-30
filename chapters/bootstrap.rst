@@ -424,6 +424,8 @@ Update the ``register.html`` template as follows:
 
 You're registration form should be looking a lot better now and something like the figure below.
 
+Bootsrapped
+-----------
 Now that Rango is starting to look better we can go back and add in the extra functionality that will really pull the application together.
 
 .. _fig-register-page-custom:

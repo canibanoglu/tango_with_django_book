@@ -3,31 +3,26 @@
 
 A Git Crash Course
 ------------------
-We strongly recommend that you spend some time familiarising yourself with a version control system if you have not already done so. For your benefit, this section provides you with a crash course in how to use `Git <http://en.wikipedia.org/wiki/Git_(software)>`_, one of many version control systems available today. Originally developed by `Linus Torvalds <http://en.wikipedia.org/wiki/Linus_Torvalds>`_, Git is one of the most popular version control systems available today. Many believe that this is due to Linus' influence over the UNIX/Linux community. Have a look `here <http://stackoverflow.com/questions/740053/why-should-i-use-git-instead-of-svn>`_ and `here <http://programmers.stackexchange.com/questions/96933/why-did-git-get-so-much-hype-while-others-dont>`_ for more information on Git, and the benefits it possesses over version control systems.
+We strongly recommend that you spend some time familiarising yourself with a version control system. For your benefit, this section provides you with a crash course in how to use `Git <http://en.wikipedia.org/wiki/Git_(software)>`_, one of many version control systems available today. Originally developed by `Linus Torvalds <http://en.wikipedia.org/wiki/Linus_Torvalds>`_, Git is one of the most popular version control systems available today. 
 
 This tutorial demonstrates at a high level how Git works, explains the basic commands that you can use, and provides an explanation of Git's workflow.
-
-.. note:: This section does what its title says: it's a *crash course*, and is by no means definitive. There are many more advanced aspects of Git that we do not cover here, such as branching and merging. There are many fantastic tutorials available online if you are interested in taking your super-awesome version control skills a step further. For further reading, you could start by looking up `this <http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/>`_, `this <http://rogerdudler.github.io/git-guide/>`_ and `this <http://pcottle.github.io/learnGitBranching/>`_.
-
 
 Why Use Version Control?
 ************************
 As your software engineering skills develop, you will find that you are able to plan and implement ever more complex solutions to ever more complex problems. As a rule of thumb, the larger the problem specification, the more code you have to write. The more code you write, the greater the emphasis you should put on software engineering practices. Such practices include the use of design patterns and the DRY (don't repeat yourself) principle.
 
-With your projects potentially spanning many individual source code files, you may make changes you sometimes regret. It's a normal thing to do: you are a human being, and human beings make mistakes! Stack Overflow user `Si. <http://stackoverflow.com/users/44540/si>`_ provides a `great argument <http://stackoverflow.com/a/1408464>`_ for using version control in your projects.
-
-Consider the points that `Si. <http://stackoverflow.com/users/44540/si>`_ raises. When developing software, have you ever encountered one or more of the following situations that could leave you pulling out your hair?
+Most projects have many files and many people working on those files. This is a recipe for chaos. Have you ever encountered one or more of the following situations:
 
 * Made a change to code, realised it was a mistake and wanted to go back?
 * Lost code (through a faulty drive), or had a backup that was too old?
 * Had to maintain multiple versions of a product (perhaps for different organisations)?
 * Wanted to see the difference between two (or more) versions of your codebase?
-* Wanted to prove that a particular change broke of fixed a piece of code?
+* Wanted to show that a particular change broke of fixed a piece of code?
 * Wanted to submit a change (patch) to someone else's code?
 * Wanted to see how much work is being done (where it was done, when it was done, or who did it)?
 * Wanted to experiment with a new feature without interfering without working code?
 
-Using a version control system makes your life easier in *all* of the above cases. The learning curve for how to use the version control system may be steep in the first instance. However, you will find after the initial pain of learning all the required commands, such an approach is actually incredibly useful. And it could just save you from disaster.
+Using a version control system makes your life easier in *all* of the above cases. While using version control systems at the beginning may seem like a hassle it will pay off later - so get into the habit now.
 
 Git on Windows
 **************
@@ -263,6 +258,8 @@ Once that is complete, create a new Git repository on Github for your project. T
 
 Once you have completed these basic steps, you can then go back and edit the file some more. Add, commit and push - and then try to revert to the initial version to see if it all works as expected.
 
-If you're feeling particularly keen, have a read about `Git branching <http://stackoverflow.com/questions/2100829/when-should-you-branch>`_. Branching is an incredibly useful version control feature - and although quite advanced, branching can make your life easier in the long run. Have a look at the `official Git website <http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging>`_ for some information, or try `this awesome tutorial <http://pcottle.github.io/learnGitBranching/>`_!
 
-Upon completion of these exercises, all that is left for us to discuss is the environment you just setup. While all may be good just now, what if you have another Python application that requires a different version to run? This is where the concept of `virtual environments <http://simononsoftware.com/virtualenv-tutorial/>`_ comes into play. Virtual environments allow multiple installations of Python and their relevant packages to exist in harmony, without disrupting one another. This is the generally accepted approach to configuring a Python setup nowadays. We don't go into much detail about them in this chapter because of their complexity, but you will be using a virtual environment when it comes to deploying your application. For now though, `check out this article <http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/>`_ to read up on what they are, and how they can benefit you.
+Upon completion of these exercises, all that is left for us to discuss is the environment you just setup. While all may be good just now, what if you have another Python application that requires a different version to run? This is where the concept of `virtual environments <http://simononsoftware.com/virtualenv-tutorial/>`_ comes into play. Virtual environments allow multiple installations of Python and their relevant packages to exist in harmony, without disrupting one another. This is the generally accepted approach to configuring a Python setup nowadays. We don't go into much detail about them in this chapter now but you will be using a virtual environment when it comes to deploying your application. For now though, `check out this article <http://dabapps.com/blog/introduction-to-pip-and-virtualenv-python/>`_ to read up on what they are, and how they can benefit you.
+
+.. note:: There are many more advanced aspects of Git that we have not covered here, such as branching and merging. There are many fantastic tutorials available online if you are interested in taking your super-awesome version control skills a step further. For more details about such features take a look at this `tutorial on getting started with Git <http://veerasundar.com/blog/2011/06/git-tutorial-getting-started/>`_, the `Git Guide <http://rogerdudler.github.io/git-guide/>`_ or `Learning about Git Branching <http://pcottle.github.io/learnGitBranching/>`_.
+

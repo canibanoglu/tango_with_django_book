@@ -154,8 +154,8 @@ In the example above, we use multiple colours to specify a different colour for 
 
 Our example applies any element with class ``some-element`` with a black top border, a red right border and a green bottom border. No left border value is supplied, meaning that the left-hand border is left transparent. To specify a color for only one side of an element's border, consider using the ``border-top-color``, ``border-right-color``, ``border-bottom-color`` and ``border-left-color`` properties where appropriate.
 
-Backgrounds and Images
-......................
+Background Colours
+..................
 You can also change the colour of an element's background through use of the CSS ``background-color`` property. Like the ``color`` property described above, the ``background-color`` property can be easily applied by specifying a single colour as its value. Check out the example below which applies a bright green background to the entire webpage. Yuck!
 
 .. code-block:: css
@@ -164,8 +164,9 @@ You can also change the colour of an element's background through use of the CSS
 	    background-color: #00FF00;
 	}
 
+Background Images
+.................
 Of course, a colour isn't the only way to change your backgrounds. You can also apply background images to your elements, too. We can achieve this through the ``background-image`` property.
-
 
 .. code-block:: css
 	
@@ -177,17 +178,6 @@ Of course, a colour isn't the only way to change your backgrounds. You can also 
 The example above makes use of ``filename.png`` as the background image for the element with identifier ``some-unique-element``. The path to your image is specified *relative to the path of your CSS stylesheet*. Our example above uses the `double dot notation to specify the relative path <http://programmers.stackexchange.com/a/186719>`_ to the image. *Don't provide an absolute path here; it won't work as you expect!* We also apply a black background colour to fill the gaps left by our background image - it may not fill the entire size of the element.
 
 .. note:: By default, background images default to the top-left corner of the relevant element and are repeated on both the horizontal and vertical axes. You can customise this functionality by altering `how the image is repeated <http://www.w3schools.com/cssref/pr_background-repeat.asp>`_ with the ``background-image`` property. You can also specify `where the image is placed <http://www.w3schools.com/cssref/pr_background-position.asp>`_ by default with the ``background-position`` property.
-
-The Cascade
------------
-It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes into play. You may have noticed in the example rendered output in Figure :num:`fig-css-render` that the red text is **bold**, yet no such property is defined in our ``h1`` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For ``<h1>`` elements, the `W3C website provides a typical style that is applied <http://www.w3.org/TR/html-markup/h1.html#h1-display>`_. If you check the typical style, you'll notice that it contains a ``font-weight: bold;`` property and value pairing, explaining where the **bold** text comes from. As we define a further style for ``<h1>`` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for ``font-size``), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out :num:`fig-css-cascading` for a graphical representation of the cascading process.
-
-.. _fig-css-cascading:
-
-.. figure:: ../images/css-cascading.pdf
-	:figclass: align-center
-
-	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
 
 .. _css-course-positioning:
 
@@ -228,7 +218,7 @@ Refer back to Figure :num:`fig-css-nesting-blocks` to refresh your mind about wh
 
 Basic Positioning
 -----------------
-An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover four important techniques for positioning elements within your webpage: *floats*, ?? *relative positioning* *absolute positioning*.
+An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover three important techniques for positioning elements within your webpage: *floats*, *relative positioning* and *absolute positioning*.
 
 Floats
 ......
@@ -243,7 +233,22 @@ Imagine that we have a ``<div>`` element that contains a series of nested ``<spa
 	
 	Our fictional ``<div>`` container, with four ``<span>`` child elements. Yellow ``<span>`` elements are to remain at the left, while blue ``<span>`` elements should be moved to the right.
 
+Easy, huh? The example makes perfect sense - the ``float: right;`` instructs your browser to float blue ``<span>`` elements to the right of the green container, while yellow elements are instructed to float to the left. The resultant output is shown at the top of Figure :num:`fig-css-positioning-float2`.
 
+.. warning::
+	You may find that the parent element of your floated element may not wrap. An illustration of the problem is shown in Figure :num:`fig-css-positioning-float2`. This is because applying the ``float`` property with a value of ``left`` or ``right`` takes the element out of the page's flow. To fix this problem, you can try one of these solutions.
+	
+	* You can apply a ``height`` to the container element which would adequately wrap around your floated elements. However, there may be circumstances where you simply don't know the height of your floated elements. Thus, you would not know the height to set your container to. Nightmare!
+	* You can alternatively apply the ``overflow: hidden;`` property and value pairing to your container. This ensures that the floated elements are adequately cleared. For more information on how this trick works, have a look at `this QuirksMode.org online article <http://www.quirksmode.org/css/clearing.html>`_.
+	
+	By applying one of these solutions, your end result should then look like the illustration at the bottom of Figure :num:`fig-css-positioning-float2`.
+
+.. _fig-css-positioning-float2:
+
+.. figure:: ../images/css-positioning-float2.pdf
+	:figclass: align-center
+	
+	Our float example with two figures - the top without the ``overflow: hidden;`` trick applied, the second with the trick applied. Note how the container wraps around the floated elements in the bottom illustration, just like you would expect.
 
 Relative Positioning
 ....................
@@ -263,6 +268,17 @@ Styling Lists
 
 Styling Links
 -------------
+
+The Cascade
+-----------
+It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes into play. You may have noticed in the example rendered output in Figure :num:`fig-css-render` that the red text is **bold**, yet no such property is defined in our ``h1`` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For ``<h1>`` elements, the `W3C website provides a typical style that is applied <http://www.w3.org/TR/html-markup/h1.html#h1-display>`_. If you check the typical style, you'll notice that it contains a ``font-weight: bold;`` property and value pairing, explaining where the **bold** text comes from. As we define a further style for ``<h1>`` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for ``font-size``), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out :num:`fig-css-cascading` for a graphical representation of the cascading process.
+
+.. _fig-css-cascading:
+
+.. figure:: ../images/css-cascading.pdf
+	:figclass: align-center
+
+	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
 
 Additional Reading
 ------------------

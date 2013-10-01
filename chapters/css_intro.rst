@@ -6,7 +6,7 @@ In web development, we use *Cascading Style Sheets (CSS)* to describe the presen
 
 Each element within a HTML document can be *styled*. The CSS for a given HTML element describes how it is to be rendered on screen. This is done by ascribing *values* to the different *properties* associated with an element. For example, the ``font-size`` property could be set to ``24pt`` to make any text contained within the specified HTML element to appear at 24pt. We could also set the ``text-align`` property to a value of ``right`` to make text appear within the HTML element on the right-hand side.
 
-.. note:: There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does.
+.. note:: There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does. Check out Section :ref:`css-course-reading-label` for a more comprehensive set of links.
 
 CSS works by following a *select and apply pattern* - for a specified element, a set of styling properties are applied. Take a look at the following example in Figure :num:`fig-css-render` where we have some HTML containing ``<h1>`` tags. In the CSS code example, we specify that all ``h1`` are styled.  We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ in Section :ref:`css-course-basic-selectors-label`. For now though, you can assume the CSS style defined will be applied to our ``<h1>`` tags. The style contains four properties:
 
@@ -104,7 +104,7 @@ In 1996, Microsoft started the `Core fonts for the Web <http://en.wikipedia.org/
 
 Colours and Backgrounds
 -----------------------
-Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also `specify words to describe your colours <http://www.w3schools.com/cssref/css_colornames.asp>`_, such as ``green``, ``yellow`` or ``blue``.
+Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of words and *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also `specify words to describe your colours <http://www.w3schools.com/cssref/css_colornames.asp>`_, such as ``green``, ``yellow`` or ``blue``.
 
 .. warning:: You must take great care when picking colours to use on your webpages. Don't select colours that don't contrast well - people simply won't be able to read them! There are many websites available that can help you pick out a good colour scheme - try `colorcombos.com <http://www.colorcombos.com/>`_ for starters.
 
@@ -221,8 +221,6 @@ Basic Positioning
 An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. These elements are said to be *positioned statically*.
 
 However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover three important techniques for positioning elements within your webpage: *floats*, *relative positioning* and *absolute positioning*.
-
-
 
 Floats
 ......
@@ -387,7 +385,7 @@ Relative Positioning
 ....................
 *Relative positioning* can be used if you required a greater degree of control over where elements are positioned on your webpage. As the name may suggest to you, relative positioning allows you to position an element *relative to where it would otherwise be located.* We make use of relative positioning with the ``position: relative;`` property and value pairing. However, that's only part of the story.
 
-Let's explain how this works. Consider our previous example where two ``<span>`` elements are sitting either side of their container. One is floated to the right, the other is sitting naturally on the left-hand side.
+Let's explain how this works. Consider our previous example where two ``<span>`` elements are sitting within their container.
 
 .. code-block:: html
 	
@@ -411,7 +409,6 @@ Let's explain how this works. Consider our previous example where two ``<span>``
 	.blue {
 	    background-color: blue;
 	    border: 1px solid black;
-	    float: right;
 	}
 
 This produces the following result - just as we would expect. Note that we have artificially increased the ``height`` of our ``container`` element to 150 pixels. This will allow us more room with which to play with.
@@ -433,7 +430,6 @@ This produces the following result - just as we would expect. Note that we have 
 		.css-rel-ex1-blue {
 		    background-color: blue;
 		    border: 1px solid black;
-		    float: right;
 		}
 	</style>
 
@@ -449,24 +445,22 @@ Now let's attempt to position our ``.blue`` ``<span>`` element relatively. First
 	.blue {
 	    background-color: blue;
 	    border: 1px solid black;
-	    float: right;
 	    position: relative;
 	}
 
-This has no effect on the positioning of our ``.blue`` element. What it does do however is change the positioning of ``.blue`` from ``static`` to ``relative``. This paves the way for us to specify where - from the original position of our element - we now wish the element to be.
+This has no effect on the positioning of our ``.blue`` element. What it does do however is change the positioning of ``.blue`` from ``static`` to ``relative``. This paves the way for us to specify where - from the original position of our element - we now wish the element to be located at.
 
 .. code-block:: css
 	
 	.blue {
 	    background-color: blue;
 	    border: 1px solid black;
-	    float: right;
 	    position: relative;
-	    right: 100px;
+	    left: 150px;
 	    top: 80px;
 	}
 
-By applying the ``right`` and ``top`` properties as shown in the example above, we are wishing the ``.blue`` element to be *pushed* 100 pixels *from the right*. In other words, we move the element 100 pixels to the left. The ``top`` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result our experimentation can be seen below.
+By applying the ``left`` and ``top`` properties as shown in the example above, we are wanting the ``.blue`` element to be *pushed* 150 pixels *from the left*. In other words, we move the element 150 pixels to the right. Think about that carefully! The ``top`` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result our experimentation can be seen below.
 
 .. raw:: html
 
@@ -485,9 +479,8 @@ By applying the ``right`` and ``top`` properties as shown in the example above, 
 		.css-rel-ex2-blue {
 		    background-color: blue;
 		    border: 1px solid black;
-		    float: right;
 			position: relative;
-		    right: 100px;
+		    left: 150px;
 		    top: 80px;
 		}
 	</style>
@@ -497,7 +490,7 @@ By applying the ``right`` and ``top`` properties as shown in the example above, 
 	    <span class="css-rel-ex2-blue">Span 2</span>
 	</div>
 
-From this, we can deduce that the properties ``left`` and ``bottom`` *push* elements from the left and bottom respectively. We can test this out by applying the properties to our ``.yellow`` class as shown below.
+From this behaviour, we can deduce that the properties ``right`` and ``bottom`` *push* elements from the right and bottom respectively. We can test this out by applying the properties to our ``.yellow`` class as shown below.
 
 .. code-block:: css
 	
@@ -506,11 +499,11 @@ From this, we can deduce that the properties ``left`` and ``bottom`` *push* elem
 	    border: 1px solid black;
 	    float: right;
 	    position: relative;
-	    left: 90px;
+	    right: 10px;
 	    bottom: 10px;
 	}
 
-This produces the following output. The ``.yellow`` container is pushed upwards and along to the right!
+This produces the following output. The ``.yellow`` container is pushed into the top left-hand corner of our container by pushing up and to the right.
 
 .. raw:: html
 
@@ -525,16 +518,15 @@ This produces the following output. The ``.yellow`` container is pushed upwards 
 		    background-color: yellow;
 		    border: 1px solid black;
 		    position: relative;
-		    left: 90px;
+		    right: 10px;
 		    bottom: 10px;
 		}
 
 		.css-rel-ex3-blue {
 		    background-color: blue;
 		    border: 1px solid black;
-		    float: right;
 			position: relative;
-		    right: 100px;
+		    left: 150px;
 		    top: 80px;
 		}
 	</style>
@@ -546,8 +538,360 @@ This produces the following output. The ``.yellow`` container is pushed upwards 
 
 .. note:: What happens if you apply both a ``top`` and ``bottom`` property, or a ``left`` and ``right`` property? Interestingly, the *first* property for the relevant axis is applied. For example, if ``bottom`` is specified before ``top``, the ``bottom`` property is used.
 
+We can even apply relative positioning to elements which are floated. Consider our earlier example where the two ``<span>`` elements were positioned on either side of the container by floating ``.blue`` to the right.
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-rel-ex4-container {
+		    border: 1px solid black;
+			padding: 10px;
+		}
+
+		.css-rel-ex4-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-rel-ex4-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+			float: right;
+		}
+	</style>
+
+	<div class="css-rel-ex4-container">
+	    <span class="css-rel-ex4-yellow">Span 1</span>
+	    <span class="css-rel-ex4-blue">Span 2</span>
+	</div>
+
+We can then alter the ``.blue`` class to the following.
+
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	    position: relative;
+	    right: 100px;
+	}
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-rel-ex5-container {
+		    border: 1px solid black;
+			padding: 10px;
+		}
+
+		.css-rel-ex5-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-rel-ex5-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+			float: right;
+			position: relative;
+			right: 150px;
+		}
+	</style>
+
+	<div class="css-rel-ex5-container">
+	    <span class="css-rel-ex5-yellow">Span 1</span>
+	    <span class="css-rel-ex5-blue">Span 2</span>
+	</div>
+
+This therefore means that relative positioning works from the position at which the element would have otherwise been at - regardless of any other position-changing properties being applied. Neat!
+
 Absolute Positioning
 ....................
+Our final positioning technique is *absolute positioning.* While we still modify the ``position`` parameter of a style, we use ``absolute`` as the value instead of ``relative``. In contrast to relative positioning, absolute positioning places an element *relative to its first parent element that has a position value other than static.* This may sound a little bit confusing, but let's go through it step by step to figure out what exactly happens.
+
+First, we can again take our earlier example of the two coloured ``<span>`` elements within a ``<div>`` container. The two ``<span>`` elements are placed side-by-side as they would naturally.
+
+.. code-block:: html
+	
+	<div class="container">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
+
+.. code-block:: css
+	
+	.container {
+	    border: 1px solid black;
+	    height: 70px;
+	}
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	}
+
+This produces the output shown below. Note that we again set our ``.container`` height to an artificial value of 70 pixels to give us more room.
+
+.. raw:: html
+	
+	<style type="text/css">
+		.css-abs-ex1-hidden-container {
+			position: relative;
+		}
+		
+		.css-abs-ex1-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 70px;
+		}
+	
+		.css-abs-ex1-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+	
+		.css-abs-ex1-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		}
+	</style>
+	
+	<div class="css-abs-ex1-hidden-container">
+		<div class="css-abs-ex1-container">
+		    <span class="css-abs-ex1-yellow">Span 1</span>
+		    <span class="css-abs-ex1-blue">Span 2</span>
+		</div>
+	</div>
+
+We now apply absolute positioning to our ``.blue`` element.
+
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	}
+
+Like with relative positioning, this has no overall effect on the positioning of our blue element in the webpage. We must apply one or more of ``top``, ``bottom``, ``left`` or ``right`` in order for a new position to take effect. As a demonstration, we can apply ``top`` and ``left`` properties to our blue element like in the example below.
+
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	}
+
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-abs-ex2-hidden-container {
+			position: relative;
+			padding-top: 30px;
+		}
+
+		.css-abs-ex2-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 70px;
+		}
+
+		.css-abs-ex2-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-abs-ex2-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		}
+	</style>
+
+	<div class="css-abs-ex2-hidden-container">
+		<div class="css-abs-ex2-container">
+		    <span class="css-abs-ex2-yellow">Span 1</span>
+		    <span class="css-abs-ex2-blue">Span 2</span>
+		</div>
+	</div>
+
+Wow, what happened here? Our blue element is now positioned outside of our container! You'll note that if you run this code within your own web browser window, the blue element appears in the top left-hand corner of the viewport. This therefore means that our ``top``, ``bottom``, ``left`` and ``right`` properties take on a slightly different meaning when absolute positioning is concerned.
+
+As our container element's position is by default set to ``position: static``, the blue and yellow elements are moving to the top left and bottom right of our screen respectively. Let's now modify our ``.yellow`` class to move the yellow ``<span>`` to 5 pixels from the bottom right-hand corner of our page. The ``.yellow`` class now looks like the example below.
+
+.. code-block:: css
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	    position: absolute;
+	    bottom: 5px;
+	    right: 5px;
+	}
+
+This produces the following result.
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-abs-ex3-hidden-container {
+			position: relative;
+			padding: 30px 0 35px;
+		}
+
+		.css-abs-ex3-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 70px;
+		}
+
+		.css-abs-ex3-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    position: absolute;
+		    bottom: 5px;
+		    right: 5px;
+		}
+
+		.css-abs-ex3-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		}
+	</style>
+
+	<div class="css-abs-ex3-hidden-container">
+		<div class="css-abs-ex3-container">
+		    <span class="css-abs-ex3-yellow">Span 1</span>
+		    <span class="css-abs-ex3-blue">Span 2</span>
+		</div>
+	</div>
+
+But what if we don't want our elements to be positioned absolutely in relation to the entire page? More often than not, we'll be looking to adjusting the positioning of our elements in relation to a container. If we recall our definition for absolute positioning, we will note that absolute positions are calculated *relative to the first parent element that has a position value other than static.* As our container is the only parent for our two ``<span>`` elements, the container to which the absolutely positioned elements is therefore the ``<body>`` of our HTML page. We can fix this by adding ``position: relative;`` to our ``.container`` class, just like in the example below.
+
+.. code-block:: css
+	
+	.container {
+	    border: 1px solid black;
+	    height: 70px;
+	    position: relative;
+	}
+
+This produces the following result. ``.container`` becomes the first parent element with a position value of anything other than ``relative``, meaning our ``<span>`` elements latch on!
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-abs-ex4-hidden-container {
+			position: relative;
+		}
+
+		.css-abs-ex4-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 70px;
+			position: relative;
+		}
+
+		.css-abs-ex4-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    position: absolute;
+		    bottom: 5px;
+		    right: 5px;
+		}
+
+		.css-abs-ex4-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		}
+	</style>
+
+	<div class="css-abs-ex4-hidden-container">
+		<div class="css-abs-ex4-container">
+		    <span class="css-abs-ex4-yellow">Span 1</span>
+		    <span class="css-abs-ex4-blue">Span 2</span>
+		</div>
+	</div>
+
+Our elements are now absolutely positioned in relation to ``.container``. Awesome! Let's adjust the positioning values of our two ``<span>`` elements to move them around.
+
+.. code-block:: css
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	    position: absolute;
+	    top: 20px;
+	    right: 100px;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    position: absolute;
+	    float: right;
+	    bottom: 50px;
+	    left: 40px;
+	}
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-abs-ex5-hidden-container {
+			position: relative;
+		}
+
+		.css-abs-ex5-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 70px;
+			position: relative;
+		}
+
+		.css-abs-ex5-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    position: absolute;
+		    top: 20px;
+		    right: 100px;
+		}
+
+		.css-abs-ex5-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    position: absolute;
+		    float: right;
+		    bottom: 50px;
+		    left: 40px;
+		}
+	</style>
+
+	<div class="css-abs-ex5-hidden-container">
+		<div class="css-abs-ex5-container">
+		    <span class="css-abs-ex5-yellow">Span 1</span>
+		    <span class="css-abs-ex5-blue">Span 2</span>
+		</div>
+	</div>
+
+Note that we also apply ``float: right;`` to our ``.blue`` element. This is to demonstrate that unlike relative positioning, absolute positioning *ignores any other positioning properties applied to an element*. ``top: 10px`` for example will always ensure that an element appears 10 pixels down from its parent (set with ``position: relative;``), regardless of whether the element has been floated or not.
 
 .. _css-course-box-model-label:
 
@@ -561,6 +905,155 @@ Styling Lists
 
 Styling Links
 -------------
+CSS provides you with the ability to easily style hyperlinks in any way you wish. You can change their colour, their font or any other aspect that you wish - and you can even change how they look when you hover over them!
+
+Hyperlinks are represented within a HTML page through the ``<a>`` tag, which is short for *anchor*. We can apply styling to all hyperlinks within your webpage as shown in following example.
+
+.. code-block:: css
+	
+	a {
+	    color: red;
+	    text-decoration: none;
+	}
+
+Every hyperlink's text colour is changed to red, with the default underline of the text removed. If we then want to change the ``color`` and ``text-decoration`` properties again when a user hovers over a link, we can create another style using the so-called `pseudo-selector <http://css-tricks.com/pseudo-class-selectors/>`_ ``:hover``. Our two styles now look like the example below.
+
+.. code-block:: css
+	
+	a {
+	    color: red;
+	    text-decoration: none;
+	}
+	
+	a:hover {
+	    color: blue;
+	    text-decoration: underline;
+	}
+
+This produces links as shown below. Hover over them to see them change!
+
+.. raw:: html
+
+	<style type="text/css">
+	    .css-links-example {
+		    padding: 10px 0 10px;
+		    text-align: center;
+		}
+		.css-links-example a {
+		    color: red;
+		    text-decoration: none;
+		}
+		
+		.css-links-example a:hover {
+		    color: blue;
+		    text-decoration: underline;
+		}
+	</style>
+	
+	<div class="css-links-example">
+		<a href="http://www.django.com/">Django</a>&nbsp;&nbsp;
+		<a href="http://www.tangowithdjango.com/">How to Tango with Django</a>&nbsp;&nbsp;
+		<a href="http://2scoops.org/">Two Scoops of Django</a>
+	</div>
+
+You may not however wish for the same link styles across the entire webpage. For example, your navigation bar may have a dark background while the rest of your page has a light background. This would necessitate having different link stylings for the two areas of your webpage. The example below demonstrates how you can apply different link styles by using a slightly more complex CSS style selector.
+
+.. code-block:: css
+	
+	#dark {
+	    background-color: black;
+	}
+	
+	#dark a {
+	    color: white;
+	    text-decoration: underline;
+	}
+	
+	#dark a:hover {
+	    color: aqua;
+	}
+	
+	.light {
+	    background-color: white;
+	}
+	
+	.light a {
+	    color: black;
+	    text-decoration: none;
+	}
+	
+	.light a:hover {
+	    color: olive;
+	    text-decoration: underline;
+	}
+
+We can then construct some simple markup to demonstrate these classes.
+
+.. code-block:: html
+	
+	<div id="dark">
+	    <a href="http://www.google.co.uk/">Google Search</a>
+	</div>
+	
+	<div class="light">
+	    <a href="http://www.bing.co.uk/">Bing Search</a>
+	</div>
+
+The resultant output looks similar to the example shown below. Again, hover over the links to see them change!
+
+.. raw:: html
+
+	<style type="text/css">
+		#css-links-multiple-dark {
+		    background-color: black;
+			margin-bottom: 10px;
+			padding: 5px;
+			margin-top: 10px;
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+			border: 1px solid #000000;
+		}
+	
+		#css-links-multiple-dark a {
+		    color: white;
+		    text-decoration: underline;
+		}
+	
+		#css-links-multiple-dark a:hover {
+		    color: aqua;
+		}
+	
+		.css-links-multiple-light {
+		    background-color: white;
+			padding: 5px;
+			margin-bottom: 10px;
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+			border: 1px solid #000000;
+		}
+	
+		.css-links-multiple-light a {
+		    color: black;
+		    text-decoration: none;
+		}
+	
+		.css-links-multiple-light a:hover {
+		    color: olive;
+		    text-decoration: underline;
+		}
+	</style>
+	
+	<div id="css-links-multiple-dark">
+	    <a href="http://www.google.co.uk/">Google Search</a>
+	</div>
+	
+	<div class="css-links-multiple-light">
+	    <a href="http://www.bing.co.uk/">Bing Search</a>
+	</div>
+
+With a small amount of CSS, you can make some big changes in the way your webpages appear to end users.
 
 The Cascade
 -----------
@@ -572,6 +1065,8 @@ It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes 
 	:figclass: align-center
 
 	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
+
+.. _css-course-reading-label:
 
 Additional Reading
 ------------------

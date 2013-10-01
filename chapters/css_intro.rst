@@ -140,7 +140,7 @@ You can alter the presentation of a small portion of text within your webpage by
 
 Borders
 .......
-You can change the colour of an element's *borders*, too. We'll discuss what borders are in Section **?????????** - but for now, we'll show you how to apply colours to them to make everything look pretty.
+You can change the colour of an element's *borders*, too. We'll discuss what borders are in Section :ref:`css-course-box-model-label` - but for now, we'll show you how to apply colours to them to make everything look pretty.
 
 Border colours can be specified with the ``border-color`` property. You can supply one colour for all four sides of your border, or specify a different colour for each side. To achieve this, you'll need to supply different colours, each separated by a space.
 
@@ -897,6 +897,26 @@ Note that we also apply ``float: right;`` to our ``.blue`` element. This is to d
 
 The Box Model
 -------------
+When using CSS, you're never too far away from using *padding*, *borders* and *margins*. These properties are some of the most fundamental styling techniques which you can apply to the elements within your webpages. They are incredibly important and are all related to what we call the *CSS box model.*
+
+Each element that you create on a webpage can be considered as a box. The `CSS box model <http://www.w3.org/TR/CSS2/box.html>`_ is defined by the `W3C <http://www.w3.org/>`_ as a formal means of describing the elements or boxes that you create, and how they are rendered in your web browser's viewport. Each element or box consists of *four separate areas*, all of which are illustrated in Figure :num:`fig-css-box-model`. The areas - listed from inside to outside - are the *content area*, the *padding area*, the *border area* and the *margin area*.
+
+.. _fig-css-box-model:
+
+.. figure:: ../images/css-box-model.pdf
+	:figclass: align-center
+	
+	An illustration demonstrating the CSS box model, complete with key showing the four areas of the model.
+
+For each element within a webpage, you can create a margin, apply some padding or a border with the respective properties ``margin``, ``padding`` and ``border``. Margins clear a transparent area around the border of your element, meaning margins are incredibly useful for creating a gap between elements. In contrast, padding creates a gap between the content of an element and its border. This therefore gives the impression that the element appears wider. If you supply a background colour for an element, the background colour is extended with the element's padding. Finally, borders are what you might expect them to be - they provide a border around your element's content and padding.
+
+For more information on the CSS box model, check out `addedbytes excellent explanation of the model <http://www.addedbytes.com/articles/for-beginners/the-box-model-for-beginners/>`_. Heck, `why not even order a t-shirt with the box model on it <http://cssboxmodel.com/>`_?
+
+.. warning:: As you may gather from examining Figure :num:`fig-css-box-model`, the width of an element isn't defined simply by the value you enter as the element's ``width``. Rather, you should always consider the width of the border and padding on both sides of your element. This can be represented mathematically as:
+	
+	``total_width = content_width + left padding + right padding + left border + left margin + right margin``
+
+	Don't forget this. You'll save yourself a lot of trouble if you don't!
 
 Styling Lists
 -------------

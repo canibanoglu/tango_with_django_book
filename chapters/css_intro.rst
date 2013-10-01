@@ -187,8 +187,34 @@ It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes 
 
 	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.
 
+.. _css-course-positioning:
+
+Inline and Block-Level Elements
+-------------------------------
+Throughout the crash course thus far, we've introduced you to the ``<span>`` element.
+
+
+
+
+
+In the markup snippet above, we introduce two new HTML tags - ``<div>`` and ``<span>``. Essentially, these tags themselves are meaningless, and are only present to provide you with a way to contain and separate your page's content. ``<div>`` tags can be considered a *block-level element* used to contain other content. A block-level element will by default display a line break after it. Conversely, ``<span>`` tags can be considered as *inline elements*, and can be used as a container for text. The difference between block-level elements and inline elements are key - and explain why a ``<div>`` can contain ``<span>`` elements, but not vice versa. For an illustration of the difference between the two, check out Figure :num:`fig-css-nesting-blocks`. In the diagram provided, you see ``<div>`` and ``<span>`` elements represented as boxes. The diagram also hints at how you can nest blocks.
+
 Basic Positioning
 -----------------
+An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing on newlines. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover four important techniques for positioning elements within your webpage.
+
+CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Indeed, we've already made use of floats - have a look at the CSS styles that correspond to Rango's navigation bar! Using floats allows us to position elements to the left or right of a particular container - or the page.
+
+Imagine that we have a ``<div>`` element that contains a series of nested ``<span>`` elements, as shown in Figure :num:`fig-css-positioning-float1`. Now, imagine that we wish to position the blue ``<span>`` elements to the right of our container, and the yellow ``<span>`` elements to their current position - at left of our container.
+
+.. _fig-css-positioning-float1:
+
+.. figure:: ../images/css-positioning-float1.pdf
+	:figclass: align-center
+	
+	Our fictional ``<div>`` container, with four ``<span>`` child elements. Yellow ``<span>`` elements are to remain at the left, while blue ``<span>`` elements should be moved to the right.
+
+
 
 Relative Positioning
 ....................

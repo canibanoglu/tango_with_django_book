@@ -8,19 +8,19 @@ So far we have been adding in different pieces of functionality to Rango. We've 
 To make Rango more coherent and integrated it would be nice to add the following functionality.
 
 * Integrate the browsing and searching within categories, i.e.:
- - provide categories on every page;
- - provide some way to search through categories (see Chapter :ref:`ajax-label`); and
- - instead of have a disconnected search page, let users search for pages within a category so that they can then add these pages to the category (see Chapter :ref:`ajax-label`)
+	* provide categories on every page;
+	* provide some way to search through categories (see Chapter :ref:`ajax-label`); and
+	* instead of have a disconnected search page, let users search for pages within a category so that they can then add these pages to the category (see Chapter :ref:`ajax-label`)
 	
 * Provide services for Registered Users, i.e.:
- - Let users view their profile	
- - Let users edit their profile
- - Let users see the list of users and their profiles.
-		
-* Track the click throughs of Categories and Pages, i.e.
- - Count the number of times a category is viewed
- - Count the number of times a page is viewed via Rango
- - Collect likes for categories (see Chapter :ref:`ajax-label`)
+	* let users view their profile;
+	* let users edit their profile; and
+	* let users see the list of users and their profiles.
+
+* Track the click throughs of Categories and Pages, i.e.:
+	* count the number of times a category is viewed;
+	* count the number of times a page is viewed via Rango; and
+	* collect likes for categories (see Chapter :ref:`ajax-label`).
 
 .. note:: We won't be working through all of these tasks right now. Some will be taken care of in Chapter :ref:`ajax-label`, while some will be left to you to complete as additional exercises.
 

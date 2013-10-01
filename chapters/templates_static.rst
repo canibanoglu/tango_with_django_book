@@ -144,11 +144,7 @@ This example demonstrates how to use templates within your views. However, we ha
 
 Serving Static Media
 --------------------
-Admittedly, the *Rango* website that we've been building thus far isn't looking too fancy. It's plain, there's no styling or anything eye-catching. In the real world, people wouldn't give it a second glance.
-
-One way with which we can spruce up a website is to include other types of media in its webpages such as image content. It would also be beneficial to include `Cascading Style Sheets (CSS) <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_ and `JavaScript <https://en.wikipedia.org/wiki/JavaScript>`_ to allow us to style webpages and introduce dynamic behaviour within the website. 
-
-These files are known by Django as *static media*, and are served in a slightly different way from webpages. This section shows you how to set up your Django project to serve static media to the client. We'll also modify our template to include some example static media.
+Admittedly, the *Rango* website is pretty plain as we have not included any styling or imagery.  `Cascading Style Sheets (CSS) <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_, `JavaScript <https://en.wikipedia.org/wiki/JavaScript>`_ and Images are essentially *static media* files which we can include in our webpages to add style and introduce dynamic behaviour. These files are served in a slightly different way from webpages (as they are not generated on the fly like our html pages). This section shows you how to set up your Django project to serve static media to the client. We'll also modify our template to include some example static media.
 
 
 
@@ -235,6 +231,7 @@ With this change in place, kick off the Django development server and visit ``ht
 The ``{% static %}`` function call should be used whenever you wish to reference static media on your page. The code example below demonstrates how you could include JavaScript, CSS and images into your templates.
 
 .. code-block:: html
+	
 	<!DOCTYPE html>
 	
 	{% load static %}

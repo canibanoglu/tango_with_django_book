@@ -28,7 +28,7 @@ UNIX-based operating systems all use a similar-looking `terminal <http://www.ee.
 
 Upon launching a new terminal instance, you'll typically be presented with something like:
 
-::
+.. code-block:: guess
 	
 	sibu:~ john$
 
@@ -44,7 +44,7 @@ Open up a Terminal window and see what your prompt looks like.
 
 When you are using the Terminal, it is important to know where you are in the file system. To find out where you are issue the command ``pwd``. This will display your present working directory. For example:
 
-::
+.. code-block:: guess
 	
 	Last login: Mon Sep 23 11:35:44 on ttys003
 	Leifs-MacBook-Air:~ leif$ pwd
@@ -59,19 +59,19 @@ Note that the base directory in any UNIX-based file system is the root directory
 
 If you are not in your home directory you can change directory (cd) to your home directory by issuing:
 
-::
+.. code-block:: guess
 	
 	$ cd ~
 
 Let's create a directory called code, to do this use the make directory command (mkdir):
 
-::
+.. code-block:: guess
 	
 	$ mkdir code
 	
 And to move to this directory enter, ``cd code``. If you now check your present working directory you'll notice that you will be in <workspace>/code/. This may also be reflected by your prompt, for example:
 
-::
+.. code-block:: guess
 	
 	Leifs-MacBook-Air:~ leif$ mkdir code
 	Leifs-MacBook-Air:~ leif$ cd code
@@ -82,7 +82,7 @@ And to move to this directory enter, ``cd code``. If you now check your present 
 
 To list the files that are in a directory you can issue the command `ls`. And to see hidden files (if any) you can issue the command `ls -a`. If you cd back to your home directory ( cd ~) and then issue ls, you'll see that you have something called ``code`` in your home directory. To find out a bit more about what is in your directory issue ``ls -l``. This will provide a more detailed listing of the files and whether it is a directory or not (denoted by a ``d`` at the start of the line):
 
-::
+.. code-block:: guess
 	
 	Leifs-MacBook-Air:~ leif$ cd ~ 
 	Leifs-MacBook-Air:~ leif$ ls -l 
@@ -190,15 +190,21 @@ With Python now installed, we now need to check that the installation was succes
 
 First, let's verify that our ``PYTHONPATH`` variable exists. Depending on the installation technique you chose, this may or may not have been done for you. To do this on your UNIX-based or UNIX-derived operating system, issue the following command in a terminal.
 
-``$ echo $PYTHONPATH``
+.. code-block:: guess
+	
+	$ echo $PYTHONPATH
 
 On a Windows-based machine, open a Command Prompt and issue the following command.
 
-``$ echo %PYTHONPATH%``
+.. code-block:: guess
+	
+	$ echo %PYTHONPATH%
 
 If all works, you should then see output that looks something similar to the example below. On a Windows-based machine, you will obviously see a Windows path, most likely originating from the C drive.
 
-``/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages:``
+.. code-block:: guess
+	
+	/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages:
 
 This is the path to your Python installation's ``site-packages`` directory, where additional Python packages and modules are stored. If you see a path, you can continue to the next part of this tutorial. However, if you do not see anything, you'll need to do a little bit of detective work to find out the path. On a Windows installation, this should be a trivial exercise: ``site-packages`` is located within the ``lib`` folder of your Python installation directory. For example, if you installed Python to ``C:\Python27``, ``site-packages`` will be at ``C:\Python27\Lib\site-packages\``.
 
@@ -223,7 +229,10 @@ Calling ``site.getsitepackages()`` returns a list of paths that point to additio
 	
 The string which is shown as a result of executing ``print site.getsitepackages()[0]`` is the path to your installation's ``site-packages`` directory. Taking the path, we now need to add it to your configuration. On a UNIX-based or UNIX-derived operating system, edit your ``.bashrc`` file once more, adding the following to the bottom of the file.
 
-``export PYTHONPATH=$PYTHONPATH:<PATH_TO_SITE-PACKAGES>``
+
+.. code-block:: guess
+	
+	export PYTHONPATH=$PYTHONPATH:<PATH_TO_SITE-PACKAGES>
 
 Replace ``<PATH_TO_SITE-PACKAGES>`` with the path to your ``site-packages`` directory. Save the file, and quit and reopen any instances of your terminal.
 
@@ -236,12 +245,11 @@ Installing and setting up your development environment is a really important par
 
 We will be using the *Pip* package manager. Download the installer ``get-pip.py`` from the `Pip website <http://www.pip-installer.org/en/latest/installing.html>`_. This can be easily done via the terminal (on UNIX-based Operating systems):
 
-::
+.. code-block:: guess
 	
+	$ curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
 	
-	``$ curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py``
-	
-	``$ python get-pip.py``
+	$ python get-pip.py
 
 
 The first command executes ``curl``, a program used for transferring files. It will download the ``get-pip.py`` file to your current working directory. If ``curl`` cannot retrieve the file, try ``http`` instead of ``https`` in the URL path.
@@ -250,7 +258,9 @@ The second command then executes the ``get-pip.py`` file using the Python interp
 
 Windows-based computers do not natively come with a ``curl`` equivalent. To retrieve the required ``get-pip.py`` file for Windows, access the URL with your web browser, and save the file to somewhere on your hard drive. With a command prompt set to the folder where the downloaded file is located, you can open a Command Prompt, navigate to the directory in which the ``.py`` file was downloaded to, and issue the following command.
 
-``$ python get-pip.py``
+.. code-block:: guess
+	
+	$ python get-pip.py
 
 This will launch the Python script, and download everything to the correct location.
 
@@ -260,11 +270,15 @@ Installing Django
 *****************
 Once the Python package manager Pip is successfully installed on your computer, installing Django is easy. Open a Command Prompt or terminal window, and issue the following command.
 
-``$ pip install -U django==1.5.4``
+.. code-block:: guess
+	
+	$ pip install -U django==1.5.4
 
 If you are using a UNIX-based or UNIX-derived operating system and receive complaints about insufficient permissions, you will need to run the command with elevated privileges using the ``sudo`` command. If this is the case, you must then run the following command instead.
 
-``$ sudo pip install -U django==1.5.4``
+.. code-block:: guess
+	
+	$ sudo pip install -U django==1.5.4
 
 The package manager will download Django and install it in the correct location for you. Upon completion, Django should be successfully installed. Note, if you didn't include the `==1.5.4` then the most recent version of Django would be installed.
 
@@ -273,9 +287,11 @@ Installing Python Imaging Library
 *********************************
 During the course of building Rango, we will be uploading and handling images. This means we will need support from the Python Imaging Library, to install this package issue the following command:
 
-``$ pip install pil``
+.. code-block:: guess
+	
+	$ pip install pil
 
-Again, use sudo, if required.
+Again, use ``sudo``, if required.
 
 
 Installing Other Python Packages
@@ -284,18 +300,24 @@ It is worth noting that additional Python packages can be easily downloaded usin
 
 To get a list of the packages installed:
 
-``$ pip list``
+.. code-block:: guess
+
+	$ pip list
 
 
 Sharing your Package List
 *************************
 You can also get a list of the packages installed in a format that can be shared with other developers. To do this issue:
 
-``$ pip freeze > requirements.txt``
+.. code-block:: guess
+	
+	$ pip freeze > requirements.txt
 
 If you examine ``requirements.txt`` using either the command ``more`` or ``cat`` requirements.txt you will see the same information but in a slightly different format. The ``requirements.txt`` can then use to install the same setup by issuing:
 
-``$ pip install -r requirements.txt --no-index --find-links``
+.. code-block:: guess
+
+	$ pip install -r requirements.txt --no-index --find-links
 
 
 Integrated Development Environment

@@ -138,8 +138,7 @@ If you don't, read the error message presented to see what the problem is, and t
 
 	A screenshot of Google Chrome rendering the template used with this tutorial.
 
-This example demonstrates how to use templates within your views. However, we have only touched upon some of the functionality provided by Django regarding templates. We will use templates in more sophisticated ways as we progress through this tutorial, but in the meantime you can find out more about `templates from the 
- official Django documentation <https://docs.djangoproject.com/en/1.5/ref/templates/>`_. Next, we will set up our Django Project to be able to serve up static media, such as images, css and javascript.
+This example demonstrates how to use templates within your views. However, we have only touched upon some of the functionality provided by Django regarding templates. We will use templates in more sophisticated ways as we progress through this tutorial, but in the meantime you can find out more about `templates from the official Django documentation <https://docs.djangoproject.com/en/1.5/ref/templates/>`_. Next we will set up our Django Project to be able to serve up static media, such as images, css and javascript.
 
 
 Serving Static Media

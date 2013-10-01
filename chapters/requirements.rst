@@ -160,6 +160,7 @@ Taken from the instructions provided `here <https://github.com/utahta/pythonbrew
 .. note:: Directories and files beginning with a period or dot can be considered the equivalent of *hidden files* in Windows. `Dot files <http://en.wikipedia.org/wiki/Dot-file>`_ are not normally visible to directory-browsing tools, and are commonly used for configuration files. You can use the ``ls`` command to view hidden files by adding the ``-a`` switch (short for *all*) to the end of the command, giving the command ``ls -a``.
 
 .. _requirements-install-python-windows:
+
 Windows
 .......
 By default, Microsoft Windows comes with no installations of Python. This means that you do not have to worry about leaving existing versions be; installing from scratch should work just fine. You can download a 64-bit version of Python from `here <http://www.python.org/ftp/python/2.7.5/python-2.7.5.amd64.msi>`_, or a 32-bit version of Python from `here <http://www.python.org/ftp/python/2.7.5/python-2.7.5.msi>`_. If you aren't sure which one to download, you can determine if your computer is 32-bit or 64-bit by looking at the instructions provided `on the Microsoft website <http://windows.microsoft.com/en-gb/windows7/32-bit-and-64-bit-windows-frequently-asked-questions>`_.
@@ -233,7 +234,7 @@ Pip, the Python Package Manager
 
 Installing and setting up your development environment is a really important part of any project. While it is possible to install Python Packages such as Django separately, this can lead to numerous problems and hassles later on. For example, how would you share your set up with another developer,  how would you set up the same environment on your new machine, how would you upgrade to the latest version of the package? Using a package manager removes much of the hassle involved in setting up and configuring your environment. It will also ensure that the package you install is the correct for the version of Python you are using along with installing any other packages that are dependent upon the one you want to install.
 
-We'll be using the *Pip* package manager. Download the installer ``get-pip.py`` from the `Pip website<http://www.pip-installer.org/en/latest/installing.html>`_. This can be easily done via the terminal (on UNIX-based Operating systems):
+We will be using the *Pip* package manager. Download the installer ``get-pip.py`` from the `Pip website <http://www.pip-installer.org/en/latest/installing.html>`_. This can be easily done via the terminal (on UNIX-based Operating systems):
 
 ::
 	
@@ -290,9 +291,9 @@ Sharing your Package List
 *************************
 You can also get a list of the packages installed in a format that can be shared with other developers. To do this issue:
 
-``$ pip freeze > requirements.txt'
+``$ pip freeze > requirements.txt``
 
-If you examine `requirements.txt' using either the command ``more'' or ``cat'' requirements.txt you'll see the same information but in a slightly different format. The requirements.txt can then use to install the same setup by issuing:
+If you examine ``requirements.txt`` using either the command ``more`` or ``cat`` requirements.txt you will see the same information but in a slightly different format. The ``requirements.txt`` can then use to install the same setup by issuing:
 
 ``$ pip install -r requirements.txt --no-index --find-links``
 

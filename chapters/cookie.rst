@@ -12,7 +12,7 @@ If you are already comfortable with the ideas and concepts behind cookies, then 
 
 Whenever a request to a website is made, the webserver returns the content of the requested page. In addition, one or more cookies may also be sent to the client, which are in turn stored in a persistent browser cache. When a user requests a new page from the same web server, any cookies that are matched to that server are sent with the request. The server can then interpret the cookies as part of the request's context and generate a response to suit.
 
-The term *cookie* wasn't actually derived from the food that you eat, but from the term *magic cookie*, a packet of data a program receives and sends again unchanged. In 1994, MCI sent a request to *Netscape Communications* to implement a way of implementing persistence across HTTP requests. This was in response to their need to reliably store the contents of a user's virtual shopping basket for an e-commerce solution they were developing. Netscape programmer Lou Montulli took the concept of a magic cookie and applied it to web communications. You can find out more about cookies and their history on `Wikipedia <http://en.wikipedia.org/wiki/HTTP_cookie#History>`_. Of course, with such a great idea came a software patent - and you can read `US patent 5774670 <http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO1&Sect2=HITOFF&d=PALL&p=1&u=%2Fnetahtml%2FPTO%2Fsrchnum.htm&r=1&f=G&l=50&s1=5774670.PN.&OS=PN/5774670&RS=PN/5774670>`_ that was submitted by Montulli himself.
+The term *cookie* wasn't actually derived from the food that you eat, but from the term *magic cookie*, a packet of data a program receives and sends again unchanged. In 1994, MCI sent a request to *Netscape Communications* to implement a way of implementing persistence across HTTP requests. This was in response to their need to reliably store the contents of a user's virtual shopping basket for an e-commerce solution they were developing. Netscape programmer Lou Montulli took the concept of a magic cookie and applied it to web communications. You can find out more about `cookies and their history on Wikipedia <http://en.wikipedia.org/wiki/HTTP_cookie#History>`_. Of course, with such a great idea came a software patent - and you can read `US patent 5774670 <http://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO1&Sect2=HITOFF&d=PALL&p=1&u=%2Fnetahtml%2FPTO%2Fsrchnum.htm&r=1&f=G&l=50&s1=5774670.PN.&OS=PN/5774670&RS=PN/5774670>`_ that was submitted by Montulli himself.
 
 As an example, you may login to a site with a particular username and password. When you have been authenticated, a cookie may be returned to your browser containing your username, indicating that you are now logged into the site. At every request, this information is passed back to the server where your login information is used to render the appropriate page - perhaps including your username in particular places on the page. Your session cannot last forever, however - cookies *have* to expire at some point in time - they cannot be of infinite length. A web application containing sensitive information may expire after only a few minutes of inactivity. A different web application with trivial information may expire half an hour after the last interaction - or even weeks into the future.
 
@@ -26,9 +26,12 @@ The passing of information in the form of cookies can open up potential security
 
 	A screenshot of the BBC News website (hosted in the United Kingdom) with the cookie warning message presented at the top of the page.
 
-.. _model-cookies-protocols-label:
+
 
 .. note:: Because of the potentially sensitive nature of cookies, lawmakers have taken a particularly keen interest in them. In particular, EU lawmakers in 2011 introduced an EU-wide 'cookie law', where all hosted sites within the EU should present a cookie warning message when a user visits the site for the first time. Check out Figure :num:`fig-bbcnews-cookies`, demonstrating such a warning on the BBC News webiste. You can read about `the law here <http://www.ico.org.uk/for_organisations/privacy_and_electronic_communications/the_guide/cookies>`_.
+
+
+.. _model-cookies-protocols-label:
 
 Sessions and the Stateless Protocol
 -----------------------------------
@@ -175,7 +178,7 @@ In the previous example, we used client side cookies. However, a more secure way
 To use session based cookies you need to perform the following steps.
 
 #. Make sure that ``MIDDLEWARE_CLASSES`` in ``settings.py`` contains ``django.contrib.sessions.middleware.SessionMiddleware``. 
-#. Configure your session backend. By default a database backend is assumed - so you will have to have your database set up and ensure that it is synchronised. See the `official Django Documentation on Sessions <https://docs.djangoproject.com/en/1.5/topics/http/sessions/>`_ for other backend configurations.
+#. Configure your session backend. By default a database backend is assumed - so you will have make sure that  your database is set up and synchronised. See the `official Django Documentation on Sessions for other backend configurations <https://docs.djangoproject.com/en/1.5/topics/http/sessions/>`_.
 
 Now if you want to check if the cookie has been stored you can do so by accessing the ``request.session`` object, where ``request`` is the name of your view's required parameter. Check out the modified ``index()`` function below to see how to do this.
 

@@ -8,7 +8,7 @@ Each element within a HTML document can be *styled*. The CSS for a given HTML el
 
 .. note:: There are many, many different CSS properties that you can use in your stylesheets. Each provides a different functionality. Check out the `W3C website <http://www.w3.org/TR/CSS2/propidx.html>`_ and `HTML Dog <http://www.htmldog.com/reference/cssproperties/>`_ for lists of available properties. `pageresource.com <http://www.pageresource.com/dhtml/cssprops.htm>`_ also has a neat list of properties, with descriptions of what each one does.
 
-CSS works by following a *Select and Apply pattern*. For a specified element, apply the styling. Take a look at the following example in Figure :num:`fig-css-render`, we have some HTML which has some ``<h1>`` tags. In the CSS code example, we specify that all ``h1`` are styled.  We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ shortly. For now though, you can assume the CSS style defined will be applied to our ``<h1>`` tags. The style contains four properties:
+CSS works by following a *select and apply pattern* - for a specified element, a set of styling properties are applied. Take a look at the following example in Figure :num:`fig-css-render` where we have some HTML containing ``<h1>`` tags. In the CSS code example, we specify that all ``h1`` are styled.  We'll come back to `selectors <http://www.w3schools.com/cssref/css_selectors.asp>`_ in Section :ref:`css-course-basic-selectors-label`. For now though, you can assume the CSS style defined will be applied to our ``<h1>`` tags. The style contains four properties:
 
 - the first property (``font-size``) sets the size of the font to 16pt;
 - the second property (``font-style``) italicises the contents of all ``<h1>`` tags within the document;
@@ -50,17 +50,19 @@ As can be seen from above, there are at minimum three attributes which you must 
 - ``type``, in which you should specify the `MIME type <http://en.wikipedia.org/wiki/Internet_media_type>`_ for CSS; and
 - ``href``, the attribute which you should point to the URL of the stylesheet you wish to include.
 
-With this tag added, your stylesheet should in included with your HTML page, and the styles within the stylesheet applied.
+With this tag added, your stylesheet should in included with your HTML page, and the styles within the stylesheet applied. It should be noted that CSS stylesheets are considered by Django as static media, meaning you should place them within your project's ``static`` directory.
 
 .. note:: You can also add CSS to your HTML documents *inline*, meaning that the CSS is included as part of your HTML page. However, this isn't generally advised because it removes the nice abstraction between presentational semantics (CSS) and content (HTML). 
 
+.. _css-course-basic-selectors-label:
+
 Basic CSS Selectors
 -------------------
-CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Here, we cover three basic forms of CSS selector: *element selectors*, *id selectors* and *class selectors*.
+CSS selectors are used to map particular styles to particular HTML elements. In essence, a CSS selector is a *pattern*. Here, we cover three basic forms of CSS selector: *element selectors*, *id selectors* and *class selectors*. In Section :ref:`css-course-links-label`, we also touch on what are known as *pseudo-selectors*.
 
 Element Selectors
 -----------------
-Taking the CSS example from Figure :num:`fig-css-render`, we can see that the selector ``h1`` matches to any ``<h1>`` tag. Any selector referencing a tag like this can be called an *element selector*. We can apply element selectors to any HTML element such as ``body``, ``h1``, ``h2``, ``h3``, ``p``, ``div``. These can be all styled in a similar manner. However, using element selectors is pretty crude - styles are applied to *all* instances of a particular tag. We usually want a more fine-grained approach to selecting what elements we style, and this is where *id selectors* and *class selectors* come into play.
+Taking the CSS example from Figure :num:`fig-css-render`, we can see that the selector ``h1`` matches to any ``<h1>`` tag. Any selector referencing a tag like this can be called an *element selector*. We can apply element selectors to any HTML element such as ``<body>``, ``<h1>``, ``<h2>``, ``<h3>``, ``<p>`` and ``<div>``. These can be all styled in a similar manner. However, using element selectors is pretty crude - styles are applied to *all* instances of a particular tag. We usually want a more fine-grained approach to selecting what elements we style, and this is where *id selectors* and *class selectors* come into play.
 
 ID Selectors
 ............
@@ -75,7 +77,6 @@ The *id selector* is used to map to a unique element on your webpage. Each eleme
 
 Class Selectors
 ...............
-
 The alternative option is to use *class selectors*. This approach is similar to that of *id selectors*, with the difference that you can legitimately target multiple elements with the same class. If you have a group of HTML elements that you wish to apply the same style to, use a class-based approach. The selector for using this method is to precede the name of your class with a period (``.``) before opening up the style with curly braces (``{ }``). Check out Figure :num:`fig-css-class` for an example.
 
 .. _fig-css-class:
@@ -89,10 +90,9 @@ The alternative option is to use *class selectors*. This approach is similar to 
 
 Fonts
 -----
-Due to wide variation of available fonts available, using fonts within webpages has historically been a pitfall when it comes to web development. If one user has a particular font installed on their computer but another user doesn't, this makes selecting fonts to use for your website a difficult task. Fortunately, CSS makes addressing this task easy thanks to the ``font-family`` property.
+Due to the huge number available, using fonts has historically been a pitfall when it comes to web development. Picture this scenario: a web developer has installed and uses a particular font on his or her webpage. The font is pretty arcane - so the probability of the font being present on other computers is relatively small. A user who visits the developer's webpage subsequently sees the page rendered incorrectly as the font is not present on their system. CSS tackles this particular issue with the ``font-family`` property.
 
-The value you specify for ``font-family`` can be a list of possible fonts - and the first one your computer or other device can render is the font that is used. Text within the specified HTML element subsequently has the selected font applied. The example CSS shown below applies *Arial* if the font exists. If it doesn't, it looks for *Helvetica*. If that font doesn't exist, any available `sans-serif font <http://en.wikipedia.org/wiki/Sans-serif>`_ is applied.
-
+The value you specify for ``font-family`` can be a *list* of possible fonts - and the first one your computer or other device has installed is the font that is used to render the webpage. Text within the specified HTML element subsequently has the selected font applied. The example CSS shown below applies *Arial* if the font exists. If it doesn't, it looks for *Helvetica*. If that font doesn't exist, any available `sans-serif font <http://en.wikipedia.org/wiki/Sans-serif>`_ is applied.
 
 .. code-block:: css
 	
@@ -100,11 +100,13 @@ The value you specify for ``font-family`` can be a list of possible fonts - and 
 	    font-family: 'Arial', 'Helvetica', sans-serif;
 	}
 
-In 1996, Microsoft started the `Core fonts for the Web <http://en.wikipedia.org/wiki/Core_fonts_for_the_Web>`_ initiative, with the aim of guaranteeing a particular set of fonts to be present on all computers. Today however, you can use pretty much any font you like - check out `Google Fonts <http://www.google.com/fonts>`_ for examples of the typesets you can use.
+In 1996, Microsoft started the `Core fonts for the Web <http://en.wikipedia.org/wiki/Core_fonts_for_the_Web>`_ initiative with the aim of guaranteeing a particular set of fonts to be present on all computers. Today however, you can use pretty much any font you like - check out `Google Fonts <http://www.google.com/fonts>`_ for examples of the typesets you can use and `this Web Designer Depot article <http://www.webdesignerdepot.com/2013/01/how-to-use-any-font-you-like-with-css3/>`_ on how to use such fonts.
 
-Selecting Colours
------------------
-When styling webpages, you can customise the colours of any element to suit your needs - from text colours to background colours, it can all be customised. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
+Colours and Backgrounds
+-----------------------
+Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
+
+.. warning:: You must take great care when picking colours to use on your webpages. Don't select colours that don't contrast well - people simply won't be able to read them! There are many websites available that can help you pick out a good colour scheme - try `colorcombos.com <http://www.colorcombos.com/>`_ for starters.
 
 .. _fig-css-colours:
 
@@ -113,23 +115,70 @@ When styling webpages, you can customise the colours of any element to suit your
 	
 	Illustration of some basic colours with their corresponding hexadecimal and RGB values. Illustration adapted from `W3Schools <http://www.w3schools.com/cssref/css_colors.asp>`_.
 
-There are also many different websites which you can visit that can tell you what codes to enter into your stylesheets - you aren't limited to the nine examples above. Try out `html-color-codes.com <http://html-color-codes.com/>`_ for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as `color-hex.com <http://www.color-hex.com/color-wheel/>`_ which gives you fine-grain control over the colours you can choose.
+There are many different websites which you can use to aid you in picking the right hexadecimal codes to enter into your stylesheets. You aren't simply limited to the nine examples above! Try out `html-color-codes.com <http://html-color-codes.com/>`_ for a simple grid of colours and their associated six character hexadecimal code. You can also try sites such as `color-hex.com <http://www.color-hex.com/color-wheel/>`_ which gives you fine-grain control over the colours you can choose.
 
-.. note:: If you aren't too clued up on hexadecimal or RGB colouring, check out `this thorough tutorial <http://www.quackit.com/css/css_color_codes.cfm>`_.
+.. note:: For more information on how colours are coded with hexadecimal, check out `this thorough tutorial <http://www.quackit.com/css/css_color_codes.cfm>`_.
 
 .. warning:: As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``. If you have grown up in Great Britain, double check your spelling and be prepared to spell it the *wrong way!* Hah!
 
-- applying colours to your elements is a straightforward process. what property you use depends on the aspect you wish to change!
+Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
-- for text, use the colour property.
-- backgrounds can be changed using the background property.
-	- can also apply background images to your elements. check out this page.
-- borders of elements 1px solid ???
-	- so width style colour.
+Text Colours
+............
+To change the colour of text within an element, you must apply the ``color`` property to the element containing the text you wish to change.
+The following CSS for example changes all the text within the associated webpage to bright red - hardly a sensible design choice!
+
+.. code-block:: css
+	
+	body {
+	    color: #FF0000;
+	}
+
+If you wish to change the colour of a small portion of text, wrap the text in a ``<span>`` tag and assign a class or unique identifier to the element. From there, you can simply reference the ``<span>`` tag in your stylesheet and apply a ``color``.
+
+Borders
+.......
+You can change the colour of an element's *borders*, too. We'll discuss what borders are in Section **?????????** - but for now, we'll show you how to apply colours to them to make everything look pretty.
+
+Border colours can be specified with the ``border-color`` property. You can supply one colour for all four sides of your border, or specify a different colour for each side. To achieve this, you'll need to supply different colours, each separated by a space.
+
+.. code-block:: css
+	
+	.some-element {
+	    border-color: #000000 #FF0000 #00FF00
+	}
+
+In the example above, we use multiple colours to specify a different colour for three sides. Starting at the top, we rotate clockwise. Thus, the order of colours for each side would be ``top right bottom left``.
+
+Our example applies any element with class ``some-element`` with a black top border, a red right border and a green bottom border. No left border value is supplied, meaning that the left-hand border is left transparent. To specify a color for only one side of an element's border, consider using the ``border-top-color``, ``border-right-color``, ``border-bottom-color`` and ``border-left-color`` properties where appropriate.
+
+Backgrounds and Images
+......................
+You can also change the colour of an element's background through use of the CSS ``background-color`` property. Like the ``color`` property described above, the ``background-color`` property can be easily applied by specifying a single colour as its value. Check out the example below which applies a bright green background to the entire webpage. Yuck!
+
+.. code-block:: css
+	
+	body {
+	    background-color: #00FF00;
+	}
+
+Of course, a colour isn't the only way to change your backgrounds. You can also apply background images to your elements, too. We can achieve this through the ``background-image`` property.
+
+
+.. code-block:: css
+	
+	#some-unique-element {
+	    background-image: url('../images/filename.png');
+	    background-color: #000000;
+	}
+
+The example above makes use of ``filename.png`` as the background image for the element with identifier ``some-unique-element``. The path to your image is specified *relative to the path of your CSS stylesheet*. Our example above uses the `double dot notation to specify the relative path <http://programmers.stackexchange.com/a/186719>`_ to the image. *Don't provide an absolute path here; it won't work as you expect!* We also apply a black background colour to fill the gaps left by our background image - it may not fill the entire size of the element.
+
+.. note:: By default, background images default to the top-left corner of the relevant element and are repeated on both the horizontal and vertical axes. You can customise this functionality by altering `how the image is repeated <http://www.w3schools.com/cssref/pr_background-repeat.asp>`_ with the ``background-image`` property. You can also specify `where the image is placed <http://www.w3schools.com/cssref/pr_background-position.asp>`_ by default with the ``background-position`` property.
 
 The Cascade
 -----------
-It's worth pointing out where the *Cascading* comes into play. You may have noticed in the example rendered output in Figure :num:`fig-css-render` that the red text is **bold**, yet no such property is defined in our ``h1`` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For ``<h1>`` elements, the `W3C website provides a typical style that is applied <http://www.w3.org/TR/html-markup/h1.html#h1-display>`_. If you check the typical style, you'll notice that it contains a ``font-weight: bold;`` property and value pairing, explaining where the **bold** text comes from. As we define a further style for ``<h1>`` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for ``font-size``), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out :num:`fig-css-cascading` for a graphical representation of the cascading process.
+It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes into play. You may have noticed in the example rendered output in Figure :num:`fig-css-render` that the red text is **bold**, yet no such property is defined in our ``h1`` style. This is a perfect example of what we mean by *cascading styles*. Most HTML elements have associated with them a *default style* which web browsers apply. For ``<h1>`` elements, the `W3C website provides a typical style that is applied <http://www.w3.org/TR/html-markup/h1.html#h1-display>`_. If you check the typical style, you'll notice that it contains a ``font-weight: bold;`` property and value pairing, explaining where the **bold** text comes from. As we define a further style for ``<h1>`` elements, typical property/value pairings *cascade* down into our style. If we define a new value for an existing property/value pairing (such as we do for ``font-size``), we *override* the existing value. This process can be repeated many times - and the property/value pairings at the end of the process are applied to the relevant element. Check out :num:`fig-css-cascading` for a graphical representation of the cascading process.
 
 .. _fig-css-cascading:
 
@@ -149,6 +198,8 @@ Absolute Positioning
 
 Styling Lists
 -------------
+
+.. _css-course-links-label:
 
 Styling Links
 -------------

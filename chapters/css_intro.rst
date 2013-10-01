@@ -218,57 +218,169 @@ Refer back to Figure :num:`fig-css-nesting-blocks` to refresh your mind about wh
 
 Basic Positioning
 -----------------
-An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover three important techniques for positioning elements within your webpage: *floats*, *relative positioning* and *absolute positioning*.
+An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. These elements are said to be *positioned statically*.
+
+However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover three important techniques for positioning elements within your webpage: *floats*, *relative positioning* and *absolute positioning*.
+
+
 
 Floats
 ......
-CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Using floats allows us to position elements to the left or right of a particular container - or the page.
+CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Using floats allows us to position elements to the left or right of a particular container - or page.
 
-Imagine that we have a ``<div>`` element that contains a series of nested ``<span>`` elements, as shown in Figure :num:`fig-css-positioning-float1`. Now imagine that we wish to position the blue ``<span>`` elements to the right of our container, and the yellow ``<span>`` elements to their current position - at left of our container.
+Let's work through an example. Consider the following HTML markup and CSS code.
 
-Now, we can create two basic CSS styles - ``.yellow`` and ``.blue``, which map to the yellow and blue ``<span>`` elements respectively. The CSS is as follows:
+.. code-block:: html
+	
+	<div class="green">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
 
 .. code-block:: css
 	
-	#container {
-	    background: green;
+	.green {
+	    background-color: green;
+	    border: 1px solid black;
 	}
 	
 	.yellow {
-	    float: left;
-	    background: yellow;
+	    background-color: yellow;
+	    border: 1px solid black;
 	}
 	
 	.blue {
-	    float: right;
-	    background: blue;
+	    background-color: blue;
+	    border: 1px solid black;
 	}
 
-Easy, huh? The example makes perfect sense - the ``float: right;`` instructs your browser to float blue ``<span>`` elements to the right of the green container, while yellow elements are instructed to float to the left. The resultant output is shown at the top of Figure :num:`fig-css-positioning-float2`.
+This produces the output shown below.
 
-.. _fig-css-positioning-float1:
-
-.. figure:: ../images/css-positioning-float1.pdf
-	:figclass: align-center
+.. raw:: html
 	
-	Our ``<div>`` container, with four ``<span>`` child elements. Yellow ``<span>`` elements are to remain at the left, while blue ``<span>`` elements should be moved to the right.
-
-.. warning::
-	You may find that the parent element of your floated element may not wrap. An illustration of the problem is shown in Figure :num:`fig-css-positioning-float2`. This is because applying the ``float`` property with a value of ``left`` or ``right`` takes the element out of the page's flow. To fix this problem, you can try one of these solutions.
+	<style type="text/css">
+		.css-float-ex1-green {
+		    background-color: green;
+		    border: 1px solid black;
+		}
 	
-	* You can apply a ``height`` to the container element which would adequately wrap around your floated elements. However, there may be circumstances where you simply don't know the height of your floated elements. Thus, you would not know the height to set your container to. Nightmare!
-	* You can alternatively apply the ``overflow: hidden;`` property and value pairing to your container. This ensures that the floated elements are adequately cleared. For more information on how this trick works, have a look at `this QuirksMode.org online article <http://www.quirksmode.org/css/clearing.html>`_.
+		.css-float-ex1-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
 	
-	By applying one of these solutions, your end result should then look like the illustration at the bottom of Figure :num:`fig-css-positioning-float2`.
-
-.. _fig-css-positioning-float2:
-
-.. figure:: ../images/css-positioning-float2.pdf
-	:figclass: align-center
+		.css-float-ex1-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		}
+	</style>
 	
-	Our float example with two figures - the top without the ``overflow: hidden;`` trick applied, the second with the trick applied. Note how the container wraps around the floated elements in the bottom illustration, just like you would expect.
+	<div class="css-float-ex1-green">
+	    <span class="css-float-ex1-yellow">Span 1</span>
+	    <span class="css-float-ex1-blue">Span 2</span>
+	</div>
+	
+We can see that each element follows its natural flow: the container element with class ``green`` spans the entire width of its parent container, while each of the ``<span>`` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text ``Span 2`` to the right of its container. We can achieve this by modifying our CSS ``.blue`` class to look like the following example.
 
-.. note:: For further reading on floats, check out the `W3Schools tutorial <http://www.w3schools.com/css/css_float.asp>`_, or perform a `web search <https://www.google.co.uk/search?q=css+float>`_. You can also play around with an `online version of our float example on JSFiddle <http://jsfiddle.net/5DXWc/1/>`_.
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	}
+
+By applying the ``float: right;`` property and value pairing, we should then see something similar to the example shown below.
+
+.. raw:: html
+	
+	<style type="text/css">
+		.css-float-ex2-green {
+		    background-color: green;
+		    border: 1px solid black;
+		}
+
+		.css-float-ex2-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-float-ex2-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+		}
+	</style>
+
+	<div class="css-float-ex2-green">
+	    <span class="css-float-ex2-yellow">Span 1</span>
+	    <span class="css-float-ex2-blue">Span 2</span>
+	</div>
+
+Note how the ``.blue`` element now appears at the right of its parent container, ``.green``. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied ``float: left`` to the ``.yellow`` ``<span>``?
+
+.. raw:: html
+	
+	<style type="text/css">
+		.css-float-ex3-green {
+		    background-color: green;
+		    border: 1px solid black;
+		}
+
+		.css-float-ex3-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    float: left;
+		}
+
+		.css-float-ex3-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+		}
+	</style>
+
+	<div class="css-float-ex3-green">
+	    <span class="css-float-ex3-yellow">Span 1</span>
+	    <span class="css-float-ex3-blue">Span 2</span>
+	</div>
+
+This would float the ``.yellow`` element, removing it from the natural flow of the webpage. In effect, it is not sitting on top of the ``.green`` container. This explains why the green container does not now fill down with the ``<span>`` elements like you would expect. You can apply the ``overflow: hidden;`` property to the parent container as shown below to fix this problem. For more information on how this trick works, have a look at `this QuirksMode.org online article <http://www.quirksmode.org/css/clearing.html>`_.
+
+.. code-block:: css
+	
+	.green {
+	    background-color: green;
+	    border: 1px solid black;
+	    overflow: hidden;
+	}
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-float-ex4-green {
+		    background-color: green;
+		    border: 1px solid black;
+		    overflow: hidden;
+		}
+
+		.css-float-ex4-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    float: left;
+		}
+
+		.css-float-ex4-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+		}
+	</style>
+
+	<div class="css-float-ex4-green">
+	    <span class="css-float-ex4-yellow">Span 1</span>
+	    <span class="css-float-ex4-blue">Span 2</span>
+	</div>
 
 Relative Positioning
 ....................
@@ -296,7 +408,7 @@ The ``left`` and ``top`` properties therefore allow us to specify how far along 
 .. figure:: ../images/css-positioning-relative.pdf
 	:figclass: align-center
 	
-	A mockup demonstrating how relative positioning works. Box 1 is our original box, statically positioned. With relative positioning applied, we move the box 200 pixels to the right (pushing from the left), and 80 pixels down (pushing from the top).
+	A mockup demonstrating how relative positioning works. Box 1 is our box, *statically positioned.* With relative positioning applied, we move the box 200 pixels to the right (pushing from the left), and 80 pixels down (pushing from the top).
 
 Absolute Positioning
 ....................

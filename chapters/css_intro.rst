@@ -232,15 +232,14 @@ Let's work through an example. Consider the following HTML markup and CSS code.
 
 .. code-block:: html
 	
-	<div class="green">
+	<div class="container">
 	    <span class="yellow">Span 1</span>
 	    <span class="blue">Span 2</span>
 	</div>
 
 .. code-block:: css
 	
-	.green {
-	    background-color: green;
+	.container {
 	    border: 1px solid black;
 	}
 	
@@ -259,9 +258,9 @@ This produces the output shown below.
 .. raw:: html
 	
 	<style type="text/css">
-		.css-float-ex1-green {
-		    background-color: green;
+		.css-float-ex1-container {
 		    border: 1px solid black;
+			padding: 10px;
 		}
 	
 		.css-float-ex1-yellow {
@@ -275,12 +274,12 @@ This produces the output shown below.
 		}
 	</style>
 	
-	<div class="css-float-ex1-green">
+	<div class="css-float-ex1-container">
 	    <span class="css-float-ex1-yellow">Span 1</span>
 	    <span class="css-float-ex1-blue">Span 2</span>
 	</div>
 	
-We can see that each element follows its natural flow: the container element with class ``green`` spans the entire width of its parent container, while each of the ``<span>`` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text ``Span 2`` to the right of its container. We can achieve this by modifying our CSS ``.blue`` class to look like the following example.
+We can see that each element follows its natural flow: the container element with class ``container`` spans the entire width of its parent container, while each of the ``<span>`` elements are enclosed inline within the parent. Now suppose that we wish to then move the blue element with text ``Span 2`` to the right of its container. We can achieve this by modifying our CSS ``.blue`` class to look like the following example.
 
 .. code-block:: css
 	
@@ -295,9 +294,9 @@ By applying the ``float: right;`` property and value pairing, we should then see
 .. raw:: html
 	
 	<style type="text/css">
-		.css-float-ex2-green {
-		    background-color: green;
+		.css-float-ex2-container {
 		    border: 1px solid black;
+			padding: 10px;
 		}
 
 		.css-float-ex2-yellow {
@@ -312,19 +311,20 @@ By applying the ``float: right;`` property and value pairing, we should then see
 		}
 	</style>
 
-	<div class="css-float-ex2-green">
+	<div class="css-float-ex2-container">
 	    <span class="css-float-ex2-yellow">Span 1</span>
 	    <span class="css-float-ex2-blue">Span 2</span>
 	</div>
 
-Note how the ``.blue`` element now appears at the right of its parent container, ``.green``. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied ``float: left`` to the ``.yellow`` ``<span>``?
+Note how the ``.blue`` element now appears at the right of its parent container, ``.container``. We have in effect disturbed the natural flow of our webpage by artificially moving an element! What if we then also applied ``float: left`` to the ``.yellow`` ``<span>``?
 
 .. raw:: html
 	
 	<style type="text/css">
-		.css-float-ex3-green {
-		    background-color: green;
+		.css-float-ex3-container {
 		    border: 1px solid black;
+			padding: 10px;
+			margin-bottom: 20px;
 		}
 
 		.css-float-ex3-yellow {
@@ -340,17 +340,16 @@ Note how the ``.blue`` element now appears at the right of its parent container,
 		}
 	</style>
 
-	<div class="css-float-ex3-green">
+	<div class="css-float-ex3-container">
 	    <span class="css-float-ex3-yellow">Span 1</span>
 	    <span class="css-float-ex3-blue">Span 2</span>
 	</div>
 
-This would float the ``.yellow`` element, removing it from the natural flow of the webpage. In effect, it is not sitting on top of the ``.green`` container. This explains why the green container does not now fill down with the ``<span>`` elements like you would expect. You can apply the ``overflow: hidden;`` property to the parent container as shown below to fix this problem. For more information on how this trick works, have a look at `this QuirksMode.org online article <http://www.quirksmode.org/css/clearing.html>`_.
+This would float the ``.yellow`` element, removing it from the natural flow of the webpage. In effect, it is not sitting on top of the ``.container`` container. This explains why the parent container does not now fill down with the ``<span>`` elements like you would expect. You can apply the ``overflow: hidden;`` property to the parent container as shown below to fix this problem. For more information on how this trick works, have a look at `this QuirksMode.org online article <http://www.quirksmode.org/css/clearing.html>`_.
 
 .. code-block:: css
 	
-	.green {
-	    background-color: green;
+	.container {
 	    border: 1px solid black;
 	    overflow: hidden;
 	}
@@ -358,10 +357,10 @@ This would float the ``.yellow`` element, removing it from the natural flow of t
 .. raw:: html
 
 	<style type="text/css">
-		.css-float-ex4-green {
-		    background-color: green;
+		.css-float-ex4-container {
 		    border: 1px solid black;
 		    overflow: hidden;
+			padding: 10px;
 		}
 
 		.css-float-ex4-yellow {
@@ -377,38 +376,175 @@ This would float the ``.yellow`` element, removing it from the natural flow of t
 		}
 	</style>
 
-	<div class="css-float-ex4-green">
+	<div class="css-float-ex4-container">
 	    <span class="css-float-ex4-yellow">Span 1</span>
 	    <span class="css-float-ex4-blue">Span 2</span>
 	</div>
+
+Applying ``overflow: hidden`` ensures that that our ``.container`` pushes down to the appropriate height.
 
 Relative Positioning
 ....................
 *Relative positioning* can be used if you required a greater degree of control over where elements are positioned on your webpage. As the name may suggest to you, relative positioning allows you to position an element *relative to where it would otherwise be located.* We make use of relative positioning with the ``position: relative;`` property and value pairing. However, that's only part of the story.
 
-Take the following CSS example. Within it, define a style for our unique ``<div>`` tag with identifier ``rel-div``. The element is square, with sides of 100 pixels. We also colour the element blue - and apply relative positioning to the element.
+Let's explain how this works. Consider our previous example where two ``<span>`` elements are sitting either side of their container. One is floated to the right, the other is sitting naturally on the left-hand side.
+
+.. code-block:: html
+	
+	<div class="container">
+	    <span class="yellow">Span 1</span>
+	    <span class="blue">Span 2</span>
+	</div>
 
 .. code-block:: css
 	
-	#rel-div {
-	    width: 100px;
-	    height: 100px;
-	    background: blue;
+	.container {
+	    border: 1px solid black;
+	    height: 200px;
+	}
+	
+	.yellow {
+	    background-color: yellow;
+	    border: 1px solid black;
+	}
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	}
+
+This produces the following result - just as we would expect. Note that we have artificially increased the ``height`` of our ``container`` element to 150 pixels. This will allow us more room with which to play with.
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-rel-ex1-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 150px;
+		}
+
+		.css-rel-ex1-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-rel-ex1-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+		}
+	</style>
+
+	<div class="css-rel-ex1-container">
+	    <span class="css-rel-ex1-yellow">Span 1</span>
+	    <span class="css-rel-ex1-blue">Span 2</span>
+	</div>
+
+Now let's attempt to position our ``.blue`` ``<span>`` element relatively. First, we apply the ``position: relative;`` property and value pairing to our ``.blue`` class, like so.
+
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
 	    position: relative;
-	    left: 200px;
+	}
+
+This has no effect on the positioning of our ``.blue`` element. What it does do however is change the positioning of ``.blue`` from ``static`` to ``relative``. This paves the way for us to specify where - from the original position of our element - we now wish the element to be.
+
+.. code-block:: css
+	
+	.blue {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	    position: relative;
+	    right: 100px;
 	    top: 80px;
 	}
 
-Of particular interest in this example is the use of the ``left`` and ``top`` properties. If we think back to our original explanation of what relative positioning achieves, we can then summarise what the above CSS code does to the positioning of our blue box. *Position the element relatively, pushed along 200 pixels from the left, and pushed from the top by 80 pixels.*
+By applying the ``right`` and ``top`` properties as shown in the example above, we are wishing the ``.blue`` element to be *pushed* 100 pixels *from the right*. In other words, we move the element 100 pixels to the left. The ``top`` property indicates that the element should be pushed 80 pixels from the *top* of the element. The result our experimentation can be seen below.
 
-The ``left`` and ``top`` properties therefore allow us to specify how far along an object should be *pushed* from where it would otherwise have been located. The ``bottom`` and ``right`` properties can also be used to *push* and element from the specified direction. The end result can be seen as box 2 in Figure :num:`fig-css-positioning-relative`, or online at `this updated JSFiddle <http://jsfiddle.net/735Ht/2/>`_.
+.. raw:: html
 
-.. _fig-css-positioning-relative:
+	<style type="text/css">
+		.css-rel-ex2-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 150px;
+		}
 
-.. figure:: ../images/css-positioning-relative.pdf
-	:figclass: align-center
+		.css-rel-ex2-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		}
+
+		.css-rel-ex2-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+			position: relative;
+		    right: 100px;
+		    top: 80px;
+		}
+	</style>
+
+	<div class="css-rel-ex2-container">
+	    <span class="css-rel-ex2-yellow">Span 1</span>
+	    <span class="css-rel-ex2-blue">Span 2</span>
+	</div>
+
+From this, we can deduce that the properties ``left`` and ``bottom`` *push* elements from the left and bottom respectively. We can test this out by applying the properties to our ``.yellow`` class as shown below.
+
+.. code-block:: css
 	
-	A mockup demonstrating how relative positioning works. Box 1 is our box, *statically positioned.* With relative positioning applied, we move the box 200 pixels to the right (pushing from the left), and 80 pixels down (pushing from the top).
+	.yellow {
+	    background-color: blue;
+	    border: 1px solid black;
+	    float: right;
+	    position: relative;
+	    left: 90px;
+	    bottom: 10px;
+	}
+
+This produces the following output. The ``.yellow`` container is pushed upwards and along to the right!
+
+.. raw:: html
+
+	<style type="text/css">
+		.css-rel-ex3-container {
+		    border: 1px solid black;
+			padding: 10px;
+			height: 150px;
+		}
+
+		.css-rel-ex3-yellow {
+		    background-color: yellow;
+		    border: 1px solid black;
+		    position: relative;
+		    left: 90px;
+		    bottom: 10px;
+		}
+
+		.css-rel-ex3-blue {
+		    background-color: blue;
+		    border: 1px solid black;
+		    float: right;
+			position: relative;
+		    right: 100px;
+		    top: 80px;
+		}
+	</style>
+
+	<div class="css-rel-ex3-container">
+	    <span class="css-rel-ex3-yellow">Span 1</span>
+	    <span class="css-rel-ex3-blue">Span 2</span>
+	</div>
+
+.. note:: What happens if you apply both a ``top`` and ``bottom`` property, or a ``left`` and ``right`` property? Interestingly, the *first* property for the relevant axis is applied. For example, if ``bottom`` is specified before ``top``, the ``bottom`` property is used.
 
 Absolute Positioning
 ....................

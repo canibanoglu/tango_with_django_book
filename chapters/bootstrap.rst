@@ -185,7 +185,8 @@ Now that we have the ``base.html`` all set up and ready to go, we can do a reall
 	A screenshot of the About page with Bootstrap Styling applied.
 
 
-With all pages fitted with hero unit ``<div>``s Rango you should be looking pretty good. However, you will notice that some of the page still look pretty ugly, especially the pages with forms (see the figure below). Later in this chapter we will update theses forms.
+With all pages fitted with hero unit <div>s Rango you should be looking pretty good. However, you will notice that some of the page still look pretty ugly, especially the pages with forms (see the figure below). Later in this chapter we will update theses forms.
+
 
 
 .. _fig-register-initial:

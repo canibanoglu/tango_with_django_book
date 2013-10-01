@@ -27,6 +27,7 @@ To include JQuery within your application, in the static folder create a *js* fo
 Then in your *base* template include:
 
 .. code-block:: html
+	
 	<script src="{% static "/js/jquery.js" %}"></script>
 	<script src="{% static "/js/rango-ajax.js" %}"></script>
 
@@ -44,19 +45,16 @@ Workflow
 To let users "like" certain categories undertake the following workflow:
 
 * In the ``category.html`` template:
- - Add in a "Like" button with ``id="like"``.
- - Add in a template tag to display the number of likes: ``{{% category.likes %}}``
- - Place this inside a div with ``id="like_count"``, i.e. ``<div id="like_count">{{ category.likes }} </div>``
- - This sets up the template to capture likes and to display likes for the category.
-
+	- Add in a "Like" button with ``id="like"``.
+	- Add in a template tag to display the number of likes: ``{{% category.likes %}}``
+	- Place this inside a div with ``id="like_count"``, i.e. ``<div id="like_count">{{ category.likes }} </div>``
+	- This sets up the template to capture likes and to display likes for the category.
 * Update the ``category`` view to pass through the number of likes for the category.
-
 * Create a view called, ``like_category`` which will examine the request and pick out the ``category_id`` and then increment the number of likes for that category.
- - Don't forgot to add in a the url mapping; so map the view to ``rango/like_category/`` i.e. the GET request will then be ``rango/like_category/?category_id=XXX``
- - Instead of return a HTML page have this view will return the new total number of likes for that category.
-
+	- Don't forgot to add in a the url mapping; so map the view to ``rango/like_category/`` i.e. the GET request will then be ``rango/like_category/?category_id=XXX``
+	- Instead of return a HTML page have this view will return the new total number of likes for that category.
 * Now in "rango-ajax.js" add the JQuery code to perform the AJAX GET request.
- - If the request is successful, then update the #like_count element, and hide the like button.
+	- If the request is successful, then update the #like_count element, and hide the like button.
 
 
 Updating Category Template
@@ -129,7 +127,7 @@ On examining the code, you will see that we are only allowing authenticated user
 
 Don't forget to add in the URL mapping, into ``rango/urls.py``. Update the ``urlpatterns`` by adding in:
 
-.. code-block::
+.. code-block:: python
 	
 	url(r'^like_category/$', views.like_category, name='like_category'),
 
@@ -164,34 +162,28 @@ Workflow
 To do this you will need to do the following:
 
 * Create a parameterised function called ``get_category_list(max_results=0, starts_with='')`` that returns all the categories starting with ``starts_with`` if ``max_results=0`` otherwise it returns up to ``max_results`` categories.
- - The function returns a list of category objects annotated with the encoded category denoted by the attribute, ``url``
-
-
+	- The function returns a list of category objects annotated with the encoded category denoted by the attribute, ``url``
 * Create a view called *suggest_category* which will examine the request and pick out the category query string.
- - Assume that a GET request is made and attempt to get the *query* attribute.
- - If the query string is not empty, ask the Category model to get the top 8 categories that start with the query string.
- - The list of category objects will then be combined into a piece of HTML via template. 
-
+	- Assume that a GET request is made and attempt to get the *query* attribute.
+	- If the query string is not empty, ask the Category model to get the top 8 categories that start with the query string.
+	- The list of category objects will then be combined into a piece of HTML via template. 
 * Instead of creating a template called ``suggestions.html`` re-use the ``category_list.html`` as it will be displaying data of the same type (i.e. categories).
-
 * To let the client ask for this data, you will need to create a URL mapping lets call it *category_suggest*
 
 With the mapping, view, and template for this view in place, you will need to update the ``base.html`` template and add in some javascript so that the categories can be displayed as the user types.
 
 * In the ``base.html`` template modify the sidebar block so that a div with an id="cats" encapsulates the categories being presented. The JQuery/AJAX will update this element.
+	- Above this <div> add an input box for a user to enter the letters of a category, i.e.:
 
- - Above this <div> add an input box for a user to enter the letters of a category, i.e.:
-
-	``<input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />``
+		``<input  class="input-medium search-query" type="text" name="suggestion" value="" id="suggestion" />``
 	
-
 * With these elements added into the templates, you can add in some JQuery to update the categories list as the user types.
- - Associate an on keypress event handler to the *input* with ``id="suggestion"``
- - ``$('#suggestion').keyup(function(){ ... })``
- - On keyup, issue an ajax call to retrieve the updated categories list
- - Then use the JQuery ``.get()`` function i.e. ``$(this).get( ... )``
- - If the call is successful, replace the content of the <div> with id="cats" with the data received.
- - Here you can use the JQuery ``.html()`` function i.e. ``$('#cats').html( data )``
+	- Associate an on keypress event handler to the *input* with ``id="suggestion"``
+	- ``$('#suggestion').keyup(function(){ ... })``
+	- On keyup, issue an ajax call to retrieve the updated categories list
+	- Then use the JQuery ``.get()`` function i.e. ``$(this).get( ... )``
+	- If the call is successful, replace the content of the <div> with id="cats" with the data received.
+	- Here you can use the JQuery ``.html()`` function i.e. ``$('#cats').html( data )``
 
 
 Parameterise the Get Category List function
@@ -291,10 +283,11 @@ Here, we attached an event handler to the HTML input element with ``id="suggesti
 Exercises
 ---------
 To let registered users quickly and easily add a Page to the Category put an "Add" button next to each search result.
+
 * Update the ``category.html`` template:
- - Add a mini-button next to each search result (if the user is authenticated), garnish the button with the title and url data, so that the JQuery can pick it out.
- - Put a <div> with ``id="page"`` around the pages in the category so that it can be updated when pages are added.
- - Remove that link to add button, if you like. 
+	- Add a mini-button next to each search result (if the user is authenticated), garnish the button with the title and url data, so that the JQuery can pick it out.
+	- Put a <div> with ``id="page"`` around the pages in the category so that it can be updated when pages are added.
+	- Remove that link to add button, if you like. 
 * Create a view auto_add_page that accepts a parameterised GET request (title, url, catid) and adds it to the category
 * Map an url to the view ``url(r'^auto_add_page/$', views.auto_add_page, name='auto_add_page'),``
 * Add an event handler to the button using JQuery - when added hide the button. The response could also update the pages listed on the category page, too.

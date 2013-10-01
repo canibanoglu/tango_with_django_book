@@ -189,10 +189,30 @@ It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes 
 
 .. _css-course-positioning:
 
-Inline and Block-Level Elements
--------------------------------
-Throughout the crash course thus far, we've introduced you to the ``<span>`` element.
+Containers, Block-Level and Inline Elements
+-------------------------------------------
+Throughout the crash course thus far, we've introduced you to the ``<span>`` element but have neglected to tell you what it is. All will become clear in this section as we explain *inline* and *block-level* elements.
 
+A ``<span>`` is considered to be a so-called *container element*. Along with a ``<div>`` tag, these elements are themselves meaningless and are provided only for you to *contain* and *separate* your page's content in a logical manner. For example, you may use a ``<div>`` to contain markup related to a navigation bar, with another ``<div>`` to contain markup related to the footer of your webpage. As containers themselves are meaningless, styles are usually applied to help control the presentational semantics of your webpage.
+
+Containers come in two flavours: *block-level elements* and *inline elements*. Check out Figure :num:`fig-css-nesting-blocks` for an illustration of the two kinds in action, and read on for a short description of each.
+
+.. _fig-css-nesting-blocks:
+
+.. figure:: ../images/css-nesting-blocks.pdf
+	:figclass: align-center
+	
+	Diagram demonstrating how block-level elements and inline elements are rendered by default. With block-level elements as green, note how a line break is taken between each element. Conversely, inline elements can appear on the same line beside each other. You can also nest block-level and inline elements within each other, but block-level elements cannot be nested within an inline element.
+
+Block-Level Elements
+....................
+In simple terms, a *block-level element* are by default rectangular in shape and spread across the entire width of the containing element. Block-level elements therefore by default appear underneath each other. The rectangular structure of each block-level element is commonly referred to as the *box model*, which we discuss in Section :ref:`css-course-box-model-label`.
+
+Block-level elements can be nested within other block-level elements to create a hierarchy of elements. You can also nest *inline elements* within block-level elements, but not vice-versa! Read on to find out why.
+
+Inline Elements
+...............
+An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage,
 
 
 
@@ -221,6 +241,11 @@ Relative Positioning
 
 Absolute Positioning
 ....................
+
+.. _css-course-box-model-label:
+
+The Box Model
+-------------
 
 Styling Lists
 -------------

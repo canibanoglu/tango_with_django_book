@@ -29,7 +29,6 @@ How To Tango With Django
    chapters/summary
    chapters/git
    chapters/css_intro
-   chapters/css
    chapters/javascript
    chapters/test
 

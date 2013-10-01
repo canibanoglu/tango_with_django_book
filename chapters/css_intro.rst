@@ -123,6 +123,8 @@ There are many different websites which you can use to aid you in picking the ri
 
 Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
+.. _css-course-colours-text-label:
+
 Text Colours
 ............
 To change the colour of text within an element, you must apply the ``color`` property to the element containing the text you wish to change.
@@ -212,7 +214,7 @@ Block-level elements can be nested within other block-level elements to create a
 
 Inline Elements
 ...............
-An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage,
+An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage, and are commonly found to be wrapped around text. This application was explained in Section :ref:`css-course-colours-text-label`, where a portion of text could be wrapped in ``<span>`` tags to change its colour. The corresponding HTML markup would look similar to the example below.
 
 
 

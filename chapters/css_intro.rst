@@ -900,6 +900,139 @@ The Box Model
 
 Styling Lists
 -------------
+Lists are everywhere. Whether you're reading a list of learning outcomes for a course or a reading a list of times for the train, you know what a list looks like and appreciate its simplicity. If you have a list of items on a webpage, why not use a HTML list? Using lists within your webpages - `according to Brainstorm and Raves <http://brainstormsandraves.com/articles/semantics/structure/>`_ - promotes good HTML document structure, allowing text-based browsers, screen readers and other browsers that do not support CSS to render your page in a sensible manner.
+
+Lists however don't look particularly appealing to end-users. Take the following HTML list that we'll be styling as we go along trying out different things.
+
+.. code-block:: html
+	
+	<ul class="sample-list">
+	    <li>Django</li>
+	    <li>How to Tango with Django</li>
+	    <li>Two Scoops of Django</li>
+	</ul>
+
+Rendered without styling, the list looks pretty boring.
+
+.. raw:: html
+	
+	<style type="text/css">
+		.css-lists-border {
+		    overflow: hidden;
+		    border: 1px solid black;
+		    padding: 10px 0 10px;
+		    margin: 10px 0 10px;
+		}
+	</style>
+	
+	<div class="css-lists-border">
+		<ul>
+		    <li>Django</li>
+		    <li>How to Tango with Django</li>
+		    <li>Two Scoops of Django</li>
+		</ul>
+	</div>
+
+Let's make some modifications. First, let's get rid of the ugly bullet points. With our ``<ul>`` element already (and conveniently) set with class ``sample-list``, we can create the following style.
+
+.. code-block:: css
+	
+	.sample-list {
+	    list-style-type: none;
+	}
+
+This produces the following result. Note the now lacking bullet points!
+
+.. raw:: html
+	
+	<style type="text/css">
+	    .css-lists-ex2 {
+	        list-style-type: none;
+	    }
+	</style>
+	
+	<div class="css-lists-border">
+		<ul class="css-lists-ex2">
+		    <li>Django</li>
+		    <li>How to Tango with Django</li>
+		    <li>Two Scoops of Django</li>
+		</ul>
+	</div>
+
+Let's now change the orientation of our list. We can do this by altering the ``display`` property of each of our list's elements (``<li>``). The following style maps to this for us.
+
+.. code-block:: css
+	
+	.sample-list li {
+	    display: inline;
+	}
+
+When applied, our list elements now appear on a single line, just like in the example below.
+
+.. raw:: html
+	
+	<style type="text/css">
+	    .css-lists-ex3 {
+	        list-style-type: none;
+	    }
+		
+		.css-lists-ex3 li {
+		    display: inline;
+		}
+	</style>
+	
+	<div class="css-lists-border">
+		<ul class="css-lists-ex3">
+		    <li>Django</li>
+		    <li>How to Tango with Django</li>
+		    <li>Two Scoops of Django</li>
+		</ul>
+	</div>
+
+While we may have the correct orientation, our list now looks awful. Where does one element start and the other end? It's a complete mess! Let's adjust our list element style and add some contrast and padding to make things look nicer.
+
+.. code-block:: css
+	
+	.example-list li {
+	    display: inline;
+	    background-color: #333333;
+	    color: #FFFFFF;
+	    padding: 10px;
+	}
+
+When applied, our list looks so much better - and quite professional, too!
+
+.. raw:: html
+
+	<style type="text/css">
+	    .css-lists-ex4 {
+	        list-style-type: none;
+	    }
+
+		.css-lists-ex4 li {
+		    display: inline;
+		    background-color: #333333;
+		    color: #FFFFFF;
+		    padding: 10px;
+		}
+	</style>
+	
+	<div class="css-lists-border">
+		<ul class="css-lists-ex4">
+		    <li>Django</li>
+		    <li>How to Tango with Django</li>
+		    <li>Two Scoops of Django</li>
+		</ul>
+	</div>
+
+From the example, it is hopefully clear that lists can be easily customised to suit the requirements of your webpages. For more information and inspiration on how to style lists, you can check out some of the selected links below.
+
+* Have a look at `this excellent tutorial on styling lists on A List Apart <http://alistapart.com/article/taminglists/>`_.
+* Have a look at `this about.com article which demonstrates how to use your own bullets <http://webdesign.about.com/od/css/a/aa012907.htm>`_!
+* Check out `this advanced tutorial from Web Designer Wall <http://webdesignerwall.com/tutorials/advanced-css-menu>`_ which uses graphics to make awesome looking lists. In the tutorial, the author uses Photoshop - you could try using a simpler graphics package if you don't feel confident with Photoshop.
+* `This awesome site compilation from devsnippets.com <http://devsnippets.com/article/styling-your-lists.html>`_ provides some great inspiration and tips on how you can style lists.
+
+The possibilities of styling lists is endless! You could say it's a never-ending list...
 
 .. _css-course-links-label:
 

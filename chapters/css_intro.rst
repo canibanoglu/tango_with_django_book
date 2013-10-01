@@ -104,9 +104,11 @@ In 1996, Microsoft started the `Core fonts for the Web <http://en.wikipedia.org/
 
 Colours and Backgrounds
 -----------------------
-Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use.
+Colours are important in defining the look and feel of your website. You can change the colour of any element within your webpage, ranging from background colours to borders and text. In this book, we make use of *hexadecimal colour codes* to choose the colours we want. As you can see from the list of basic colours in Figure :num:`fig-css-colours`, you can supply either a *hexadecimal* or *RGB (red-green-blue)* value for the colour you want to use. You can also `specify words to describe your colours <http://www.w3schools.com/cssref/css_colornames.asp>`_, such as ``green``, ``yellow`` or ``blue``.
 
 .. warning:: You must take great care when picking colours to use on your webpages. Don't select colours that don't contrast well - people simply won't be able to read them! There are many websites available that can help you pick out a good colour scheme - try `colorcombos.com <http://www.colorcombos.com/>`_ for starters.
+
+Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
 .. _fig-css-colours:
 
@@ -120,8 +122,6 @@ There are many different websites which you can use to aid you in picking the ri
 .. note:: For more information on how colours are coded with hexadecimal, check out `this thorough tutorial <http://www.quackit.com/css/css_color_codes.cfm>`_.
 
 .. warning:: As you may have noticed, CSS uses American/International English to spell words. As such, there are a few words which are spelt slightly differently compared to their British counterparts, like ``color`` and ``center``. If you have grown up in Great Britain, double check your spelling and be prepared to spell it the *wrong way!* Hah!
-
-Applying colours to your elements is a straightforward process. The property that you use depends on the aspect of the element you wish to change! The following subsections explain the relevant properties and how to apply them.
 
 .. _css-course-colours-text-label:
 
@@ -222,18 +222,36 @@ An important concept that we have not yet covered in this CSS crash course regar
 
 Floats
 ......
-CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Indeed, we've already made use of floats - have a look at the CSS styles that correspond to Rango's navigation bar! Using floats allows us to position elements to the left or right of a particular container - or the page.
+CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Using floats allows us to position elements to the left or right of a particular container - or the page.
 
-Imagine that we have a ``<div>`` element that contains a series of nested ``<span>`` elements, as shown in Figure :num:`fig-css-positioning-float1`. Now, imagine that we wish to position the blue ``<span>`` elements to the right of our container, and the yellow ``<span>`` elements to their current position - at left of our container.
+Imagine that we have a ``<div>`` element that contains a series of nested ``<span>`` elements, as shown in Figure :num:`fig-css-positioning-float1`. Now imagine that we wish to position the blue ``<span>`` elements to the right of our container, and the yellow ``<span>`` elements to their current position - at left of our container.
+
+Now, we can create two basic CSS styles - ``.yellow`` and ``.blue``, which map to the yellow and blue ``<span>`` elements respectively. The CSS is as follows:
+
+.. code-block:: css
+	
+	#container {
+	    background: green;
+	}
+	
+	.yellow {
+	    float: left;
+	    background: yellow;
+	}
+	
+	.blue {
+	    float: right;
+	    background: blue;
+	}
+
+Easy, huh? The example makes perfect sense - the ``float: right;`` instructs your browser to float blue ``<span>`` elements to the right of the green container, while yellow elements are instructed to float to the left. The resultant output is shown at the top of Figure :num:`fig-css-positioning-float2`.
 
 .. _fig-css-positioning-float1:
 
 .. figure:: ../images/css-positioning-float1.pdf
 	:figclass: align-center
 	
-	Our fictional ``<div>`` container, with four ``<span>`` child elements. Yellow ``<span>`` elements are to remain at the left, while blue ``<span>`` elements should be moved to the right.
-
-Easy, huh? The example makes perfect sense - the ``float: right;`` instructs your browser to float blue ``<span>`` elements to the right of the green container, while yellow elements are instructed to float to the left. The resultant output is shown at the top of Figure :num:`fig-css-positioning-float2`.
+	Our ``<div>`` container, with four ``<span>`` child elements. Yellow ``<span>`` elements are to remain at the left, while blue ``<span>`` elements should be moved to the right.
 
 .. warning::
 	You may find that the parent element of your floated element may not wrap. An illustration of the problem is shown in Figure :num:`fig-css-positioning-float2`. This is because applying the ``float`` property with a value of ``left`` or ``right`` takes the element out of the page's flow. To fix this problem, you can try one of these solutions.
@@ -250,8 +268,35 @@ Easy, huh? The example makes perfect sense - the ``float: right;`` instructs you
 	
 	Our float example with two figures - the top without the ``overflow: hidden;`` trick applied, the second with the trick applied. Note how the container wraps around the floated elements in the bottom illustration, just like you would expect.
 
+.. note:: For further reading on floats, check out the `W3Schools tutorial <http://www.w3schools.com/css/css_float.asp>`_, or perform a `web search <https://www.google.co.uk/search?q=css+float>`_. You can also play around with an `online version of our float example on JSFiddle <http://jsfiddle.net/5DXWc/1/>`_.
+
 Relative Positioning
 ....................
+*Relative positioning* can be used if you required a greater degree of control over where elements are positioned on your webpage. As the name may suggest to you, relative positioning allows you to position an element *relative to where it would otherwise be located.* We make use of relative positioning with the ``position: relative;`` property and value pairing. However, that's only part of the story.
+
+Take the following CSS example. Within it, define a style for our unique ``<div>`` tag with identifier ``rel-div``. The element is square, with sides of 100 pixels. We also colour the element blue - and apply relative positioning to the element.
+
+.. code-block:: css
+	
+	#rel-div {
+	    width: 100px;
+	    height: 100px;
+	    background: blue;
+	    position: relative;
+	    left: 200px;
+	    top: 80px;
+	}
+
+Of particular interest in this example is the use of the ``left`` and ``top`` properties. If we think back to our original explanation of what relative positioning achieves, we can then summarise what the above CSS code does to the positioning of our blue box. *Position the element relatively, pushed along 200 pixels from the left, and pushed from the top by 80 pixels.*
+
+The ``left`` and ``top`` properties therefore allow us to specify how far along an object should be *pushed* from where it would otherwise have been located. The ``bottom`` and ``right`` properties can also be used to *push* and element from the specified direction. The end result can be seen as box 2 in Figure :num:`fig-css-positioning-relative`, or online at `this updated JSFiddle <http://jsfiddle.net/735Ht/2/>`_.
+
+.. _fig-css-positioning-relative:
+
+.. figure:: ../images/css-positioning-relative.pdf
+	:figclass: align-center
+	
+	A mockup demonstrating how relative positioning works. Box 1 is our original box, statically positioned. With relative positioning applied, we move the box 200 pixels to the right (pushing from the left), and 80 pixels down (pushing from the top).
 
 Absolute Positioning
 ....................

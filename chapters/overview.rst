@@ -40,7 +40,7 @@ At the end of each chapter, we have included a number of exercises designed to p
 
 https://github.com/leifos/tango_with_django
 
-and to see a working version of the application you can visit the *How to Tango with Django* website:
+and to see a working version of the application you can visit the `How to Tango with Django <http://www.tangowithdjango.com/rango/>`_ website:
 
 http://www.tangowithdjango.com/rango/
 
@@ -110,7 +110,14 @@ N-Tier Architecture
 -------------------
 The high level architecture for most web applications is an 3-Tier architecture. Rango will be a variant on this architecture as it interfaces with an external service.
 
-.. image:: ../images/rango-ntier-architecture.png
+.. _fig-ntier:
+
+.. figure:: ../images/rango-ntier-architecture.png
+	:scale: 100%
+	:figclass: align-center
+
+	Overview of the system architecture for Rango.
+
 
 
 Since we are building a web application with Django, we will use the following technologies:
@@ -124,26 +131,39 @@ For the most part, this book will focus on developing the middleware. Though it 
 
 Wireframes
 ----------
-Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time and can vary from hand drawn sketches to exact mock ups depending on the tools that you have available. For Rango, we'd like to make the site look something like these screen shots:
+Wireframes are great way to provide clients with some idea of what the application should look like when complete. They save a lot of time and can vary from hand drawn sketches to exact mock ups depending on the tools that you have available. For Rango, we'd like to make the index page of the site look like the screen shot shown in Figure :num:`fig-index-page` and the category page is shown in Figure :num:`fig-cat-page`:
 
-.. image:: ../images/wireframe_default.pdf
+.. _fig-index-page:
 
-.. image:: ../images/wireframe_cat.pdf
+.. figure:: ../images/ch1-rango-index.png
+	:scale: 60%
+	:figclass: align-center
 
-TODO(leifos): add in annotations to the screenshots describing the functionality
+	The Index page with the categories bar on the left, also showing the top five pages and top five categories.
+
+
+.. _fig-cat-page:
+
+	.. figure:: ../images/ch1-rango-cat-page.png
+		:scale: 60%
+		:figclass: align-center
+
+		The Category page showing the pages in the category (along with the number of views), and below a search for *python* has been conducted and the results are displayed.
+
+
 
 
 Pages and URL Mappings
 ----------------------
 From the specification we have already identified two pages that our application will present to the user at different points in time. To access each of these pages we will need to describe in some fashion the URL mappings - that is what the URL string will be that will activate this page (later referred to as View).
 
-	* rango/ will point to the main (or index) page view
-	* rango/about/ will point to an about page view
-	* rango/cat/<category_name>/ will point to the category page view for <category_name>, where the category might be:
+	* ``rango/`` will point to the main (or index) page view
+	* ``rango/about/`` will point to an about page view
+	* ``rango/category/<category_name>/`` will point to the category page view for ``<category_name>``, where the category might be:
 		* games 
 		* python recipes
 		* code and compilers
-	* rango/etc 
+	* ``rango/etc`` 
 	
 As we build our application we will probably need to create other URL mappings, but these ones will get us started. Also, at some point we will have to transform the category names in a valid URL string, as well as handle when the category does not exist. 
 
@@ -153,38 +173,50 @@ Entity-Relationship Diagram
 ---------------------------
 Given the specification, it should be clear that, we have at least two entities: category and page, and that a category houses many pages. So we can formulate the following ER Diagram to describe the data model. 
 
-.. image:: ../images/rango-erd.png
+
+.. _fig-rango-erd:
+
+	.. figure:: ../images/rango-erd.png
+		:scale: 100%
+		:figclass: align-center
+
+		The Entity Relationship Diagram of the main entities.
 
 Note that the specification is vague. One page may be in one or many categories. So we could model the relationship as a many-to-many. However, this introduces a number of complexities, so we will make the simplifying assumption that one category contains many pages, but one page is assigned to one category. This does not preclude that the same page can be assigned to different categories (but the page would have to be entered twice, which may not be ideal). It good to note down any working assumptions like this, because you never know when they may come back to haunt you. By noting it down means you can communicate it with your development team and make sure that it sensible or that they are happy to proceed under such an assumption.
 
 The resulting tables are shown below, where *Str* denotes a string or char field, *Int* denotes an integer field, *URL* denotes a URL field and FK denotes a Foreign Key.
 
-**Category**
-
-+------------+------+
-| Field      | Type |
-+============+======+
-| name       | Str  |
-+------------+------+
-| views      | Int  |
-+------------+------+
-| likes      | Int  |
-+------------+------+
 
 
-**Page**
+Category Table
+..............
 
-+------------+------+
-| Field      | Type |
-+============+======+
-| category   | FK   |
-+------------+------+
-| title      | Str  |
-+------------+------+
-| url        | URL  |
-+------------+------+
-| views      | int  |
-+------------+------+
+	+------------+------+
+	| Field      | Type |
+	+============+======+
+	| name       | Str  |
+	+------------+------+
+	| views      | Int  |
+	+------------+------+
+	| likes      | Int  |
+	+------------+------+
+
+
+Page Table
+...........
+
+	+------------+------+
+	| Field      | Type |
+	+============+======+
+	| category   | FK   |
+	+------------+------+
+	| title      | Str  |
+	+------------+------+
+	| url        | URL  |
+	+------------+------+
+	| views      | int  |
+	+------------+------+
+
 
 We will also have a User table - which we have not shown here, but shall introduce later in the book. In the following chapters will we see how to instantiate these data models in Django and how to use Django's Object Relational Mapping to connect to the database. 
 
@@ -200,21 +232,21 @@ Working with the Official Django Tutorials
 
 In the table below we suggest undertaking the Tutorials as part of the exercises associated with the chapters below in order to re-enforce your understanding of the framework and to build up your skills.
 
-+--------------------+--------------------------+
-| Tango With Django  | Official Django Tutorial |
-+====================+==========================+
-| Chapter 3          | Part 1 - Models          |
-+--------------------+--------------------------+
-| Chapter 5          | Part 2 - Admin           |
-+--------------------+--------------------------+
-| Chapter 6          | Part 3 - URLS and Views  |
-+--------------------+--------------------------+
-| Chapter 7          | Part 4 - Templates       |
-+--------------------+--------------------------+
-| Chapter 18         | Part 5 - Testing         |
-+--------------------+--------------------------+
-| Chapter 11         | Part 6 - CSS             |
-+--------------------+--------------------------+
+	+--------------------+--------------------------+
+	| Tango With Django  | Official Django Tutorial |
+	+====================+==========================+
+	| Chapter 3          | Part 1 - Models          |
+	+--------------------+--------------------------+
+	| Chapter 5          | Part 2 - Admin           |
+	+--------------------+--------------------------+
+	| Chapter 6          | Part 3 - URLS and Views  |
+	+--------------------+--------------------------+
+	| Chapter 7          | Part 4 - Templates       |
+	+--------------------+--------------------------+
+	| Chapter 18         | Part 5 - Testing         |
+	+--------------------+--------------------------+
+	| Chapter 11         | Part 6 - CSS             |
+	+--------------------+--------------------------+
 
 
 

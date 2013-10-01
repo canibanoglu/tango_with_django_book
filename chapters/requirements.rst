@@ -296,8 +296,6 @@ If you examine `requirements.txt' using either the command ``more'' or ``cat'' r
 
 ``$ pip install -r requirements.txt --no-index --find-links``
 
-#TODO(leifos): test this out.
-
 
 Integrated Development Environment
 ----------------------------------

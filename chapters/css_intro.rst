@@ -128,15 +128,15 @@ Applying colours to your elements is a straightforward process. The property tha
 Text Colours
 ............
 To change the colour of text within an element, you must apply the ``color`` property to the element containing the text you wish to change.
-The following CSS for example changes all the text within the associated webpage to bright red - hardly a sensible design choice!
+The following CSS for example changes all the text within an element using class ``red`` to...red!
 
 .. code-block:: css
 	
-	body {
+	.red {
 	    color: #FF0000;
 	}
 
-If you wish to change the colour of a small portion of text, wrap the text in a ``<span>`` tag and assign a class or unique identifier to the element. From there, you can simply reference the ``<span>`` tag in your stylesheet and apply a ``color``.
+You can alter the presentation of a small portion of text within your webpage by wrapping the text within ``<span>`` tags. Assign a class or unique identifier to the element, and from there you can simply reference the ``<span>`` tag in your stylesheet while applying the ``color`` property.
 
 Borders
 .......
@@ -208,23 +208,30 @@ Containers come in two flavours: *block-level elements* and *inline elements*. C
 
 Block-Level Elements
 ....................
-In simple terms, a *block-level element* are by default rectangular in shape and spread across the entire width of the containing element. Block-level elements therefore by default appear underneath each other. The rectangular structure of each block-level element is commonly referred to as the *box model*, which we discuss in Section :ref:`css-course-box-model-label`.
+In simple terms, a *block-level element* are by default rectangular in shape and spread across the entire width of the containing element. Block-level elements therefore by default appear underneath each other. The rectangular structure of each block-level element is commonly referred to as the *box model*, which we discuss in Section :ref:`css-course-box-model-label`. A typical block-level element you will use is the ``<div>`` tag, short for *division.*
 
 Block-level elements can be nested within other block-level elements to create a hierarchy of elements. You can also nest *inline elements* within block-level elements, but not vice-versa! Read on to find out why.
 
 Inline Elements
 ...............
-An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage, and are commonly found to be wrapped around text. This application was explained in Section :ref:`css-course-colours-text-label`, where a portion of text could be wrapped in ``<span>`` tags to change its colour. The corresponding HTML markup would look similar to the example below.
+An *inline element* does exactly what it says on the tin. These elements appear *inline* to block-level elements on your webpage, and are commonly found to be wrapped around text. You'll find that ``<span>`` tags are commonly used for this purpose.
 
+This text-wrapping application was explained in Section :ref:`css-course-colours-text-label`, where a portion of text could be wrapped in ``<span>`` tags to change its colour. The corresponding HTML markup would look similar to the example below.
 
+.. code-block:: html
+	
+	<div>
+	    This is some text wrapped within a block-level element. <span class="red">This text is wrapped within an inline element!</span> But this text isn't.
+	</div>
 
-
-In the markup snippet above, we introduce two new HTML tags - ``<div>`` and ``<span>``. Essentially, these tags themselves are meaningless, and are only present to provide you with a way to contain and separate your page's content. ``<div>`` tags can be considered a *block-level element* used to contain other content. A block-level element will by default display a line break after it. Conversely, ``<span>`` tags can be considered as *inline elements*, and can be used as a container for text. The difference between block-level elements and inline elements are key - and explain why a ``<div>`` can contain ``<span>`` elements, but not vice versa. For an illustration of the difference between the two, check out Figure :num:`fig-css-nesting-blocks`. In the diagram provided, you see ``<div>`` and ``<span>`` elements represented as boxes. The diagram also hints at how you can nest blocks.
+Refer back to Figure :num:`fig-css-nesting-blocks` to refresh your mind about what you can and cannot nest before you move on.
 
 Basic Positioning
 -----------------
-An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing on newlines. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover four important techniques for positioning elements within your webpage.
+An important concept that we have not yet covered in this CSS crash course regards the positioning of elements within your webpage. Most of the time, you'll be satisfied with inline elements appearing alongside each other, and block-level elements appearing underneath each other. However, there will be scenarios where you require a little bit more control on where everything goes. In this section, we'll briefly cover four important techniques for positioning elements within your webpage: *floats*, ?? *relative positioning* *absolute positioning*.
 
+Floats
+......
 CSS *floats* are one of the most straightforward techniques for positioning elements within your webpage. Indeed, we've already made use of floats - have a look at the CSS styles that correspond to Rango's navigation bar! Using floats allows us to position elements to the left or right of a particular container - or the page.
 
 Imagine that we have a ``<div>`` element that contains a series of nested ``<span>`` elements, as shown in Figure :num:`fig-css-positioning-float1`. Now, imagine that we wish to position the blue ``<span>`` elements to the right of our container, and the yellow ``<span>`` elements to their current position - at left of our container.

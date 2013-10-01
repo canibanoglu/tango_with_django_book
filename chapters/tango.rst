@@ -34,12 +34,10 @@ It would be nice to show the different categories that users can browse through 
 
 * Create a ``category_list.html`` template and migrate the template code for presenting the categories list from  ``index.html`` to this new template. This template won't be a full HTML document, but a portion of one which we can include in other templates.
 * Use the ``{% include "rango/category_list.html" %}`` to now include this template code into the ``base.html`` template within the sidebar. This means that all pages will now include categories, assuming the ``cat_list`` data is passed through in the context dictionary.
- - To handle the scenario where ``cat_list`` isn't available, add the conditional ``{% if cat_list %}`` to ensure that only templates providing ``cat_list`` attempt to render this component.
-
+	* To handle the scenario where ``cat_list`` isn't available, add the conditional ``{% if cat_list %}`` to ensure that only templates providing ``cat_list`` attempt to render this component.
 * Migrate the code that gathers the list of categories from the ``index()`` view and place it into your ``category()`` view. While it's really tempting to simply copy and paste, there's a much better way to go about this!
- - Create a helper function called ``get_category_list()`` within ``views.py`` that returns the list of categories.
- - We can then call this function whenever we want to get the category list to be presented in the sidebar. This saves a lot of code repetition!
-
+	* Create a helper function called ``get_category_list()`` within ``views.py`` that returns the list of categories.
+	* We can then call this function whenever we want to get the category list to be presented in the sidebar. This saves a lot of code repetition!
 * Pass the category list data (``cat_list``) through to the template to complete the process.
 
 Searching Within a Category Page
@@ -67,9 +65,9 @@ Currently, Rango provides a direct link to external pages. This is not very good
 
 * Create a new view called ``track_url()``, and map it to URL ``/rango/goto/``.
 * The ``track_url()`` view will examine the HTTP ``GET`` request parameters and pull out the ``page_id``. The HTTP ``GET`` requests will look something like ``/rango/goto/?page_id=1``.
- - Your view should then be able to find the relevant ``Page`` model for the selected page, and add 1 to the associated ``views`` field.
- - The view will then redirect the user to the specified URL using Django's ``redirect`` method.
- - In the scenario where no parameters are in the HTTP ``GET`` request for ``page_id``, or the parameters do not return a ``Page`` object, redirect the user to Rango's homepage.
+	* Your view should then be able to find the relevant ``Page`` model for the selected page, and add 1 to the associated ``views`` field.
+	* The view will then redirect the user to the specified URL using Django's ``redirect`` method.
+	* In the scenario where no parameters are in the HTTP ``GET`` request for ``page_id``, or the parameters do not return a ``Page`` object, redirect the user to Rango's homepage.
 * Update the ``category.html`` so that it uses ``/rango/goto/?page_id=XXX`` instead of using the direct URL.
 
 Hint

@@ -371,8 +371,8 @@ Now let's verify that the population script populated the database. Restart the 
 
 A population script takes a bit of time to write but if you ever change your models, you'll be glad you have it. Remember to update your population script when you update your models too - you don't want the two to get out of sync with each other.
 
-Basic Workflow
---------------
+Basic Workflows
+---------------
 Now that we've covered the core principles of dealing with Django's models functionality, now is a good time to summarise the processes involved in setting everything up. We've split the core tasks into separate sections for you.
 
 Setting up your Database

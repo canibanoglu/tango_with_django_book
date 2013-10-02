@@ -14,7 +14,7 @@
 	<key>BackgroundGraphic</key>
 	<dict>
 		<key>Bounds</key>
-		<string>{{0, 0}, {1118.5799560546875, 782.8900146484375}}</string>
+		<string>{{0, 0}, {1118, 783}}</string>
 		<key>Class</key>
 		<string>SolidGraphic</string>
 		<key>ID</key>
@@ -53,7 +53,7 @@
 	<array>
 		<dict>
 			<key>Bounds</key>
-			<string>{{308.33332108126797, 372.24071698129984}, {157.40740966796875, 68}}</string>
+			<string>{{237.1851758397664, 369.46293931390119}, {157.40740966796875, 68}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -95,19 +95,21 @@
 				bmcBlIQBK0tSYW5nbyBpbWFnZSBob3N0ZWQgb24gZmxp
 				Y2tyIHVuZGVyIENyZWF0aXZlIENvbW1vbnMgbGljZW5j
 				ZSAtIHVzZXIgZWxicmFnb26GhAJpSQEWkoSEhAxOU0Rp
-				Y3Rpb25hcnkAlIQBaQOShJaWBk5TRm9udIaShISEBk5T
-				Rm9udB6UmRyEBVsyOGNdBgAAABQAAAD//kgAZQBsAHYA
-				ZQB0AGkAYwBhAIQBZg6EAWMAnQGdAJ0AhpKElpYQTlNQ
-				YXJhZ3JhcGhTdHlsZYaShISEF05TTXV0YWJsZVBhcmFn
-				cmFwaFN0eWxlAISEEE5TUGFyYWdyYXBoU3R5bGUAlIQE
-				Q0NAUwEAhYEACIQEWzFmXYPNzEw9hpKElpYOTlNPcmln
-				aW5hbEZvbnSGkpqGlwIFkoSYmQSSoJKEm5kohAVbNDBj
-				XQYAAAAeAAAA//5IAGUAbAB2AGUAdABpAGMAYQAtAEIA
-				bwBsAGQAAACcDp0AnQGdAJ0AhpKckp2SmZKikoSWlgdO
-				U0NvbG9yhpKEhIQHTlNDb2xvcgCUnQKEBGZmZmaD3txc
-				PoPIxsY+g93bWz8BhoaXAwGShJiZBJKgkqKSnJKdkpmS
-				opKjkoSlnQKkg/PxcT+DhYQEPoOFhAQ/AYaGlwQBkoSY
-				mQOSmZKikpySnZKgkqKGlwEmlwQIhg==
+				Y3Rpb25hcnkAlIQBaQKShJaWEE5TUGFyYWdyYXBoU3R5
+				bGWGkoSEhBBOU1BhcmFncmFwaFN0eWxlAJSEBENDQFMB
+				AISEhAdOU0FycmF5AJSZDJKEhIQJTlNUZXh0VGFiAJSE
+				AkNmAByGkoSfngA4hpKEn54AVIaShJ+eAHCGkoSfngCB
+				jACGkoSfngCBqACGkoSfngCBxACGkoSfngCB4ACGkoSf
+				ngCB/ACGkoSfngCBGAGGkoSfngCBNAGGkoSfngCBUAGG
+				hoEACIQEWzFmXYPNzEw9hpKElpYGTlNGb250hpKEhIQG
+				TlNGb250HpSZHIQFWzI4Y10GAAAAFAAAAP/+SABlAGwA
+				dgBlAHQAaQBjAGEAhAFmDoQBYwCjAaMAowCGhpcCBZKE
+				mJkDkoSWlgdOU0NvbG9yhpKEhIQHTlNDb2xvcgCUowKE
+				BGZmZmaD3txcPoPIxsY+g93bWz8BhpKZkpqSq5KErZko
+				hAVbNDBjXQYAAAAeAAAA//5IAGUAbAB2AGUAdABpAGMA
+				YQAtAEIAbwBsAGQAAACiDqMAowGjAKMAhoaXAwGShJiZ
+				A5KvkoSxowKlg/PxcT+DhYQEPoOFhAQ/AYaSmZKakquS
+				soaXBAGShJiZApKZkpqSq5KyhpcBJpcECIY=
 				</data>
 				<key>Text</key>
 				<string>{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
@@ -125,7 +127,7 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{472.66664812300081, 154.62962348520063}, {380.97451782226562, 285.611083984375}}</string>
+			<string>{{401.51850288149922, 151.85184581780209}, {380.97451782226562, 285.611083984375}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -241,7 +243,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-07-26 20:44:14 +0000</string>
+	<string>2013-10-02 14:15:04 +0000</string>
 	<key>Modifier</key>
 	<string>David Maxwell</string>
 	<key>NotesVisible</key>
@@ -272,7 +274,7 @@
 		<key>NSPaperSize</key>
 		<array>
 			<string>size</string>
-			<string>{595.28997802734375, 841.8900146484375}</string>
+			<string>{595, 842}</string>
 		</array>
 		<key>NSPrintReverseOrientation</key>
 		<array>
@@ -322,7 +324,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{-70, 1003}, {1090, 778}}</string>
+		<string>{{4, 0}, {1090, 778}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>

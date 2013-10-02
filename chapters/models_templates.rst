@@ -277,14 +277,14 @@ Here we have updated each list element (``<li>``) adding a HTML hyperlink (``<a>
 
 Demo
 ....
+Let's try everything out now by visiting the Rango's homepage. You should see your homepage listing all the categories. The categories should now be clickable links. Clicking on ``Python`` should then take you to the ``Python`` detailed category view, as demonstrated in Figure :num:`fig-rango-links`. If you see a list of links like ``Official Python Tutorial``, then you've successfully set up the new view. Try navigating a category which doesn't exist, like ``/rango/category/computers``. You should see a message telling you that no pages exist in the category.
+
 .. _fig-rango-links:
 
-.. figure:: ../images/rango-links.pdf
+.. figure:: ../images/rango-links.png
 	:figclass: align-center
 
 	What your link structure should now look like. Starting with the Rango homepage, you are then presented with the category detail page. Clicking on a page link takes you to the linked website.
-
-Let's try everything out now by visiting the Rango's homepage. You should see your homepage listing all the categories. The categories should now be clickable links. Clicking on ``Python`` should then take you to the ``Python`` detailed category view, as demonstrated in Figure :num:`fig-rango-links`. If you see a list of links like ``Official Python Tutorial``, then you've successfully set up the new view. Try navigating a category which doesn't exist, like ``/rango/category/computers``. You should see a message telling you that no pages exist in the category.
 
 Exercises
 ---------

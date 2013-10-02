@@ -189,7 +189,7 @@ The resulting tables are shown below, where ``Str`` denotes a ``string`` or ``ch
 		
 		#ch1-tables table tr td {
 			text-align: center;
-			border-bottom: 1px solid gray;
+			border-bottom: 1px solid lightgray;
 		}
 		
 		#ch1-tables table th.none, #ch1-tables table td.none {
@@ -264,31 +264,87 @@ We will also have a ``User`` table - which we have not shown here, but shall int
 
 Summary
 -------
+These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies, these steps are common to most database driven web sites. It's a good idea to become familiar and comfortable with producing such specifications and designs.
 
-These high level design and specifications will serve as a useful reference point when building our web application. While we will be focusing on using specific technologies these steps are common to most database driven web sites, so it is good idea to become familiar with and comfortable producing such specifications and designs.
+If you already have Python 2.7.5 and Django 1.5.4 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter. Otherwise, get started with Chapter :ref:`requirements-label`.
 
-If you already have Python 2.7.5 and Django 1.5.4 installed, you have a good working knowledge of the command line, configured your paths, then you can skip straight to the :ref:`Django Basics <django-basics>` chapter, otherwise, continue going through the setup stages.
-
-Working with the Official Django Tutorials
+Working with The Official Django Tutorials
 ..........................................
+We suggest undertaking the `Official Django Tutorials <https://docs.djangoproject.com/en/1.5/intro/tutorial01/>`_ as part of the exercises associated with each of this book's chapters. You can find a mapping between the tutorial exercises and book chapters below. The tutorial exercises will help reinforce your understanding of the Django framework, and also help you build up your skills.
 
-In the table below we suggest undertaking the Tutorials as part of the exercises associated with the chapters below in order to re-enforce your understanding of the framework and to build up your skills.
-
-	+--------------------+--------------------------+
-	| Tango With Django  | Official Django Tutorial |
-	+====================+==========================+
-	| Chapter 3          | Part 1 - Models          |
-	+--------------------+--------------------------+
-	| Chapter 5          | Part 2 - Admin           |
-	+--------------------+--------------------------+
-	| Chapter 6          | Part 3 - URLS and Views  |
-	+--------------------+--------------------------+
-	| Chapter 7          | Part 4 - Templates       |
-	+--------------------+--------------------------+
-	| Chapter 18         | Part 5 - Testing         |
-	+--------------------+--------------------------+
-	| Chapter 11         | Part 6 - CSS             |
-	+--------------------+--------------------------+
+.. raw:: html
+	
+	<style type="text/css">
+		
+		#ch1-tables table {
+			width: 80%;
+			margin: auto;
+			margin: 
+		}
+		
+		#ch1-tables table tr th {
+			border-bottom: 2px solid black;
+			text-align: center;
+		}
+		
+		#ch1-tables table tr.table-header th {
+			border-bottom: none;
+			margin: 10px 0 10px;
+			font-size: 12pt;
+			font-style: italic;
+		}
+		
+		#ch1-tables table tr td {
+			text-align: center;
+			border-bottom: 1px solid lightgray;
+		}
+		
+		#ch1-tables table th.none, #ch1-tables table td.none {
+			border: none;
+		}
+	
+	</style>
+	
+	<div id="ch1-tables">
+		<table>
+			
+			<tr>
+				<th style="width: 20%;">Tango with Django</th>
+				<th style="width: 20%;">Django Tutorial</th>
+			</tr>
+			
+			<tr>
+				<td>Chapter 3</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial01/">Part 1 - Models</a></td>
+			</tr>
+			
+			<tr>
+				<td>Chapter 5</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial02/">Part 2 - The Admin Interface</a></td>
+			</tr>
+			
+			<tr>
+				<td>Chapter 6</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial03/">Part 3 - URLs and Views</a></td>
+			</tr>
+			
+			<tr>
+				<td>Chapter 7</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial04/">Part 4 - Templates</a></td>
+			</tr>
+			
+			<tr>
+				<td>Chapter 18</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial05/">Part 5 - Testing</a></td>
+			</tr>
+			
+			<tr>
+				<td>Chapter 11</td>
+				<td><a href="https://docs.djangoproject.com/en/1.5/intro/tutorial06/">Part 6 - CSS</a></td>
+			</tr>
+	
+		</table>
+	</div>
 
 
 

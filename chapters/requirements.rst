@@ -51,7 +51,7 @@ When you are using the terminal, it is important to know where you are in the fi
 
 You can see that the present working directory in this example is: ``/Users/leif``.
 
-You'll also note that the prompt indicates that my present working directory is ~. This is because the tilde (``~``) represents your *home directory.* Whenever we refer to ``<workspace>``, we'll be referring to your home directory. The base directory in any UNIX-based file system is the *root directory*. The path of the root directory is denoted by a single forward slash (``/``).
+You'll also note that the prompt indicates that my present working directory is ~. This is because the tilde (``~``) represents your *home directory*. The base directory in any UNIX-based file system is the *root directory*. The path of the root directory is denoted by a single forward slash (``/``).
 
 If you are not in your home directory you can change directory (``cd``) to your home directory by issuing the following command.
 
@@ -65,7 +65,9 @@ Let's create a directory called ``code``. To do thus, use the make directory com
 	
 	$ mkdir code
 	
-To move to the newly-created ``code`` directory, enter ``cd code``. If you now check your current working directory, you'll notice that you will be in ``<workspace>/code/``. This may also be reflected by your prompt. Note in the example below that the current working directory is printed after the ``sibu`` computer name.
+To move to the newly-created ``code`` directory, enter ``cd code``. If you now check your current working directory, you'll notice that you will be in ``~/code/``. This may also be reflected by your prompt. Note in the example below that the current working directory is printed after the ``sibu`` computer name.
+
+.. note:: Whenever we refer to ``<workspace>``, we'll be referring to your ``code`` directory.
 
 .. code-block:: guess
 	

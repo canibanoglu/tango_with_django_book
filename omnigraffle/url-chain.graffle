@@ -96,8 +96,8 @@
 			<integer>11</integer>
 			<key>Points</key>
 			<array>
-				<string>{315.49999610529829, 241.15984894058724}</string>
-				<string>{343.50000688205483, 241.04910203639412}</string>
+				<string>{315.49999873428334, 241.30642066809369}</string>
+				<string>{343.50000224055725, 241.24339483028098}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -359,6 +359,29 @@
 \f0\fs24 \cf0 http://www.servername.com/}</string>
 			</dict>
 		</dict>
+		<dict>
+			<key>Bounds</key>
+			<string>{{144, 181}, {571, 85}}</string>
+			<key>Class</key>
+			<string>ShapedGraphic</string>
+			<key>ID</key>
+			<integer>13</integer>
+			<key>Shape</key>
+			<string>Rectangle</string>
+			<key>Style</key>
+			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
+			</dict>
+		</dict>
 	</array>
 	<key>GridInfo</key>
 	<dict/>
@@ -407,7 +430,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-07-24 13:48:55 +0000</string>
+	<string>2013-10-02 13:26:36 +0000</string>
 	<key>Modifier</key>
 	<string>David Maxwell</string>
 	<key>NotesVisible</key>

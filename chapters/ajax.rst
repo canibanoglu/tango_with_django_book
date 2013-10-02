@@ -151,15 +151,14 @@ This piece of JQuery/Javascript will add and event handler to the element with i
 
 There is a lot going on here and getting the mechanics right when constructing pages with AJAX can be a bit tricky. Essentially here, when the button is clicked an AJAX request is made, given our url mapping, this invokes the ``like_category`` view which updates the category and returns a new number of likes. When the AJAX request receives the response it update part of the page i.e. the text and the button.
 
-Adding inline category suggestions
+Adding Inline Category Suggestions
 ----------------------------------
 It would be really neat if we could provide a fast way for users to find a category, rather than browsing through a long list. To do this we can create a suggestion component which lets users type in a letter or part of a word, and then the system responds by providing a list of suggested categories, that the user can then select from. As the user types a series of requests will be made to the server to fetch the suggested categories relevant to what the user has entered. 
 
 
 Workflow
 ........
-
-To do this you will need to do the following:
+To do this you will need to do the following.
 
 * Create a parameterised function called ``get_category_list(max_results=0, starts_with='')`` that returns all the categories starting with ``starts_with`` if ``max_results=0`` otherwise it returns up to ``max_results`` categories.
 	- The function returns a list of category objects annotated with the encoded category denoted by the attribute, ``url``
@@ -185,8 +184,7 @@ With the mapping, view, and template for this view in place, you will need to up
 	- If the call is successful, replace the content of the <div> with id="cats" with the data received.
 	- Here you can use the JQuery ``.html()`` function i.e. ``$('#cats').html( data )``
 
-
-Parameterise the Get Category List function
+Parameterise the Get Category List Function
 ...........................................
 In this helper function we use a filter to find all the categories that start with the string supplied.
 
@@ -229,7 +227,6 @@ Using the ``get_category_list`` function we can now create a view that returns t
 
 Note here we are re-using the ``rango/category_list.html`` template :-).
 
-
 Map View to URL
 ...............
 Add the following code to ``urlpatterns`` in ``rango/urls.py``:
@@ -237,8 +234,6 @@ Add the following code to ``urlpatterns`` in ``rango/urls.py``:
 .. code-block:: python
 
 	url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
-
-
 
 Update Base Template
 ....................
@@ -262,8 +257,7 @@ In the base template in the sidebar div add in the following HTML code:
 
 Here we have added in an input box with ``id="suggestion"`` and div with ``id="Cats"`` in which we will display the response. We don't need to add a button as we will be adding an event handler on keyup to the input box which will send the suggestion request.
 
-
-Add AJAX to request suggestions
+Add AJAX to Request Suggestions
 ...............................
 Add the following JQuery code to the ``js/rango-ajax.js``:
 
@@ -278,7 +272,6 @@ Add the following JQuery code to the ``js/rango-ajax.js``:
 	});
 
 Here, we attached an event handler to the HTML input element with ``id="suggestion"`` to trigger when a keyup event occurs. When it does the contents of the input box is obtained and placed into the ``query`` variable. Then a AJAX GET request is made calling ``/rango/category_suggest/`` with the ``query`` as the parameter. On success, the HTML element with id="cats" i.e. the div, is updated with the category list html.
-
 
 Exercises
 ---------
@@ -295,8 +288,7 @@ To let registered users quickly and easily add a Page to the Category put an "Ad
 
 Hints
 .....
-
-HHTML Template code: 
+HTML Template code: 
 
 .. code-block:: html
 	

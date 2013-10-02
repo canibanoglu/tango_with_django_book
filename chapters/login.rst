@@ -43,8 +43,7 @@ Passwords are stored by default in Django using the `PBKDF2 algorithm <http://en
 
 The User Model
 --------------
-
-The core of Django's authentication system is the ``User`` object, located at ``django.contrib.auth.models.User``. A ``User`` object represents each of the people interacting with a Django application. The `Django documentation on user objects <https://docs.djangoproject.com/en/1.5/topics/auth/default/#user-objects>`_ states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles and the association of creators with site content.
+The core of Django's authentication system is the ``User`` object, located at ``django.contrib.auth.models.User``. A ``User`` object represents each of the people interacting with a Django application. The `Django documentation on User objects <https://docs.djangoproject.com/en/1.5/topics/auth/default/#user-objects>`_ states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles and the association of creators with site content.
 
 The ``User`` model comes complete with five primary attributes. They are:
 
@@ -55,7 +54,6 @@ The ``User`` model comes complete with five primary attributes. They are:
 - the user's surname.
 
 The model also comes with other attributes such as ``is_active`` (which determines whether a particular account is active or not). Check the `official Django documentation on the user model <https://docs.djangoproject.com/en/1.5/ref/contrib/auth/#django.contrib.auth.models.User>`_ for a full list of attributes provided by the base ``User`` model.
-
 
 Additional User Attributes
 --------------------------
@@ -80,7 +78,7 @@ Fortunately, this is a relatively easy task to accomplish. This is achieved thro
 	    def __unicode__(self):
 	        return self.user.username
 
-As we also reference the ``User`` model, we'll need to include the model into the ``models.py`` namespace. Add it with the following import statement at the top of the file:
+As we also reference the ``User`` model, we'll need to include the model into the ``models.py`` namespace. Add it with the following import statement at the top of the file.
 
 .. code-block:: python
 	
@@ -163,7 +161,6 @@ Within ``UserForm``, we have set the form field of ``password`` to be a ``forms.
 
 Create a Register View
 .......................
-
 Next we need to handle both the rendering of the form, and the processing of form input data. Within Rango's ``views.py`` file, add the following view function:
 
 .. code-block:: python
@@ -234,9 +231,8 @@ Next we need to handle both the rendering of the form, and the processing of for
 Is the view a lot more complex? Not really. The only added complexity from our previous ``add_category()`` view is the need to handle two distinct ``ModelForm`` instances - one for the ``User`` model, and one for the ``UserProfile`` model. We also need to handle a user's profile image, if he or she chooses to upload one. We must also establish a link between the two model instances that we create. After creating a new ``User`` model instance, we reference it in the ``UserProfile`` instance with the line ``profile.user = user``.
 
 
-Create Registration Template
-............................
-
+Create a Registration Template
+..............................
 Now create a new template file, ``rango/register.html`` and add the following code:
 
 .. code-block:: html
@@ -306,10 +302,8 @@ Finally, we can add a link pointing to that URL in our homepage ``index.html`` t
 	
 	<a href="/rango/register/">Register Here</a>
 
-
 Demo
 ....
-
 Easy! Now you'll have a new hyperlink with the text ``Register Here`` that'll take you to the registration page. Try it out now! Start your Django development server and try to register a new user account. Upload a profile image if you wish. Your registration form should look like the one illustrated in Figure :num:`fig-rango-register-form`.
 
 .. _fig-rango-register-form:
@@ -401,7 +395,6 @@ All of these functions and classes are provided by Django, and as such you'll ne
 
 Creating a Login Template
 .........................
-
 With our new view created, we'll need to create a new template allowing users to login. While we know that the template will live in the ``templates/rango/`` directory, we'll leave you to figure out the name of the file. Look at the code example above to work out the name. In your new template file, add the following code:
 
 .. code-block:: html
@@ -433,7 +426,6 @@ Ensure that you match up the input ``name`` attributes to those that you specifi
 
 Mapping the Login View to a URL
 ...............................
-
 With your login template created, we can now match up the ``user_login()`` view to a URL. Modify Rango's ``urls.py`` file so that its ``urlpatterns`` tuple now looks like the code below:
 
 .. code-block:: python
@@ -448,9 +440,8 @@ With your login template created, we can now match up the ``user_login()`` view 
 	    url(r'^login/$', views.user_login, name='login'),
 	    )
 
-Link up the Login page to the Index page
+Link up the Login page to The Index page
 ........................................
-
 Our final step is to provide users of Rango with a handy link to access the login page. To do this, we'll edit the ``index.html`` template inside of the ``templates/rango/`` directory. Find the previously created category addition and registration links, and add the following hyperlink underneath. You may wish to include a line break (``<br />``) before the link.
 
 .. code-block:: python
@@ -477,7 +468,6 @@ As you can see we have used  Django's Template Language to check if the user is 
 
 Demo
 ....
-
 Check out Figure :num:`fig-rango-login-message` for screenshots of what everything should look like.
 
 .. _fig-rango-login-message:
@@ -512,7 +502,6 @@ Django provides decorator called, ``login_required()`` which we can attach to an
 
 Restricting Access with a Decorator
 ...................................
-
 To try this out,  create a view in Rango's ``views.py`` file, called ``restricted()`` and add the following code:
 
 .. code-block:: python
@@ -607,11 +596,9 @@ Simple - when a user is authenticated and logged in, he is she can see the ``Res
 
 Exercises
 ---------
-
 This chapter has covered several important aspects of managing user authentication within Django. We've covered the basics of installing Django's ``django.contrib.auth`` application into our project. Additionally, we have also shown how to implement a user profile model that can provide additional fields to the base ``django.contrib.auth.models.User`` model. We have also detailed how to setup the functionality to allow user registrations, login, logout, and to control access. For more information about user authentication and registration consult  `Django's official documentation on Authentication <https://docs.djangoproject.com/en/1.5/topics/auth/>`_.
 
-
-	* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages. You'll also have ensure links to add/edit pages appear only if the user browsing the website is logged in.
-	* Provide informative error messages when users incorrectly enter their username or password.
+* Customise the application so that only registered users can add/edit, while non-registered can only view/use the categories/pages. You'll also have ensure links to add/edit pages appear only if the user browsing the website is logged in.
+* Provide informative error messages when users incorrectly enter their username or password.
 	
-In most applications you are going to require different levels of security when registering and managing users - for example, making sure the user enters an email address that they have access to, or sending users passwords that they have forgotten. While we could extend the current approach and build all the necessary infrastructure to support such functionality a ``django-registration`` application has been developed which greatly simplifies the process - visit ``https://django-registration.readthedocs.org/en/latest/`` to find out more about using this package.
+In most applications you are going to require different levels of security when registering and managing users - for example, making sure the user enters an email address that they have access to, or sending users passwords that they have forgotten. While we could extend the current approach and build all the necessary infrastructure to support such functionality a ``django-registration`` application has been developed which greatly simplifies the process - visit https://django-registration.readthedocs.org/en/latest/ to find out more about using this package.

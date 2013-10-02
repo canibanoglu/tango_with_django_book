@@ -7,7 +7,7 @@ This chapter provides a step-by-step guide on how to deploy your Django applicat
 
 Creating a PythonAnywhere Account
 ---------------------------------
-First `sign up for the ``N00b`` PythonAnywhere account <https://www.pythonanywhere.com/pricing/>`_.  If your application takes off and becomes popular, you can always upgrade your account at a later stage to gain more storage space and CPU time along with a number of other benefits (like hosting specific domains and ssh abilities).
+First `sign up for the N00b PythonAnywhere account <https://www.pythonanywhere.com/pricing/>`_.  If your application takes off and becomes popular, you can always upgrade your account at a later stage to gain more storage space and CPU time along with a number of other benefits (like hosting specific domains and ssh abilities).
 
 Once your account has been created, you will have your own little slice of the World Wide Web at ``http://<username>.pythonanywhere.com``, where ``<username>`` is your PythonAnywhere username. It is from this URL that your hosted application will be available from.
 
@@ -94,6 +94,7 @@ where ``rango`` can be replaced with the name of the virtual environment you wis
 You can then leave the virtual environment using the ``deactivate`` command. Your prompt should then be missing the ``(rango)`` prefix, with an example shown below.
 
 ::
+	
 	(rango) 16:49 ~ $ deactivate 
 	16:51 ~ $
 
@@ -101,18 +102,21 @@ Cloning your Git Repository
 ---------------------------
 Now that your virtual environment for Rango is all setup, you can now clone your Git repository to obtain a copy of your project's files. Clone your repository by issuing the following command from your home directory:
 
-``$ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git``
+::
+	
+	$ git clone https://<USERNAME>:<PASSWORD>@github.com/<OWNER>/<REPO_NAME>.git
 
 where you replace
-	- ``<USERNAME>`` with your GitHub username;
-	- ``<PASSWORD>`` with your GitHub password;
-	- ``<OWNER>`` with the username of the person who owns the repository; and
-	- ``<REPO_NAME>`` with the name of your project's repository.
-	
-	
+- ``<USERNAME>`` with your GitHub username;
+- ``<PASSWORD>`` with your GitHub password;
+- ``<OWNER>`` with the username of the person who owns the repository; and
+- ``<REPO_NAME>`` with the name of your project's repository.
+
+
 If you haven't put your code in a Git repository, you can clone the version we have made, by issuing the following command:
 
 ::
+	
 	16:54 ~ $ git clone https://github.com/leifos/tango_with_django.git
 
 .. note:: It doesn't matter if you clone your Git repository within your new virtual environment or not. You're only creating files within your disk quota, which doesn't require your special Python setup.
@@ -219,11 +223,6 @@ Note that the names for each log file are prepended with your subdomain. For exa
 
 When debugging, you may find it useful to delete or move the log files so that you don't have to scroll through a huge list of previous attempts. If the files are moved or deleted, they will be recreated automatically when a new request or error arises.
 
-
 Exercises
 ---------
-
-* Congratulations you've successfully deployed Rango. Tweet a link to your application to @tangowithdjango as we'd love to know you've succeeded!
-
-
-
+Congratulations, you've successfully deployed Rango! Why not tweet a link of your application to `@tangowithdjango <https://twitter.com/tangowithdjango>`_. We'd love to know you've succeeded!

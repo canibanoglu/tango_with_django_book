@@ -202,22 +202,19 @@ Now that we inherit from ``base.html``, all that exists within the ``category.ht
 	
 	To learn more about the extensive functionality offered by Django's template language, check out the official `Django documentation on templates <https://docs.djangoproject.com/en/1.5/topics/templates/>`_. 
 
-
 Exercises
 ---------
+Now that you've worked through this chapter, we've got several exercises for you to work through. After completing them, you'll be a Django templating messiah.
 
-	* Update all other existing templates within Rango's repertoire to extend from the ``rango/base.html`` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`. While you're at it, make sure you remove the links from our ``index.html`` template. We don't need them anymore! You can also remove the link to Rango's homepage within the ``about.html`` template.
-	
-	* Convert the restricted page to use a template. Call the template ``restricted.html``, and ensure that it too extends from our ``base.html`` template.
-	
-	* Add another link to our growing link collection that allows users to navigate back to Rango's homepage from anywhere on the website.
-	
+* Update all other existing templates within Rango's repertoire to extend from the ``rango/base.html`` template. Follow the same process as we demonstrated above. Once completed, your templates should all inherit from ``base.html``, as demonstrated in Figure :num:`fig-rango-template-inheritance`. While you're at it, make sure you remove the links from our ``index.html`` template. We don't need them anymore! You can also remove the link to Rango's homepage within the ``about.html`` template.
+* Convert the restricted page to use a template. Call the template ``restricted.html``, and ensure that it too extends from our ``base.html`` template.
+* Add another link to our growing link collection that allows users to navigate back to Rango's homepage from anywhere on the website.
+
 .. warning:: Remember to add ``{% load static %}`` to the top of each template that makes use of static media. If you don't, you'll get an error! Django template modules must be imported individually for each template that requires them - *you can't make use of modules included in templates you extend from!*
 
 .. _fig-rango-template-inheritance:
 
-.. figure:: ../images/rango-template-inheritance.pdf
+.. figure:: ../images/rango-template-inheritance.svg
+	:figclass: align-center
 	
 	A class diagram demonstrating how your templates should inherit from ``base.html``.
-	
-

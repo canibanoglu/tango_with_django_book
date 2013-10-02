@@ -19,7 +19,7 @@ With all of these properties applied, the resultant page render can be seen in t
 
 .. _fig-css-render:
 
-.. figure:: ../images/css-render.pdf
+.. figure:: ../images/css-render.png
 	:figclass: align-center
 
 	Illustration demonstrating the rendered output of the sample HTML markup and CSS stylesheet shown. Pay particular attention to the CSS example - the colours are used to demonstrate the syntax used to define styles and the property/value pairings associated with them.
@@ -70,7 +70,7 @@ The *id selector* is used to map to a unique element on your webpage. Each eleme
 
 .. _fig-css-id:
 
-.. figure:: ../images/css-id.pdf
+.. figure:: ../images/css-id.png
 	:figclass: align-center
 
 	An illustration demonstrating the use of an *id selector* in CSS. Note the blue header has an identifier which matches the CSS attribute ``#blue_header``.
@@ -81,7 +81,7 @@ The alternative option is to use *class selectors*. This approach is similar to 
 
 .. _fig-css-class:
 
-.. figure:: ../images/css-class.pdf
+.. figure:: ../images/css-class.png
 	:figclass: align-center
 
 	An illustration demonstrating the use of a *class selector* in CSS. The blue headers employ the use of the ``.blue`` CSS style to override the red text of the ``h1`` style.
@@ -112,7 +112,7 @@ Applying colours to your elements is a straightforward process. The property tha
 
 .. _fig-css-colours:
 
-.. figure:: ../images/css-colours.pdf
+.. figure:: ../images/css-colours.svg
 	:figclass: align-center
 	
 	Illustration of some basic colours with their corresponding hexadecimal and RGB values. Illustration adapted from `W3Schools <http://www.w3schools.com/cssref/css_colors.asp>`_.
@@ -191,7 +191,7 @@ Containers come in two flavours: *block-level elements* and *inline elements*. C
 
 .. _fig-css-nesting-blocks:
 
-.. figure:: ../images/css-nesting-blocks.pdf
+.. figure:: ../images/css-nesting-blocks.svg
 	:figclass: align-center
 	
 	Diagram demonstrating how block-level elements and inline elements are rendered by default. With block-level elements as green, note how a line break is taken between each element. Conversely, inline elements can appear on the same line beside each other. You can also nest block-level and inline elements within each other, but block-level elements cannot be nested within an inline element.
@@ -903,7 +903,7 @@ Each element that you create on a webpage can be considered as a box. The `CSS b
 
 .. _fig-css-box-model:
 
-.. figure:: ../images/css-box-model.pdf
+.. figure:: ../images/css-box-model.svg
 	:figclass: align-center
 	
 	An illustration demonstrating the CSS box model, complete with key showing the four areas of the model.
@@ -1001,12 +1001,14 @@ When applied, our list elements now appear on a single line, just like in the ex
 		}
 	</style>
 	
+	<div style="text-align: center;">
 	<div class="css-lists-border">
 		<ul class="css-lists-ex3">
 		    <li>Django</li>
 		    <li>How to Tango with Django</li>
 		    <li>Two Scoops of Django</li>
 		</ul>
+	</div>
 	</div>
 
 While we may have the correct orientation, our list now looks awful. Where does one element start and the other end? It's a complete mess! Let's adjust our list element style and add some contrast and padding to make things look nicer.
@@ -1037,12 +1039,14 @@ When applied, our list looks so much better - and quite professional, too!
 		}
 	</style>
 	
+	<div style="text-align: center;">
 	<div class="css-lists-border">
 		<ul class="css-lists-ex4">
 		    <li>Django</li>
 		    <li>How to Tango with Django</li>
 		    <li>Two Scoops of Django</li>
 		</ul>
+	</div>
 	</div>
 
 From the example, it is hopefully clear that lists can be easily customised to suit the requirements of your webpages. For more information and inspiration on how to style lists, you can check out some of the selected links below.
@@ -1198,12 +1202,14 @@ The resultant output looks similar to the example shown below. Again, hover over
 		}
 	</style>
 	
-	<div id="css-links-multiple-dark">
-	    <a href="http://www.google.co.uk/">Google Search</a>
-	</div>
+	<div style="text-align: center;">
+		<div id="css-links-multiple-dark">
+		    <a href="http://www.google.co.uk/">Google Search</a>
+		</div>
 	
-	<div class="css-links-multiple-light">
-	    <a href="http://www.bing.co.uk/">Bing Search</a>
+		<div class="css-links-multiple-light">
+		    <a href="http://www.bing.co.uk/">Bing Search</a>
+		</div>
 	</div>
 
 With a small amount of CSS, you can make some big changes in the way your webpages appear to end users.
@@ -1214,7 +1220,7 @@ It's worth pointing out where the *Cascading* in *Cascading Style Sheets* comes 
 
 .. _fig-css-cascading:
 
-.. figure:: ../images/css-cascading.pdf
+.. figure:: ../images/css-cascading.png
 	:figclass: align-center
 
 	Illustration demonstrating the *cascading* in *Cascading Style Sheets* at work. Take note of the ``font-size`` property in our ``h1`` style - it is overridden from the default value. The cascading styles produce the resultant style, shown on the right of the illustration.

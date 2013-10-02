@@ -251,13 +251,16 @@ If you need more secure cookies, then use session based cookies:
 
 Exercises
 ---------
+Now you've read through this chapter and tried out the code, give these exercises a go.
+
 - Change your cookies from client side to server side to make your application more secure. Clear the browser's cache and cookies, then check to make sure can't see the ``last_visit`` and ``visits`` variables in the browser. Note you will still see the ``sessionid`` cookie.
 - Update the *About* page view and template telling the visitors how many times they have visited the site.
 
 Hint
 ....
+To aid you in your quest to complete the above exercises, the following hint may help you.
 
-You'll have to pass the value from the cookie to the template context for it to be rendered as part of the page:
+You'll have to pass the value from the cookie to the template context for it to be rendered as part of the page, as shown in the example below.
 
 .. code-block:: python
 	

@@ -27,17 +27,17 @@ Git on Windows
 **************
 Like Python, Git doesn't come as part of a standard Windows installation. However, Windows implementations of the version control system can be downloaded and installed. You can download the official Windows Git client from the Git `website <http://git-scm.com/download/win>`_. The installer provides the ``git`` command line program, which we use in this crash course.
 
-You can also download a program called *TortoiseGit*, a graphical extension to the Windows Explorer shell. The program provides a really nice right-click Git context menu for files. This makes version control really easy to use. You can `download TortoiseGit from here <https://code.google.com/p/tortoisegit/>`_. Although we do not cover TortoiseGit in this crash course, many tutorials exist online for it. Check `this out for starters <http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/>`_ if you are interested in using it.
+You can also download a program called *TortoiseGit*, a graphical extension to the Windows Explorer shell. The program provides a really nice right-click Git context menu for files. This makes version control really easy to use. You can `download TortoiseGit from here <https://code.google.com/p/tortoisegit/>`_. Although we do not cover TortoiseGit in this crash course, many tutorials exist online for it. Check `this TortoiseGit tutorial <http://robertgreiner.com/2010/02/getting-started-with-git-and-tortoisegit-on-windows/>`_ if you are interested in using it.
 
 The Git System
 **************
 Essentially, Git comprises of four separate storage locations: your *workspace*, the local *index*, the *local repository* and the *remote repository*. As the name may suggest, the remote repository is stored on some remote server - and is the only part of Git stored outwith your computer. This is considered a huge advantage of Git - you can make changes to your local repository when you may not have Internet access, and then apply those changes to the remote repository at a later stage.
 
-.. note:: We keep repeating the word *repository*, but what do we actually mean by that? In the context of version control systems, consider a repository as a form of data structure that contains a set of *commit objects*, and a set of references to commit objects, called *heads*. You can find out more about what these are `here <http://www.sbf5.com/~cduan/technical/git/git-1.shtml>`_ - and we will be explaining what the terminology for head means later on.
+.. note:: We keep repeating the word *repository*, but what do we actually mean by that? In the context of version control systems, consider a repository as a form of data structure that contains a set of *commit objects*, and a set of references to commit objects, called *heads*. You can find out more about what these are on `this Git tutorial <http://www.sbf5.com/~cduan/technical/git/git-1.shtml>`_ - and we will be explaining what the terminology for head means later on.
 
 For now though, the following bullet points provide an explanation of each part of the Git system.
 
-* As already explained, the *remote repository* is the copy of your project's repository stored on some remote server. This is particularly important for Git projects that have more than one contributor - you require a central place to store all the work that your team members produce. If you're feeling adventurous, you can set up a Git server on a computer with Internet access and a properly configured firewall (check out `this <http://www.seifeet.com/2012/11/centos-63-configuring-git-server.html>`_, for example), or use one of many services providing free Git repositories. One of the most widely-used services available today is `GitHub <https://github.com/>`_. In fact, this book has a Git `repository <https://github.com/leifos/tango_with_django>`_ on GitHub!
+* As already explained, the *remote repository* is the copy of your project's repository stored on some remote server. This is particularly important for Git projects that have more than one contributor - you require a central place to store all the work that your team members produce. If you're feeling adventurous, you can set up a Git server on a computer with Internet access and a properly configured firewall (check out `this Git server tutorial <http://www.seifeet.com/2012/11/centos-63-configuring-git-server.html>`_, for example), or use one of many services providing free Git repositories. One of the most widely-used services available today is `GitHub <https://github.com/>`_. In fact, this book has a Git `repository <https://github.com/leifos/tango_with_django>`_ on GitHub!
 
 * The *local repository* is a copy of the remote repository. The key difference however is that the local repository is stored on your own computer. It is to this repository you make all your additions, changes and deletions. When you reach a particular milestone, you can then push all your local changes to the remote repository. From there, you can instruct your team members to retrieve your changes. This concept is known as *pulling* from the remote repository, and we will explain that in a bit more detail later.
 
@@ -108,7 +108,7 @@ With your repository cloned and ready to go on your local computer, you're ready
 
 .. _fig-git-sequence:
 
-.. figure:: ../images/git-sequence.pdf
+.. figure:: ../images/git-sequence.svg
 	:figclass: align-center
 	
 	A diagram depicting the basic workflow and associated commands of interacting with a Git repository.
@@ -117,7 +117,7 @@ We have provided a pictorial representation of the basic Git workflow in Figure 
 
 1. Starting Off
 ...............
-Before you can start work on your project, you must prepare Git for your forthcoming geek session. If you haven't yet sorted out your project's Git workspace, you'll need to ``clone`` the repository to obtain a copy of all of its files. Check out Section :num:`requirements-git-clone-label` for more information on how to achieve this.
+Before you can start work on your project, you must prepare Git for your forthcoming geek session. If you haven't yet sorted out your project's Git workspace, you'll need to ``clone`` the repository to obtain a copy of all of its files. Check out Section :ref:`requirements-git-clone-label` for more information on how to achieve this.
 
 If you have previously made a clone of the remote repository, it's good practice to get into the habit of updating you local copy by using the ``git pull`` command. This 'pulls' changes from the remote repository. By doing this, you'll be working from the same page as your team members, which will help keep the issue of conflicting file contents from making your life a nightmare.
 
@@ -125,7 +125,7 @@ If you have previously made a clone of the remote repository, it's good practice
 ...................
 Once your workspace has been updated with the latest changes, the onus is on you to do some work! Within your workspace, you can take existing files and modify them. You can delete them too, or add new files to be version controlled.
 
-It's not all plain sailing, however. You must be aware that as you work away, you need to keep Git up-to-date on the list of files you have added, removed or updated by modifying the *local index*. The list of files stored within the local index are then used to perform your next *commit*, which we'll be discussing in the next step. To keep Git informed, there are several Git commands which let you update the local index. Three of the commands are near-identical to those that were discussed in Section :num:`requirements-core-commands-label`, with the addition of a ``git`` prefix.
+It's not all plain sailing, however. You must be aware that as you work away, you need to keep Git up-to-date on the list of files you have added, removed or updated by modifying the *local index*. The list of files stored within the local index are then used to perform your next *commit*, which we'll be discussing in the next step. To keep Git informed, there are several Git commands which let you update the local index. Three of the commands are near-identical to those that were discussed in Chapter :ref:`requirements-label`, with the addition of a ``git`` prefix.
 
 - The first command ``git add`` allows you to request Git to add a particular file to the next commit for you. A common newbie mistake is to assume that ``git add`` is used for adding new files to your repository only - *this is not the case! You must tell Git what modified files you wish to commit, too!* The command can be used in the fashion ``git add <filename>``, where ``<filename>`` is the name of the file you wish to add to your next commit. Multiple files and directories can be added with the command ``git add .`` - `but be careful with this <http://stackoverflow.com/a/16969786>`_!
 
@@ -193,15 +193,15 @@ To push your changes, the simplest command to run is:
 
 ``$ git push origin master``
 
-As explained on `this <http://stackoverflow.com/questions/7311995/what-is-git-push-origin-master-help-with-gits-refs-heads-and-remotes>`_ article, this instructs the ``git push`` command to push your local master branch (where your changes are saved) to the *origin* (the remote server from which you originally cloned). If you are using a more complex setup involving `branching and merging <http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging>`_, alter ``master`` to the name of the branch you wish to push.
+As explained on `this Stack Overflow question and answer page <http://stackoverflow.com/questions/7311995/what-is-git-push-origin-master-help-with-gits-refs-heads-and-remotes>`_, this command instructs the ``git push`` command to push your local master branch (where your changes are saved) to the *origin* (the remote server from which you originally cloned). If you are using a more complex setup involving `branching and merging <http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging>`_, alter ``master`` to the name of the branch you wish to push.
 
-If what you are pushing is particularly important, you can also optionally alert other team members to the fact they should really update their local repositories by pulling your changes. You can do this through a *pull request.* Issue one after pushing your latest changes by invoking the command ``git request-pull master``, where master is your branch name (this is the default value). If you are using a service such as GitHub, the web interface allows you to generate requests without the need to enter the command. Check out `this <https://help.github.com/articles/using-pull-requests>`_ tutorial for more information.
+If what you are pushing is particularly important, you can also optionally alert other team members to the fact they should really update their local repositories by pulling your changes. You can do this through a *pull request.* Issue one after pushing your latest changes by invoking the command ``git request-pull master``, where master is your branch name (this is the default value). If you are using a service such as GitHub, the web interface allows you to generate requests without the need to enter the command. Check out `the official GitHub website's tutorial <https://help.github.com/articles/using-pull-requests>`_ for more information.
 
 Recovering from Mistakes
 ************************
-This section presents a solution to a coder's worst nightmare: what if you find that your code no longer works? Perhaps a refactoring went terribly wrong, someone changed something, or everything is so terribly messed up you have no idea what happened. Whatever the reason, using a form of version control always gives you a last resort: rolling back to a previous commit. This section details how to do just that. We follow the information given from `this <http://stackoverflow.com/questions/2007662/rollback-to-an-old-commit-using-git>`_ Stack Overflow question and answer page.
+This section presents a solution to a coder's worst nightmare: what if you find that your code no longer works? Perhaps a refactoring went terribly wrong, someone changed something, or everything is so terribly messed up you have no idea what happened. Whatever the reason, using a form of version control always gives you a last resort: rolling back to a previous commit. This section details how to do just that. We follow the information given from `this Stack Overflow <http://stackoverflow.com/questions/2007662/rollback-to-an-old-commit-using-git>`_ question and answer page.
 
-.. warning:: You should be aware that this guide will rollback your workspace to a previous iteration. Any uncommitted changes that you have made will be lost, with a very slim chance of recovery! Be wary. If you are having a problem with only one file, you could always view the different versions of the files for comparison. Have a look `here <http://stackoverflow.com/a/3338145>`_ to see how to do that.
+.. warning:: You should be aware that this guide will rollback your workspace to a previous iteration. Any uncommitted changes that you have made will be lost, with a very slim chance of recovery! Be wary. If you are having a problem with only one file, you could always view the different versions of the files for comparison. Have a look `at this Stack Overflow page <http://stackoverflow.com/a/3338145>`_ to see how to do that.
 
 Rolling back your workspace to a previous commit involves two distinct steps:
 

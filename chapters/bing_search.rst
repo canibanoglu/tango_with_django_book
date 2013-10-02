@@ -217,10 +217,8 @@ You'll also need to ensure you do the following, too.
 
 Exercises
 ---------
+Taking the basic Bing Search API function we added above as a baseline, try out the following exercises.
 
-	* Add a main() function to the *bing_search.py* to test out the BING Search API  when you run *python bing_search.py*.
-		
-		* The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
-		* Print out the rank, title and url for each result.
-
-
+* Add a main() function to the *bing_search.py* to test out the BING Search API  when you run *python bing_search.py*.
+* The main function should ask a user for a query (from the command line), and then issue the query to the BING API via the run_query method and print out the top ten results returned. 
+* Print out the rank, title and URL for each result.

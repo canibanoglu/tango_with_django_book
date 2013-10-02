@@ -1,4 +1,5 @@
 .. _tango-too-label:
+
 Doing the Tango with Rango! 
 ===========================
 
@@ -60,7 +61,7 @@ In ``rango/views.py``, create a function called ``get_category_list()`` that ret
 
 Updating Views
 ..............
-Then call this function in each of the views that you want to display the category list in the sidebar, and pass the list into the context dictionary. For example, to have the categories showing on the index page, alter the ``index``() view as follows:
+Then call this function in each of the views that you want to display the category list in the sidebar, and pass the list into the context dictionary. For example, to have the categories showing on the index page, alter the ``index()`` view as follows:
 	
 .. code-block:: python
 	

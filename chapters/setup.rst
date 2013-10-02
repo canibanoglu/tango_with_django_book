@@ -26,7 +26,7 @@ After verifying your Python installation, check your Django installation by issu
 	$ python -c "import django; print(django.get_version())"
 	1.5.4
 
-The command again executes the code within the string provided as part of the ``-c`` switch. After importing Django, you should see ``1.5.4`` printed underneath. If you see a different set of numbers or are greeted with a Python ``ImportError``, go back to Section Section :ref:`requirements-installation-label` or consult the `Django Documentation on Installing Django <https://docs.djangoproject.com/en/1.5/topics/install/>`_ for more information. If you find that you have got a different versions of Django, while most of this tutorial will work, it is likely that you will come across problems at some point, so it worth making sure you have Django 1.5.4 installed.
+The command again executes the code within the string provided as part of the ``-c`` switch. After importing Django, you should see ``1.5.4`` printed underneath. If you see a different set of numbers or are greeted with a Python ``ImportError``, go back to Section :ref:`installing-software` or consult the `Django Documentation on Installing Django <https://docs.djangoproject.com/en/1.5/topics/install/>`_ for more information. If you find that you have got a different version of Django, it is possible that you will come across problems at some point. It's definitely worth making sure you have Django 1.5.4 installed.
 
 Creating your Django Project
 ----------------------------
@@ -38,15 +38,15 @@ This command will invoke the ``django-admin.py`` script, which will set up a new
 
 You will now notice within your workspace is a directory set to the name of your new project, ``tango_with_django_project``. Within this newly created directory, you should see two items:
 
-	- *another* directory with the same name as your project, ``tango_with_django_project``; and
-	- a Python script called ``manage.py``.
+* *another* directory with the same name as your project, ``tango_with_django_project``; and
+* a Python script called ``manage.py``.
 
-For the purposes of this tutorial, we call this nested directory the *project configuration directory*. Within this directory, you will find four Python scripts. We will discuss this scripts in details later on, but for now, you should see:
-	
-	- ``__init__.py``, a blank Python script `whose presence indicates to the Python interpreter that the directory is a Python package
-	- ``settings.py``, the place to store all of your Django project's settings
-	- ``urls.py``, a Python script to store URL patterns for your project, and
-	- ``wsgi.py``, a Python script used to help run your development server and deploy your project to a production environment.
+For the purposes of this tutorial, we call this nested directory the *project configuration directory*. Within this directory, you will find four Python scripts. We will discuss this scripts in details later on, but for now you should see:
+
+* ``__init__.py``, a blank Python script whose presence indicates to the Python interpreter that the directory is a Python package;
+* ``settings.py``, the place to store all of your Django project's settings;
+* ``urls.py``, a Python script to store URL patterns for your project; and
+* ``wsgi.py``, a Python script used to help run your development server and deploy your project to a production environment.
 
 .. note:: The project configuration directory has been created with new Django projects since version 1.4. Having two directories with the same name may seem quite a bit odd, but the change was made to make separate out the project from the applications within your project.
 

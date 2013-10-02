@@ -79,10 +79,9 @@ We also use the ``Meta`` class to specify which fields that we wish to include i
 .. note::  We highly recommend you check out the `official Django documentation on forms <https://docs.djangoproject.com/en/1.5/ref/forms/>`_ for further information about how to customise them.
 
 
-Creating an Add Category View 
-.............................
-
-With ``CategoryForm`` class defined we're now ready to create a new view to display the form and handle the posting of form data. To do this add the following code to ``rango/views.py'':
+Creating an *Add Category* View
+...............................
+With our ``CategoryForm`` class now defined, we're now ready to create a new view to display the form and handle the posting of form data. To do this, add the following code to ``rango/views.py``.
 
 .. code-block:: python
 	

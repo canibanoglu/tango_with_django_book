@@ -1,9 +1,8 @@
-
 .. _git-crash-course:
 
 A Git Crash Course
 ------------------
-We strongly recommend that you spend some time familiarising yourself with a version control system. For your benefit, this section provides you with a crash course in how to use `Git <http://en.wikipedia.org/wiki/Git_(software)>`_, one of many version control systems available today. Originally developed by `Linus Torvalds <http://en.wikipedia.org/wiki/Linus_Torvalds>`_, Git is one of the most popular version control systems available today. 
+We strongly recommend that you spend some time familiarising yourself with a version control system. For your benefit, this section provides you with a crash course in how to use `Git <http://en.wikipedia.org/wiki/Git_(software)>`_, one of the many version control systems available. Originally developed by `Linus Torvalds <http://en.wikipedia.org/wiki/Linus_Torvalds>`_, Git is today very popular, and is used by open-source and closed-source projects alike.
 
 This tutorial demonstrates at a high level how Git works, explains the basic commands that you can use, and provides an explanation of Git's workflow.
 
@@ -57,6 +56,7 @@ Setting up your Git workspace is a straightforward process. Once everything is s
 #. Navigate into the newly created directory. That's your workspace in which you can add files to be version controlled!
 
 .. _requirements-git-clone-label:
+
 How to Clone a Remote Repository
 ................................
 Cloning your repository is a straightforward process with the ``git clone`` command. Supplement this command with the URL of your remote repository - and if required, authentication details, too. The URL of your repository varies depending on the provider you use. If you are unsure of the URL to enter, it may be worth querying it with your search engine or asking someone in the know.

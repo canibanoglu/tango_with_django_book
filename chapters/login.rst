@@ -41,8 +41,8 @@ While ``django.contrib.auth`` provides Django with access to the authentication 
 
 Passwords are stored by default in Django using the `PBKDF2 algorithm <http://en.wikipedia.org/wiki/PBKDF2>`_, providing a good level of security for your user's data. You can read more about this as part of the `official Django documentation on how django stores passwords  <https://docs.djangoproject.com/en/1.5/topics/auth/passwords/#how-django-stores-passwords>`_. The documentation also provides an explanation of how to use different password hashers if you require a greater level of security. 
 
-The User Model
---------------
+The ``User`` Model
+------------------
 The core of Django's authentication system is the ``User`` object, located at ``django.contrib.auth.models.User``. A ``User`` object represents each of the people interacting with a Django application. The `Django documentation on User objects <https://docs.djangoproject.com/en/1.5/topics/auth/default/#user-objects>`_ states that they are used to allow aspects of the authentication system like access restriction, registration of new user profiles and the association of creators with site content.
 
 The ``User`` model comes complete with five primary attributes. They are:
@@ -110,8 +110,8 @@ You also need to import the ``UserProfile`` model by adding one of the following
 
 .. note:: Remember that with the creation of a new model, you much synchronise your database. Run the ``$ python manage.py syncb`` command to synchronise the new ``UserProfile`` model. Not doing so will result in errors explaining that the required database tables cannot be found.
 
-Creating a User Registration View and Template
-----------------------------------------------
+Creating a *User Registration* View and Template
+------------------------------------------------
 With our authentication infrastructure laid out, we can now begin to build onto it by providing users of our application with the opportunity to create new user accounts. We will achieve this via the creation of a new view and template combination.
 
 .. note:: We feel it's important to note that there are several off-the-shelf user registration packages available for you to download and use in your Django projects. Examples include the `Django Registration application <https://bitbucket.org/ubernostrum/django-registration/>`_, and you can also check out the table on `this webpage <https://www.djangopackages.com/grids/g/registration/>`_ which lists other registration packages. While these exist, we'll be showing you how to set up everything from scratch. While this is at odds with the DRY principle, it is also important to get a feeling for the user authentication package and feature. It will also re-enforce your understanding of working with forms, how to extend upon the user model, and how to upload media.
@@ -126,8 +126,8 @@ To set everything the user registration functionality will we go through the fol
 #. Link the index page to the register page
 
 
-Create UserForm and UserProfileForm
-....................................
+Creating the ``UserForm`` and ``UserProfileForm``
+.................................................
 
 In ``rango/forms.py``, add the following classes:
 
@@ -159,8 +159,8 @@ Recall that the attribute ``model`` in the ``Meta`` class within the inherited `
 Within ``UserForm``, we have set the form field of ``password`` to be a ``forms.PasswordInput()`` widget, which will hide the user's input when they type into the field.
 
 
-Create a Register View
-.......................
+Creating the ``register()`` View
+................................
 Next we need to handle both the rendering of the form, and the processing of form input data. Within Rango's ``views.py`` file, add the following view function:
 
 .. code-block:: python
@@ -231,8 +231,8 @@ Next we need to handle both the rendering of the form, and the processing of for
 Is the view a lot more complex? Not really. The only added complexity from our previous ``add_category()`` view is the need to handle two distinct ``ModelForm`` instances - one for the ``User`` model, and one for the ``UserProfile`` model. We also need to handle a user's profile image, if he or she chooses to upload one. We must also establish a link between the two model instances that we create. After creating a new ``User`` model instance, we reference it in the ``UserProfile`` instance with the line ``profile.user = user``.
 
 
-Create a Registration Template
-..............................
+Creating the *Registration* Template
+....................................
 Now create a new template file, ``rango/register.html`` and add the following code:
 
 .. code-block:: html
@@ -277,8 +277,8 @@ This HTML template makes use of the ``register`` variable we used in our view in
 
 	Also, remember to make sure you include the CSRF token too ``{% csrf_token %}``.
 
-Mapping the View to a URL
-.........................
+The ``register()`` View URL Mapping
+...................................
 Now we can add a URL mapping to our new view. In ``rango/urls.py`` modify the ``urlpatterns`` tuple as shown below:
 
 .. code-block:: python
@@ -294,8 +294,8 @@ Now we can add a URL mapping to our new view. In ``rango/urls.py`` modify the ``
 
 The newly added pattern points the URL ``/rango/register/`` to the ``register()`` view. 
 
-Linking the Register to Index
-.............................
+Linking Together
+................
 Finally, we can add a link pointing to that URL in our homepage ``index.html`` template. Underneath the link to the category addition page, add the following hyperlink.
 
 .. code-block:: html
@@ -315,7 +315,6 @@ Easy! Now you'll have a new hyperlink with the text ``Register Here`` that'll ta
 
 Upon seeing the message indicating your details were successfully registered, the database should have two new entries in its tables corresponding to the ``User`` and ``UserProfile`` models. 
 
-
 Adding Login Functionality
 --------------------------
 With the ability to register accounts completed, we now need to add login in functionality. To achieve this we will need to undertake the workflow below:
@@ -325,9 +324,8 @@ With the ability to register accounts completed, we now need to add login in fun
 * Map the login view to a url
 * Provide a link to login from the index page
 
-
-Creating the Login View
-.......................
+Creating the ``login()`` View
+.............................
 In ``rango/views.py`` create a new function called ``user_login()`` and add the following code:
 
 .. code-block:: python
@@ -393,8 +391,8 @@ All of these functions and classes are provided by Django, and as such you'll ne
 	from django.contrib.auth import authenticate, login
 	from django.http import HttpResponseRedirect
 
-Creating a Login Template
-.........................
+Creating a *Login* Template
+...........................
 With our new view created, we'll need to create a new template allowing users to login. While we know that the template will live in the ``templates/rango/`` directory, we'll leave you to figure out the name of the file. Look at the code example above to work out the name. In your new template file, add the following code:
 
 .. code-block:: html
@@ -440,8 +438,8 @@ With your login template created, we can now match up the ``user_login()`` view 
 	    url(r'^login/$', views.user_login, name='login'),
 	    )
 
-Link up the Login page to The Index page
-........................................
+Linking Together
+................
 Our final step is to provide users of Rango with a handy link to access the login page. To do this, we'll edit the ``index.html`` template inside of the ``templates/rango/`` directory. Find the previously created category addition and registration links, and add the following hyperlink underneath. You may wish to include a line break (``<br />``) before the link.
 
 .. code-block:: python
@@ -557,7 +555,6 @@ To provide log out functionality in ``rango/views.py`` add the a view called ``u
 	    
 	    # Take the user back to the homepage.
 	    return HttpResponseRedirect('/rango/')
-
 
 With the view created, map the URL ``/rango/logout/`` to the ``user_logout()`` view by modifying the ``urlpatterns`` tuple in Rango's ``urls.py`` module:
 

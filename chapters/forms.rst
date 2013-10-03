@@ -28,8 +28,8 @@ Page and Category Forms
 -----------------------
 First, create a file called ``forms.py`` within the ``rango`` application directory. While this step is not absolutely necessary, as you could put the forms in the ``models.py``, this makes the codebase a lot cleaner and clearer to understand.
 
-Creating ModelForm Classes
-..........................
+Creating ``ModelForm`` Classes
+..............................
 Within Rango's ``forms.py`` module, we will be creating a number of classes that inherit from Django's ``ModelForm``. In essence, `a ModelForm <https://docs.djangoproject.com/en/1.5/topics/forms/modelforms/#modelform>`_ is a *helper class* that allows you to create a Django ``Form`` from a pre-existing model. As we've already got two models defined for Rango (``Category`` and ``Page``), we'll create ``ModelForms`` for both. 
 
 In ``rango/forms.py`` add the following code.
@@ -129,8 +129,8 @@ Django's form handling machinery has also been utilised to process the data retu
 
 You'll notice from the line in which we call ``render_to_response()`` that we refer to a new template called ``add_category.html`` which will contain the relevant Django template code and HTML for the form and page. 
 
-Creating the Add Category Template
-..................................
+Creating the *Add Category* Template
+....................................
 Create the file ``templates/rango/add_category.html``. Within the file, add the following HTML markup and Django template code.
 
 .. code-block:: html
@@ -170,8 +170,8 @@ Now, what does this code do? You can see that within the ``<body>`` of the HTML 
 
 You should also take note of the code snippet ``{% csrf_token %}``. This is a *Cross-Site Request Forgery (CSRF) token*, which helps to protect and secure the HTTP ``POST`` action that is initiated on the subsequent submission of a form. *The CSRF token is required by the Django framework. If you forget to include a CSRF token in your forms, a user may encounter errors when he or she submits the form.* Check out the `official Django documentation on CSRF tokens <https://docs.djangoproject.com/en/1.5/ref/contrib/csrf/>`_ for more information about this.
 
-Mapping the Add Category View
-.............................
+Mapping the *Add Category* View
+...............................
 Now we need to map the ``add_category()`` view to a URL. In the template we have used the URL ``/rango/add_category/`` in the form's submit attribute. So we will need to follow suit in ``rango/urls.py`` and modify the ``urlpatterns`` as follows.
 
 .. code-block:: python
@@ -210,17 +210,17 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 
 	class PageForm(forms.ModelForm):
 
-		...
-	
-		def clean(self):
-	    	cleaned_data = self.cleaned_data
-	    	url = cleaned_data.get('url')
+	    ...
 	    
-	    	if not url.startswith('http://'):
-	        	url = 'http://' + url
-	    
-	    		cleaned_data['url'] = url
-	    		return cleaned_data
+	    def clean(self):
+	        cleaned_data = self.cleaned_data
+	        url = cleaned_data.get('url')
+	        
+	        if not url.startswith('http://'):
+	            url = 'http://' + url
+	            
+	            cleaned_data['url'] = url
+	            return cleaned_data
 
 This trivial example shows how we can clean the data being passed through the form before being stored. This is pretty handy, especially when particular fields need to have default values - or data within the form is missing, and we need to handle such data entry problems.
 

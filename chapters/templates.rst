@@ -10,7 +10,7 @@ The basic approach to using inheritance in templates is as follows.
 #. In a *base template*, provide the skeleton structure of a standard page along with any common content (i.e. the copyright notice that goes in the footer, the logo and title that appears in the section), and then define a number of *blocks* which are subject to change depending on which page the user is viewing.
 #. Create specific templates - all of which inherit from the base template - and specify the contents of each block.
 
-Reoccurring HTML and the Base Template
+Reoccurring HTML and The Base Template
 --------------------------------------
 Given the templates that we have created so far it should be pretty obvious that we have been repeating a fair bit of HTML code. Below we have abstracted away any page specific details to show the skeleton structure that we have been repeating within each template.
 
@@ -33,7 +33,6 @@ Let's make this our base template, for the time being, and save it as ``base.htm
 .. note:: You should always aim to extract as much reoccurring content for your base templates. While it may be a bit more of a challenge for you to do initially, the time you will save in maintenance of your templates in the future far outweighs the initial overhead. Think about it: would you rather maintain one copy of your markup or multiple copies?
 
 .. warning:: Remember that your page ``<!DOCTYPE html>`` declaration absolutely must be placed on the first line for your page! Not doing so will mean your markup will not comply with the W3C HTML5 guidelines.
-
 
 Template Blocks
 ---------------

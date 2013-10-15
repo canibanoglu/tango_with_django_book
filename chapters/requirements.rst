@@ -234,30 +234,38 @@ Replace ``<PATH_TO_SITE-PACKAGES>`` with the path to your ``site-packages`` dire
 
 On a Windows-based computer, you must follow the instructions shown in Section :num:`requirements-install-python-windows` to bring up the environment variables settings dialog. Add a ``PYTHONPATH`` variable with the value being set to your ``site-packages`` folder, which is typically ``C:\Python27\Lib\site-packages\``.
 
-Pip, the Python Package Manager
-*******************************
+``setuptools`` and ``pip``, the Python Package Manager
+******************************************************
 Installing and setting up your development environment is a really important part of any project. While it is possible to install Python Packages such as Django separately, this can lead to numerous problems and hassles later on. For example, how would you share your setup with another developer? How would you set up the same environment on your new machine? How would you upgrade to the latest version of the package? Using a package manager removes much of the hassle involved in setting up and configuring your environment. It will also ensure that the package you install is the correct for the version of Python you are using, along with installing any other packages that are dependent upon the one you want to install.
 
-We will be using the *Pip* package manager. Download the installer ``get-pip.py`` from the `Pip website <http://www.pip-installer.org/en/latest/installing.html>`_. This can be easily done via the terminal (on UNIX-based Operating systems):
+In this book, we will be using *Pip*. Pip is a user-friendly wrapper over the *Setuptools* Python package manager. Because Pip depends on Setuptools, we are required to ensure that both are installed on your computer.
+
+To start, we should download Setuptools from the `official Python package website <https://pypi.python.org/pypi/setuptools/1.1.6>`_. You can download the package in a compressed ``.tar.gz`` file. Using your favourite file extracting program, extract the files. They should all appear in a directory called ``setuptools-1.1.6`` - where ``1.1.6`` represents the Setuptools version number. From a terminal instance, you can then change into the directory and execute the script``ez_setup.py`` as shown below.
 
 .. code-block:: guess
 	
-	$ curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-	$ python get-pip.py
+	$ cd setuptools-1.1.6
+	$ sudo python ez_setup.py
 
-The first command executes ``curl``, a program used for transferring files. It will download the ``get-pip.py`` file to your current working directory. If ``curl`` cannot retrieve the file, try ``http`` instead of ``https`` in the URL path.
-
-The second command then executes the ``get-pip.py`` file using the Python interpreter. Note that you may have to use ``sudo python get-pip.py`` depending on your accounts privileges. 
-
-Windows-based computers do not natively come with a ``curl`` equivalent. To retrieve the required ``get-pip.py`` file for Windows, access the URL with your web browser, and save the file to somewhere on your hard drive. With a Command Prompt set to the folder where the downloaded file is located, issue the following command.
+In the example above, we also use ``sudo`` to allow the changes to become system-wide. The second command should install Setuptools for you. To verify that the installation was successful, you should be able to see output similar to that shown below.
 
 .. code-block:: guess
 	
-	$ python get-pip.py
+	Finished processing dependencies for setuptools==1.1.6
 
-This will launch the Python script, and should download everything to the correct location for you.
+Of course, ``1.1.6`` is substituted with the version of Setuptools you are installing. If this line can be seen, you can move onto installing Pip. This is a trivial process, and can be completed with one simple command. From your terminal instance, enter the following.
 
-Once you have run the installation process for Pip, you should be able to launch Pip from your terminal. To do so, just type ``pip``. This should present you with a list of commands and switches that Pip accepts.
+.. code-block:: guess
+	
+	$ sudo easy_install pip
+
+This command should download and install Pip, again with system-wide access. You should see the following output, verifying Pip has been successfully installed.
+
+.. code-block:: guess
+	
+	Finished processing dependencies for pip
+
+Upon seeing this output, you should be able to launch Pip from your terminal. To do so, just type ``pip``. Instead of an unrecognised command error, you should be presented with a list of commands and switches that Pip accepts. If you see this, you're ready to move on!
 
 Installing Django
 *****************

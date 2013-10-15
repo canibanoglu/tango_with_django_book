@@ -267,6 +267,8 @@ This command should download and install Pip, again with system-wide access. You
 
 Upon seeing this output, you should be able to launch Pip from your terminal. To do so, just type ``pip``. Instead of an unrecognised command error, you should be presented with a list of commands and switches that Pip accepts. If you see this, you're ready to move on!
 
+.. note:: With Windows-based computers, follow the same basic process. You won't need to enter the ``sudo`` command, however.
+
 Installing Django
 *****************
 Once the Python package manager Pip is successfully installed on your computer, installing Django is easy. Open a Command Prompt or terminal window, and issue the following command.

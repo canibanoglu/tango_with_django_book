@@ -234,13 +234,13 @@ Replace ``<PATH_TO_SITE-PACKAGES>`` with the path to your ``site-packages`` dire
 
 On a Windows-based computer, you must follow the instructions shown in Section :num:`requirements-install-python-windows` to bring up the environment variables settings dialog. Add a ``PYTHONPATH`` variable with the value being set to your ``site-packages`` folder, which is typically ``C:\Python27\Lib\site-packages\``.
 
-``setuptools`` and ``pip``, the Python Package Manager
-******************************************************
+Using Setuptools and Pip
+************************
 Installing and setting up your development environment is a really important part of any project. While it is possible to install Python Packages such as Django separately, this can lead to numerous problems and hassles later on. For example, how would you share your setup with another developer? How would you set up the same environment on your new machine? How would you upgrade to the latest version of the package? Using a package manager removes much of the hassle involved in setting up and configuring your environment. It will also ensure that the package you install is the correct for the version of Python you are using, along with installing any other packages that are dependent upon the one you want to install.
 
 In this book, we will be using *Pip*. Pip is a user-friendly wrapper over the *Setuptools* Python package manager. Because Pip depends on Setuptools, we are required to ensure that both are installed on your computer.
 
-To start, we should download Setuptools from the `official Python package website <https://pypi.python.org/pypi/setuptools/1.1.6>`_. You can download the package in a compressed ``.tar.gz`` file. Using your favourite file extracting program, extract the files. They should all appear in a directory called ``setuptools-1.1.6`` - where ``1.1.6`` represents the Setuptools version number. From a terminal instance, you can then change into the directory and execute the script``ez_setup.py`` as shown below.
+To start, we should download Setuptools from the `official Python package website <https://pypi.python.org/pypi/setuptools/1.1.6>`_. You can download the package in a compressed ``.tar.gz`` file. Using your favourite file extracting program, extract the files. They should all appear in a directory called ``setuptools-1.1.6`` - where ``1.1.6`` represents the Setuptools version number. From a terminal instance, you can then change into the directory and execute the script ``ez_setup.py`` as shown below.
 
 .. code-block:: guess
 	

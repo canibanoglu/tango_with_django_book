@@ -16,7 +16,7 @@ Configuring the Templates Directory
 ...................................
 To get templates up and running, you will need to setup a directory in which template files are stored. 
 
-In your Django project's directory (e.g. ``<workspace>/tango_with_django_project/``), create a new directory called ``templates``. Within the new templates directory, create another directory called ``rango``. ``templates/rango/`` will the location in which we will be storing templates associated with our ``rango`` application.
+In your Django project's directory (e.g. ``<workspace>/tango_with_django_project/``), create a new directory called ``templates``. Within the new templates directory, create another directory called ``rango``. So the directory ``<workspace>/tango_with_django_project/templates/rango/`` will be the location in which we will be storing templates associated with our ``rango`` application. 
 
 To tell your Django project where the templates will be housed, open your project's ``settings.py`` file. Find the tuple ``TEMPLATE_DIRS`` and add in the path to your newly created ``templates`` directory, so it looks like the following example.
 
@@ -48,7 +48,7 @@ This code imports the Python ``os`` module and asks for the path of the current 
 
 With the absolute to our project's root directory now stored in ``PROJECT_PATH``, we can then join the path together with a further directory or filename to obtain a complete path to our project's filesystem resources.
 
-Create a templates path and it to ``settings.py`` as shown in the example below.
+Create a new variable called TEMPLATE_PATH in the ``settings.py`` file and store the path to the templates directory in it as follows:
 
 .. code-block:: python
 	
@@ -69,7 +69,7 @@ We can keep the ``TEMPLATE_PATH`` variable at the top of our ``settings.py`` to 
 
 Adding a Template
 .................
-With your template path set up create a file called ``index.html`` and place it in the ``templates/rango/`` directory. Within this new file, add the following HTML code:
+With your template directory and path set up, create a file called ``index.html`` and place it in the ``templates/rango/`` directory. Within this new file, add the following HTML code:
 
 .. code-block:: html
 	

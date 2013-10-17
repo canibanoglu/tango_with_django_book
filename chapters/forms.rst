@@ -40,7 +40,7 @@ In ``rango/forms.py`` add the following code.
 	from rango.models import Page, Category
 	
 	class CategoryForm(forms.ModelForm):
-	    name = forms.CharField(max_length=50, help_text="Please enter the category name.")
+	    name = forms.CharField(max_length=128, help_text="Please enter the category name.")
 	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	    
@@ -50,8 +50,8 @@ In ``rango/forms.py`` add the following code.
 	        model = Category
 	
 	class PageForm(forms.ModelForm):
-	    title = forms.CharField(max_length=100, help_text="Please enter the title of the page.")
-	    url = forms.CharField(max_length=200, help_text="Please enter the URL of the page.")
+	    title = forms.CharField(max_length=128, help_text="Please enter the title of the page.")
+	    url = forms.URLField(max_length=200, help_text="Please enter the URL of the page.")
 	    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	    
 	    class Meta:
@@ -64,7 +64,7 @@ In ``rango/forms.py`` add the following code.
 	        # Here, we are hiding the foreign key.
 	        fields = ('title', 'url','views')
 
-Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our ``PageForm`` class, we've defined ``forms.CharField`` for both the ``title`` and ``url`` fields, as a text entry field is most appropriate. You can see from the parameters we pass that the maximum permissible length of each form field varies - with lengths of 100 and 200 characters respectively.
+Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our ``PageForm`` class, we've defined ``forms.CharField`` for the ``title`` field, and ``forms.URLField`` for ``url`` field. Both fields provide text entry for users. Note the ``max_length`` parameters we supply to our fields - the lengths that we specify are identical to the maximum length of each field we specified in the underlying data models. Go back to Chapter :ref:`model-label` to check for yourself, or have a look at Rango's ``models.py`` file.
 
 You will also notice that we have included several ``IntegerField`` entries for the views and likes fields in each form. Note that we have set the widget to be hidden with the parameter setting ``widget=forms.HiddenInput()``, and then set the value to zero with ``initial=0``. This is one way to set the field to zero without giving the control to the user as the field will be hidden, yet the form will provide the value to the model. However, as you can see in the ``PageForm``, despite the fact that we have a hidden field, we still need to include the field in the form. If in ``fields`` we excluded ``views``, then the form would not contain that field (despite it being specified) and so the form would not return the value zero for that field. This may raise an error depending on how the model has been set up. If in the models we specified that the ``default=0`` for these fields then we can rely on the model to automatically populate field with the default value - and thus avoid a ``not null`` error. In this case, it would not be necessary to have these hidden fields. Essentially, you need to be careful when you define your models and forms to make sure that form is going to contain and pass on all the data that is required to populate your model correctly.
 

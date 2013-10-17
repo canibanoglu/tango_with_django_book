@@ -146,7 +146,8 @@ Next, we can add our new view, ``category()``.
 	    # We can then simply replace the underscores with spaces again to get the name.
 	    category_name = category_name_url.replace('_', ' ')
 	    
-	    # Build up the dictionary we will use as our template context dictionary.
+	    # Create a context dictionary which we can pass to the template rendering engine.
+	    # We start by containing the name of the category passed by the user.
 	    context_dict = {'category_name': category_name}
 	    
 	    try:
@@ -161,6 +162,9 @@ Next, we can add our new view, ``category()``.
 	        
 	        # Adds our results list to the template context under name pages.
 	        context_dict['pages'] = pages
+	        # We also add the category object from the database to the context dictionary.
+	        # We'll use this in the template to verify that the category exists.
+	        context_dict['category'] = category
 	    except Category.DoesNotExist:
 	        # We get here if we didn't find the specified category.
 	        # Don't do anything - the template displays the "no category" message for us.
@@ -169,9 +173,7 @@ Next, we can add our new view, ``category()``.
 	    # Go render the response and return it to the client.
 	    return render_to_response('rango/category.html', context_dict, context)
 
-Our new view follows the same basic steps as our ``index()`` view. We first obtain the context of the request, then build a context dictionary, render the template, and send the result back. The difference here is that the context dictionary building is a little more complex. We need to check the database for the category we supply as argument ``category_name_url``, and build the context dictionary depending on the value of that parameter.
-
-In constructing this view, we are making the assumption that we will be passed in the ``category_name_url``. We'll have to create a URL mapping to handle this, and we are also assuming that we have a template called ``rango/category.html`` which we will have to create too.
+Our new view follows the same basic steps as our ``index()`` view. We first obtain the context of the request, then build a context dictionary, render the template, and send the result back. In this case, the difference is that the context dictionary building is a little more complex. To build our context dictionary, we need to determine which category to look at by using the value passed as parameter ``category_name_url`` to the ``category()`` view function. Once we have determined which category to look for, we can pull the relevant information from the database and append the results to our context dictionary, ``context_dict``. We'll figure out how to get the value for ``category_name_url`` from the URL shortly.
 
 You will have also seen in the ``category()`` view function we assume that the ``category_name_url`` is the category name where spaces are converted to underscores. We therefore replace all the underscores with spaces. This is unfortunately a pretty crude way to handle the decoding and encoding of the category name within the URL. As an exercise later, it'll be your job to create two functions to encode and decode category name.
 
@@ -191,20 +193,25 @@ Now let's create our template for the new view.  In ``<workspace>/tango_with_dja
 	
 	    <body>
 	        <h1>{{ category_name }}</h1>
-	
-	        {% if pages %}
-	        <ul>
-	            {% for page in pages %}
-	            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-	            {% endfor %}
-	        </ul>
+	        {% if category %}
+	            {% if pages %}
+	            <ul>
+	                {% for page in pages %}
+	                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+	                {% endfor %}
+	            </ul>
+	            {% else %}
+	                <strong>No pages currently in category.</strong>
+	            {% endif %}
 	        {% else %}
-	            <strong>No pages currently in category.</strong>
+	            The specified category {{ category_name }} does not exist!
 	        {% endif %}
 	    </body>
 	</html>
 
-The HTML code example again demonstrates how we utilise the data passed to the template via its context. We make use of ``category_name`` and our ``pages`` list. If ``pages`` is undefined or contains no elements, we display a message stating there are no pages present. Otherwise, the pages within the category are presented in a HTML list. For each page in the ``pages`` list, we present their ``title`` and ``url`` attributes.
+The HTML code example again demonstrates how we utilise the data passed to the template via its context. We make use of the ``category_name`` variable and our ``category`` and ``pages`` objects. If ``category`` is not defined within our template context, the category was not found within the database, and a friendly error message is displayed stating this fact. If the opposite is true, we then proceed to check for ``pages``. If ``pages`` is undefined or contains no elements, we display a message stating there are no pages present. Otherwise, the pages within the category are presented in a HTML list. For each page in the ``pages`` list, we present their ``title`` and ``url`` attributes.
+
+.. note:: This a Django template ``{% if %}`` statement with an object is a really neat way of determining the existence of the object within the template's context. Try getting into the habit of performing these checks to reduce the scope for potential exceptions that could be raised within your code.
 
 Parameterised URL Mapping
 .........................

@@ -61,7 +61,7 @@ In ``rango/models.py``, we will define two classes - both of which must inherit 
 	class Page(models.Model):
 	    category = models.ForeignKey(Category)
 	    title = models.CharField(max_length=128)
-	    url = models.URLField()
+	    url = models.URLField(unique=True)
 	    views = models.IntegerField(default=0)
 	    
 	    def __unicode__(self):

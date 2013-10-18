@@ -213,6 +213,7 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 	    ...
 	    
 	    def clean(self):
+                super(PageForm, self).clean()
 	        cleaned_data = self.cleaned_data
 	        url = cleaned_data.get('url')
 	        
@@ -223,6 +224,7 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 	            return cleaned_data
 
 This trivial example shows how we can clean the data being passed through the form before being stored. This is pretty handy, especially when particular fields need to have default values - or data within the form is missing, and we need to handle such data entry problems.
+Note that we have called the parent class's clean() method because we would like to have Django automatically validate the uniqueness of the `url` field defined in our Page Model. Take a loot at the `official Django documentation on overriding the clean() method <https://docs.djangoproject.com/en/1.5/topics/forms/modelforms/#overriding-the-clean-method>`_ for more information.
 
 Exercises
 ---------

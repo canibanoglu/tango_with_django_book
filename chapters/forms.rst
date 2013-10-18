@@ -216,7 +216,7 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 	        cleaned_data = self.cleaned_data
 	        url = cleaned_data.get('url')
 	        
-	        if not url.startswith('http://'):
+	        if url and not url.startswith('http://'):
 	            url = 'http://' + url
 	            
 	            cleaned_data['url'] = url

@@ -239,7 +239,7 @@ Our new view is set up and ready to go - but we need to do one more thing. Our i
 	    context = RequestContext(request)
 	    
 	    # Query for categories - add the list to our context dictionary.
-	    category_list = Category.objects.ordered_by('-likes')[:5]
+	    category_list = Category.objects.order_by('-likes')[:5]
 	    context_dict = {'categories': category_list}
 	    
 	    # The following two lines are new.

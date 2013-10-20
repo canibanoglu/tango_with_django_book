@@ -151,7 +151,7 @@ Don't forget to include the required classes at the top of the ``forms.py`` modu
 
 .. code-block:: python
 	
-	from models.rango import UserProfile
+	from rango.models import UserProfile
 	from django.contrib.auth.models import User
 
 Recall that the attribute ``model`` in the ``Meta`` class within the inherited ``ModelForm`` associates the model to the form, and ``fields`` dictates what fields will be displayed on the form. 

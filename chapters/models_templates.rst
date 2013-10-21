@@ -298,7 +298,8 @@ Exercises
 Reinforce what you've learnt in this chapter by trying out the following exercises.
 
 * Modify the index page to also include the top 5 most viewed pages.
-* The encoding and decoding of the Category name to a URL is pretty sloppy. Create a better way for encoding and decoding the url/name so that it handles special characters and ignores cAsE.
+* The encoding and decoding of the Category name to a URL is not particularly robust as every time we need to access the page we need to decode the URL. One way we can make sure the encoding and decoding is to use some functions to perform the encoding and decoding. 
+* While the encode and decode function help it is only part of the solution. How would you redesign the URL encoding so that it is more seamless and doesn't require encoding and decoding every time?
 * Undertake the `part three of official Django tutorial <https://docs.djangoproject.com/en/1.5/intro/tutorial03/>`_ if you have not done so already to further what you've learnt here.
 
 Hints

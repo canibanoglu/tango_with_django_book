@@ -108,7 +108,7 @@ You also need to import the ``UserProfile`` model by adding one of the following
 	# Import the UserProfile model with Category and Page
 	from rango.models import Category, Page, UserProfile
 
-.. note:: Remember that with the creation of a new model, you much synchronise your database. Run the ``$ python manage.py syncb`` command to synchronise the new ``UserProfile`` model. Not doing so will result in errors explaining that the required database tables cannot be found.
+.. note:: Remember that with the creation of a new model, you must synchronise your database. Run the ``$ python manage.py syncb`` command to synchronise the new ``UserProfile`` model. Not doing so will result in errors explaining that the required database tables cannot be found.
 
 Creating a *User Registration* View and Template
 ------------------------------------------------
@@ -138,12 +138,12 @@ In ``rango/forms.py``, add the following classes:
 	    
 	    class Meta:
 	        model = User
-	        fields = ['username', 'email', 'password']
+	        fields = ('username', 'email', 'password')
 
 	class UserProfileForm(forms.ModelForm):
 	    class Meta:
 	        model = UserProfile
-	        fields = ['website', 'picture']
+	        fields = ('website', 'picture')
 
 Here, we added **two** classes: one representing an input form for a ``User`` model, the other for the ``UserProfile`` model. Recall how additional fields were combined with the base ``User`` model - not with inheritance, but by linking the two models together with a one-to-one relationship, hence the need for two forms.
 
@@ -248,7 +248,7 @@ Now create a new template file, ``rango/register.html`` and add the following co
 
 	        {% if registered %}
 	        Rango says: <strong>thank you for registering!</strong>
-	        <a href="/rango/" >Return to the homepage.</a><br />
+	        <a href="/rango/">Return to the homepage.</a><br />
 	        {% else %}
 	        Rango says: <strong>register here!</strong><br />
 
@@ -547,9 +547,6 @@ To provide log out functionality in ``rango/views.py`` add the a view called ``u
 	# Use the login_required() decorator to ensure only those logged in can access the view.
 	@login_required
 	def user_logout(request):
-	    # Like before, obtain the request's context.
-	    context = RequestContext(request)
-	    
 	    # Since we know the user is logged in, we can now just log them out.
 	    logout(request)
 	    

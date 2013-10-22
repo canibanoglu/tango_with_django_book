@@ -404,7 +404,7 @@ Hint
 If you require some help or inspiration to get these exercises done, these hints will hopefully help you out.
 
 * To customise the admin interface, you will need to edit ``rango/admin.py`` and create a PageAdmin class that inherits from admin.ModelAdmin. 
-* Then set ``list_display = ('category','title', 'url')`` in the PageAdmin class
+* Then set ``list_display = ('category', 'title', 'url')`` in the PageAdmin class
 * Finally, register it with Django's admin interface by adding the line ``admin.site.register(Page, PageAdmin)`` to your app's ``admin.py`` file.
 
 .. _fig-admin-customised:

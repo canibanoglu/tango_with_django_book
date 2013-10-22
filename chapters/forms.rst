@@ -101,8 +101,8 @@ With our ``CategoryForm`` class now defined, we're now ready to create a new vie
 	            # The user will be shown the homepage.
 	            return index(request)
 	        else:
-	            # No form passed - ignore and keep going.
-	            pass
+	            # The supplied form contained errors - just print them to the terminal.
+	            print form.errors
 	    else:
 	        # If the request was not a POST, display the form to enter details.
 	        form = CategoryForm()

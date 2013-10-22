@@ -129,7 +129,7 @@ To set everything the user registration functionality will we go through the fol
 Creating the ``UserForm`` and ``UserProfileForm``
 .................................................
 
-In ``rango/forms.py``, add the following classes:
+In ``rango/forms.py``, add the following classes.
 
 .. code-block:: python
 	
@@ -138,25 +138,23 @@ In ``rango/forms.py``, add the following classes:
 	    
 	    class Meta:
 	        model = User
-	        fields = ['username', 'email', 'password']
+	        fields = ('username', 'email', 'password')
 
 	class UserProfileForm(forms.ModelForm):
 	    class Meta:
 	        model = UserProfile
-	        fields = ['website', 'picture']
+	        fields = ('website', 'picture')
 
-Here, we added **two** classes: one representing an input form for a ``User`` model, the other for the ``UserProfile`` model. Recall how additional fields were combined with the base ``User`` model - not with inheritance, but by linking the two models together with a one-to-one relationship, hence the need for two forms.
+Here, we added *four* additional classes. We defined two classes which handle the form representation of our two models, ``User`` and ``UserProfile``. These both inherit from ``forms.ModelForm``. The remaining two classes - both called ``Meta`` - are `nested classes <http://www.brpreiss.com/books/opus7/html/page598.html>`_. The ``Meta`` class allows us to specify information about each ``ModelForm`` class. For example, the attribute ``model`` allows us to specify which model each form class should use. ``fields`` accepts a list or tuple of field names which you wish to include in the form. With ``fields``, you can fine tune what fields you want users to see.
 
-Don't forget to include the required classes at the top of the ``forms.py`` module!
+We have additionally set the form field of ``password`` in ``UserForm`` to be a ``forms.PasswordInput()`` widget. This will ensure that when a user enters his or her password it will be hidden from prying eyes.
+
+You shouldn't forget to include the required classes at the top of the ``forms.py`` module!
 
 .. code-block:: python
 	
 	from rango.models import UserProfile
 	from django.contrib.auth.models import User
-
-Recall that the attribute ``model`` in the ``Meta`` class within the inherited ``ModelForm`` associates the model to the form, and ``fields`` dictates what fields will be displayed on the form. 
-
-Within ``UserForm``, we have set the form field of ``password`` to be a ``forms.PasswordInput()`` widget, which will hide the user's input when they type into the field.
 
 
 Creating the ``register()`` View
@@ -547,14 +545,13 @@ To provide log out functionality in ``rango/views.py`` add the a view called ``u
 	# Use the login_required() decorator to ensure only those logged in can access the view.
 	@login_required
 	def user_logout(request):
-	    # Like before, obtain the request's context.
-	    context = RequestContext(request)
-	    
 	    # Since we know the user is logged in, we can now just log them out.
 	    logout(request)
 	    
 	    # Take the user back to the homepage.
 	    return HttpResponseRedirect('/rango/')
+
+.. note:: Where's ``RequestContext()``? In this simple user logout view, there's no need to obtain the request's context from Django's backend. If we don't need it, why ask for it?
 
 With the view created, map the URL ``/rango/logout/`` to the ``user_logout()`` view by modifying the ``urlpatterns`` tuple in Rango's ``urls.py`` module:
 

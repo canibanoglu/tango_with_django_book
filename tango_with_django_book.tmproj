@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>chapters/models_templates.rst</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -13,8 +15,6 @@
 			<string>conf.py</string>
 			<key>lastUsed</key>
 			<date>2013-10-20T17:11:32Z</date>
-			<key>selected</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -74,7 +74,9 @@
 			<key>filename</key>
 			<string>chapters/models_templates.rst</string>
 			<key>lastUsed</key>
-			<date>2013-10-20T16:55:39Z</date>
+			<date>2013-10-21T11:00:59Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -132,7 +134,26 @@
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>chapters/models_templates.rst</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>297</integer>
+				<key>line</key>
+				<integer>226</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>279</integer>
+			<key>firstVisibleLine</key>
+			<integer>213</integer>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>chapters/models_templates.rst</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>

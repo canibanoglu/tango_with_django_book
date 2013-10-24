@@ -262,8 +262,8 @@ You'll have to pass the value from the cookie to the template context for it to 
 	
 	# If the visits session varible exists, take it and use it.
 	# If it doesn't, we haven't visited the site so set the count to zero.
-	if request.session['visits']:
-	    count = request.session['visits']
+	if request.session.get('visits'):
+	    count = request.session.get('visits')
 	else:
 	    count = 0
 

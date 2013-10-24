@@ -3,7 +3,7 @@
 Cookies and Sessions
 ====================
 
-In this chapter, we will be going through *sessions* and *cookies*, both of which go hand in hand, and are of paramount importance in modern day web applications. In the previous chapter, the Django framework used sessions and cookies to handle the login and logout functionality (all behind the scenes). Here we will explore how to explicitly used cookies for other purposes.
+In this chapter, we will be going through *sessions* and *cookies*, both of which go hand in hand, and are of paramount importance in modern day web applications. In the previous chapter, the Django framework used sessions and cookies to handle the login and logout functionality (all behind the scenes). Here we will explore how to explicitly use cookies for other purposes.
 
 Cookies, Cookies Everywhere!
 ----------------------------

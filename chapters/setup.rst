@@ -48,7 +48,7 @@ For the purposes of this tutorial, we call this nested directory the *project co
 
 .. note:: The project configuration directory has been created with new Django projects since version 1.4. Having two directories with the same name may seem quite a bit odd, but the change was made to make separate out the project from the applications within your project.
 
-In the project directory, you will see there is a file called ``manage.py``. We will be called this script time and time again as we develop our project, as it provides you with a series of commands you can run to maintain your Django project. For example, ``manage.py`` allows you to run the built-in Django development server to test your work and run database commands. You'll be using this script a lot throughout the development cycle.
+In the project directory, you will see there is a file called ``manage.py``. We will be calling this script time and time again as we develop our project, as it provides you with a series of commands you can run to maintain your Django project. For example, ``manage.py`` allows you to run the built-in Django development server to test your work and run database commands. You'll be using this script a lot throughout the development cycle.
 
 .. note:: See the Django documentation for more details about the `Admin and Manage scripts <https://docs.djangoproject.com/en/1.5/ref/django-admin/#django-admin-py-and-manage-py>`_.
 
@@ -172,7 +172,7 @@ Within the ``rango`` application directory, we now need to create a new file cal
 
 This code imports the relevant Django machinery that we use to create URL mappings. Importing the ``views`` module from ``rango`` also provides us with access to our simple view implemented previously, allowing us to reference the view.
 
-To create our mappings, we use a ``urlpatterns`` tuple. Django uses this tuple to identify valid mappings. Here, we define a URL mapping with a regular expression ``^$``. This regular expression matches an string that is empty. When a matching string is supplied, the method ``rango.views.index`` is invoked, and is passed a ``HttpRequest`` object. This may seem a bit odd, but when this pattern matching takes places only a portion of the original URL string is considered. This is because our Django project will first process the original URL string (i.e. ``http://www.tangowithdjango.com/rango/``).
+To create our mappings, we use a ``urlpatterns`` tuple. Django uses this tuple to identify valid mappings. Here, we define a URL mapping with a regular expression ``^$``. This regular expression matches a string that is empty. When a matching string is supplied, the method ``rango.views.index`` is invoked, and is passed a ``HttpRequest`` object. This may seem a bit odd, but when this pattern matching takes places only a portion of the original URL string is considered. This is because our Django project will first process the original URL string (i.e. ``http://www.tangowithdjango.com/rango/``).
 
 This means we need to configure the ``urls.py`` of our project ``tango_with_django_project`` and connect up our main project with our Rango application.
 

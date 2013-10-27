@@ -95,7 +95,7 @@ If you are using version control, now may be a good time to commit the changes y
 
 Creating a Django Application
 -----------------------------
-A Django project is a collection of *configurations* and *applications* that together make up a given web application or website. One of the intended outcomes of using this approach is to promote good software engineering practices. By developing a small series of applications, the idea is that you can theoretically drop an existing application into a different Django project and have it working with minimal effort. Why reinvent the wheel if it's already there?
+A Django project is a collection of *configurations* and *applications* that together make up a given web application or website. One of the intended outcomes of using this approach is to promote good software engineering practices. By developing a small series of applications, the idea is that you can theoretically drop an existing application into a different Django project and have it working with minimal effort. Why reinvent the wheel if it's already there? [#f2]_
 
 A Django application exists to perform a particular task. You need to create specific applications that are responsible for providing your site with particular kinds of functionality. For example, we could imagine that a project might consist of several applications including a polling app, a registration app, and a specific content related app. In another project, we may wish to re-use the polling and registration apps and use them with to dispatch different content. There are many Django applications you can `download <https://code.djangoproject.com/wiki/DjangoResources#Djangoapplicationcomponents>`_ and use in your projects. Since we are getting started, we'll kick off by walking through how to create your own application.
 
@@ -257,3 +257,5 @@ If you're struggling to get the exercises done, the following hints will hopeful
 
 .. rubric:: Footnotes
 .. [#f1] This assumes that you are using the IP address 127.0.0.1 and port 8000 when running your Django development web server. If you do not explicitly provide a port to run the development server on, Django defaults to port 8000 for you.
+
+.. [#f2] There are many applications available out there that you can use in your project. Take a look at `PyPI <https://pypi.python.org/pypi?%3Aaction=search&term=django&submit=search>`_ and `Django Packages <https://www.djangopackages.com/>`_ to search for reusable apps.

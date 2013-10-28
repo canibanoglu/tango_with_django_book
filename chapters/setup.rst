@@ -46,7 +46,7 @@ For the purposes of this tutorial, we call this nested directory the *project co
 * ``urls.py``, a Python script to store URL patterns for your project; and
 * ``wsgi.py``, a Python script used to help run your development server and deploy your project to a production environment.
 
-.. note:: The project configuration directory has been created with new Django projects since version 1.4. Having two directories with the same name may seem quite a bit odd, but the change was made to make separate out the project from the applications within your project.
+.. note:: The project configuration directory has been created with new Django projects since version 1.4. Having two directories with the same name may seem quite a bit odd, but the change was made to separate out project-related components from its individual applications.
 
 In the project directory, you will see there is a file called ``manage.py``. We will be called this script time and time again as we develop our project, as it provides you with a series of commands you can run to maintain your Django project. For example, ``manage.py`` allows you to run the built-in Django development server to test your work and run database commands. You'll be using this script a lot throughout the development cycle.
 

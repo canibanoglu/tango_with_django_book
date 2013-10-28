@@ -62,7 +62,7 @@ In ``rango/forms.py`` add the following code.
 	        # This way we don't need every field in the model present.
 	        # Some fields may allow NULL values, so we may not want to include them...
 	        # Here, we are hiding the foreign key.
-	        fields = ('title', 'url','views')
+	        fields = ('title', 'url', 'views')
 
 Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our ``PageForm`` class, we've defined ``forms.CharField`` for the ``title`` field, and ``forms.URLField`` for ``url`` field. Both fields provide text entry for users. Note the ``max_length`` parameters we supply to our fields - the lengths that we specify are identical to the maximum length of each field we specified in the underlying data models. Go back to Chapter :ref:`model-label` to check for yourself, or have a look at Rango's ``models.py`` file.
 

@@ -215,12 +215,12 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 	    def clean(self):
 	        cleaned_data = self.cleaned_data
 	        url = cleaned_data.get('url')
-	        
-	        if not url.startswith('http://'):
+	        # If url is not empty and doesn't start with 'http://' add 'http://' to the beginning.
+	        if url and not url.startswith('http://'):
 	            url = 'http://' + url
 	            
 	            cleaned_data['url'] = url
-	            return cleaned_data
+                return cleaned_data
 
 This trivial example shows how we can clean the data being passed through the form before being stored. This is pretty handy, especially when particular fields need to have default values - or data within the form is missing, and we need to handle such data entry problems.
 

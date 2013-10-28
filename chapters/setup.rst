@@ -258,4 +258,4 @@ If you're struggling to get the exercises done, the following hints will hopeful
 .. rubric:: Footnotes
 .. [#f1] This assumes that you are using the IP address 127.0.0.1 and port 8000 when running your Django development web server. If you do not explicitly provide a port to run the development server on, Django defaults to port 8000 for you.
 
-.. [#f2] There are many applications available out there that you can use in your project. Take a look at `PyPI <https://pypi.python.org/pypi?%3Aaction=search&term=django&submit=search>`_ and `Django Packages <https://www.djangopackages.com/>`_ to search for reusable apps.
+.. [#f2] There are many applications available out there that you can use in your project. Take a look at `PyPI <https://pypi.python.org/pypi?%3Aaction=search&term=django&submit=search>`_ and `Django Packages <https://www.djangopackages.com/>`_ to search for reusable apps which you can drop into your projects.

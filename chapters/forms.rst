@@ -265,7 +265,7 @@ A next logical step would be to allow users to add pages to a given category. To
 	            page.save()
 	            
 	            # Now that the page is saved, display the category instead.
-	            return category(request, category_name)
+	            return category(request, category_name_url)
 	        else:
 	            print form.errors
 	    else:

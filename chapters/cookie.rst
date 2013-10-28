@@ -99,7 +99,7 @@ If the message isn't displayed, you'll want to check your browser's security set
 
 Client Side Cookies: A Site Counter Example
 -------------------------------------------
-Now we know cookies work let's implement a very simple site visit counter. To achieve this, we're going to be creating two cookies. One to track the number of times the user has visited the Rango website, and the other to track the last time he or she accessed the site. Keeping track of the date and time of the last access will allow us to only increment the site counter once per day, for example.
+Now we know cookies work, let's implement a very simple site visit counter. To achieve this, we're going to be creating two cookies: one to track the number of times the user has visited the Rango website, and the other to track the last time he or she accessed the site. Keeping track of the date and time of the last access will allow us to only increment the site counter once per day, for example.
 
 The sensible place to assume a user enters the Rango site is at the index page. Open ``rango/index.py`` and edit the ``index()`` view as follows:
 

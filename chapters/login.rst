@@ -594,7 +594,7 @@ Like in the previous section, we'll be modifying Rango's ``index.html`` template
 	<a href="/rango/about/">About</a><br/>
 	<a href="/rango/add_category/">Add a New Category</a><br />
 
-Simple - when a user is authenticated and logged in, he is she can see the ``Restricted Page`` and ``Logout`` links. If he or she isn't logged in, ``Register Here`` and ``Login`` are presented. As ``About`` and ``Add a New Category`` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
+Simple - when a user is authenticated and logged in, he or she can see the ``Restricted Page`` and ``Logout`` links. If he or she isn't logged in, ``Register Here`` and ``Login`` are presented. As ``About`` and ``Add a New Category`` are not within the template conditional blocks, these links are available to both anonymous and logged in users.
 
 Exercises
 ---------

@@ -84,7 +84,7 @@ With the view updated, all that is left for us to do is update the template ``ra
 
 Here, we make use of Django's template language to present the data using ``if`` and ``for`` control statements. Within the ``<body>`` of the page, we test to see if ``categories`` - the name of the context variable containing our list - actually contains any categories (i.e. ``{% if categories %}``).
 
-If so, we proceed to construct an unordered HTML list (within the ``<ul>`` tags). The for loop (``{% for category in categories %}``) then iterates through the list of results, printing out each category's name (``{{ category.name }}`)` within a pair of ``<li>`` tags to indicate a list element.
+If so, we proceed to construct an unordered HTML list (within the ``<ul>`` tags). The for loop (``{% for category in categories %}``) then iterates through the list of results, printing out each category's name (``{{ category.name }})`` within a pair of ``<li>`` tags to indicate a list element.
 
 If no categories exist, a message is displayed instead indicating so.
 
@@ -222,9 +222,9 @@ Now let's have a look at how we actually pass the value of the ``category_name_u
 	urlpatterns = patterns('',
 	    url(r'^$', views.index, name='index'),
 	    url(r'^about/$', views.about, name='about'),
-	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),) # New!
+	    url(r'^category/(?P<category_name_url>\w+)/$', views.category, name='category'),) # New!
 
-As you can see, we have added in a rather complex entry that will invoke ``view.category()`` when the regular expression ``r'^(?P<category_name_url>\w+)$'`` is matched. We set up our regular expression to look for any sequence of word characters (e.g. a-z, A-Z, _, or 0-9) before the end of the URL, or a trailing URL slash - whatever comes first. This value is then passed to the view ``views.category()`` as parameter ``category_name_url``, the only argument after the mandatory ``request`` argument. Essentially, the name you hard-code into the regular expression is the name of the argument that Django looks for in your view's function definition.
+As you can see, we have added in a rather complex entry that will invoke ``view.category()`` when the regular expression ``r'^(?P<category_name_url>\w+)/$'`` is matched. We set up our regular expression to look for any sequence of word characters (e.g. a-z, A-Z, _, or 0-9) before the end of the URL, or a trailing URL slash - whatever comes first. This value is then passed to the view ``views.category()`` as parameter ``category_name_url``, the only argument after the mandatory ``request`` argument. Essentially, the name you hard-code into the regular expression is the name of the argument that Django looks for in your view's function definition.
 
 .. note:: Regular expressions may seem horrible and confusing at first, but there are tons of resources online to help you. `This cheat sheet <http://cheatography.com/davechild/cheat-sheets/regular-expressions/>`_ provides you with an excellent resource for fixing pesky regular expression problems.
 

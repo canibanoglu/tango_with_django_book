@@ -62,7 +62,7 @@ In ``rango/forms.py`` add the following code.
 	        # This way we don't need every field in the model present.
 	        # Some fields may allow NULL values, so we may not want to include them...
 	        # Here, we are hiding the foreign key.
-	        fields = ('title', 'url','views')
+	        fields = ('title', 'url', 'views')
 
 Django provides us with a number of ways to customise the forms that are created on our behalf. In the code sample above, we've specified the widgets that we wish to use for each field to be displayed. For example, in our ``PageForm`` class, we've defined ``forms.CharField`` for the ``title`` field, and ``forms.URLField`` for ``url`` field. Both fields provide text entry for users. Note the ``max_length`` parameters we supply to our fields - the lengths that we specify are identical to the maximum length of each field we specified in the underlying data models. Go back to Chapter :ref:`model-label` to check for yourself, or have a look at Rango's ``models.py`` file.
 
@@ -101,8 +101,8 @@ With our ``CategoryForm`` class now defined, we're now ready to create a new vie
 	            # The user will be shown the homepage.
 	            return index(request)
 	        else:
-	            # No form passed - ignore and keep going.
-	            pass
+	            # The supplied form contained errors - just print them to the terminal.
+	            print form.errors
 	    else:
 	        # If the request was not a POST, display the form to enter details.
 	        form = CategoryForm()
@@ -215,12 +215,12 @@ Since we have defined the ``url`` attribute in the ``Page`` model to be a ``URLF
 	    def clean(self):
 	        cleaned_data = self.cleaned_data
 	        url = cleaned_data.get('url')
-	        
-	        if not url.startswith('http://'):
+	        # If url is not empty and doesn't start with 'http://' add 'http://' to the beginning.
+	        if url and not url.startswith('http://'):
 	            url = 'http://' + url
 	            
 	            cleaned_data['url'] = url
-	            return cleaned_data
+            return cleaned_data
 
 This trivial example shows how we can clean the data being passed through the form before being stored. This is pretty handy, especially when particular fields need to have default values - or data within the form is missing, and we need to handle such data entry problems.
 
@@ -265,7 +265,7 @@ A next logical step would be to allow users to add pages to a given category. To
 	            page.save()
 	            
 	            # Now that the page is saved, display the category instead.
-	            return category(request, category_name)
+	            return category(request, category_name_url)
 	        else:
 	            print form.errors
 	    else:

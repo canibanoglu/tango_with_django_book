@@ -182,7 +182,7 @@ Now we need to map the ``add_category()`` view to a URL. In the template we have
 	    url(r'^add_category/$', views.add_category, name='add_category'), # NEW MAPPING!
 	    url(r'^category/(?P<category_name_url>\w+)$', views.category, name='category'),)
 
-Note the order in which we placed our new URL mapping. Django looks for a matching URL, starting with the first tuple entry. It then moves along the tuple sequentially until a match is found (a HTTP 404 error is raised if no match is found). In our example, the URL ``/add_category/`` is our new URL for adding a category. As such, this must always return the add category form, and should take precedence over the category view mapping, which could match to any string combination. If the URL provided does not match ``/add_category/``, Django then falls back to the category view mapping as a last resort. Take a look at the `official Django documentation on how Django process a request <https://docs.djangoproject.com/en/1.5/topics/http/urls/#how-django-processes-a-request>`_ for more information.
+Ordering doesn't necessarily matter in this instance. However, take a look at the `official Django documentation on how Django process a request <https://docs.djangoproject.com/en/1.5/topics/http/urls/#how-django-processes-a-request>`_ for more information. Our new URL for adding a category is ``/rango/add_category/``.
 
 Modifying the Index Page View
 .............................

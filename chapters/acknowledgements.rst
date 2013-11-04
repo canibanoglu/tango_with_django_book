@@ -20,7 +20,11 @@ In this book, we have pulled together the relevant information and details so th
 * Rezha Julio ‏@kimiamania
 * Thomas Murphy ‏@TMurphyMusic
 * Saurabh Tandon ‏@saurabhtand
-* @ramdog
+* Pierre-Yves Mathieu @pywebdesign (GitHub account)
+* Dhiraj Thakur @dhirajt (GitHub account)
+* Svante Kvarnström @sjktje
+* @ramdog (GitHub account)
+* Krace Kumar @kracekumar (GitHub account)
 
 for their suggestions, comments and feedback, which have greatly improved the quality of this resource.
 

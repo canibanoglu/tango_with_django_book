@@ -307,4 +307,4 @@ Hints
 To help you with the exercises above, the following hints may be of some use to you. Good luck!
 
 * Update the population script to add some value to the views count for each page.
-* Create an encode and decode function to convert category_name_url to category_name and vice versa.
+* Create an encode and decode function to convert ``category_name_url`` to ``category_name`` and vice versa.

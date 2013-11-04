@@ -1,5 +1,3 @@
-
-
 Chapter 1
 	- fix erd diagram
 
@@ -12,3 +10,7 @@ Chapter 7
 
 Deployment Chapter
 - add list of packages to be installed other than Django and pil
+
+Courtesy of pywebdesign
+- What about refactoring to use class-based views?
+- Adding a chapter to show how django-allauth could be used to integrate signups.

@@ -4,9 +4,11 @@ Acknowledgements
 The first version of this book began because my students were struggling to pick up the Django Framework as part of the course I teach on Web Application Development. However, it became painfully clear that the official Django Tutorials made many assumptions regarding one's background, missed out
 crucial steps here and there that would trip up the students, and finally, it was clear that the students lacked the vocabulary to google for the right things to resolve any problems that did arise (and also that they didn't have hours to spend trying to figure out what was going on).
 
-I realised that to go from woe to go required a lot of additional information and help to resolve common problems. For this I often consulted stackoverflow.com for advice, help and explanations, along with other sites - the folk who have contributed to these sites have been an invaluable source of knowledge that I have tried to distill and combine here. So I wish to express my gratitude to all the folk who have posted such advice, help and explanations, and to those who were brave enough to ask the questions in the first place. In this book, we have pull together the relevant information and details to create this book so that students and beginners to web development can go through the process in a seamless fashion and learn the basics of web application development.
+I realised that to go from woe to go required a lot of additional information and help to resolve common problems. For this I often consulted stackoverflow.com for advice, help and explanations, along with other sites - the folk who have contributed to these sites have been an invaluable source of knowledge that I have tried to distill and combine here. So I wish to express my gratitude to all the folk who have posted such advice, help and explanations, and to those who were brave enough to ask the questions in the first place. 
+Leif
 
-After realising the book we have numerous people contact us about how we can improving the book. So we'd like to thank:
+
+In this book, we have pulled together the relevant information and details so that students and beginners to web development can go through the process in a seamless fashion and learn the basics of web application development. After realising the book we have had numerous people contact us with ways to improve the quality of the book. So we'd like to thank:
 
 * Manoel Maria ‏@xmadruga157 
 * Codenius @Codenius 
@@ -18,4 +20,8 @@ After realising the book we have numerous people contact us about how we can imp
 * Thomas Murphy ‏@TMurphyMusic
 * Saurabh Tandon ‏@saurabhtand
 
+for their suggestions, comments and feedback, which have greatly improved the quality of this resource.
+
+
+Leif and David
 

@@ -177,7 +177,7 @@ Our new view follows the same basic steps as our ``index()`` view. We first obta
 
 You will have also seen in the ``category()`` view function we assume that the ``category_name_url`` is the category name where spaces are converted to underscores. We therefore replace all the underscores with spaces. This is unfortunately a pretty crude way to handle the decoding and encoding of the category name within the URL. As an exercise later, it'll be your job to create two functions to encode and decode category name.
 
-.. warning:: While you can used spaces in URLs, it is considered to be unsafe to use them. Check out `IETF Memo on URLs <http://www.ietf.org/rfc/rfc1738.txt>`_ to read more.
+.. warning:: While you can use spaces in URLs, it is considered to be unsafe to use them. Check out `IETF Memo on URLs <http://www.ietf.org/rfc/rfc1738.txt>`_ to read more.
 
 Category Template
 .................

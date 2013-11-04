@@ -5,6 +5,7 @@ The first version of this book began because my students were struggling to pick
 crucial steps here and there that would trip up the students, and finally, it was clear that the students lacked the vocabulary to google for the right things to resolve any problems that did arise (and also that they didn't have hours to spend trying to figure out what was going on).
 
 I realised that to go from woe to go required a lot of additional information and help to resolve common problems. For this I often consulted stackoverflow.com for advice, help and explanations, along with other sites - the folk who have contributed to these sites have been an invaluable source of knowledge that I have tried to distill and combine here. So I wish to express my gratitude to all the folk who have posted such advice, help and explanations, and to those who were brave enough to ask the questions in the first place. 
+
 Leif
 
 

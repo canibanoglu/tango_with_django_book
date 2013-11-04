@@ -25,3 +25,15 @@ Deployment Chapter
 Courtesy of pywebdesign
 - What about refactoring to use class-based views?
 - Adding a chapter to show how django-allauth could be used to integrate signups.
+
+CLASS-BASED VIEWS (@pywebdesign)
+================================
+Function based views are very useful and adequate for many other uses which means that an optimal tutorial should cover them too. I find myself looking at your code in views.py and trying to think of a solution to teach class based views without eclipsing function based view! Here's my shortly tough solution:
+
+Make an optional chapter where you teach to convert some views to class based one? This seams to be great and can also allow you to discuss the topic of class based VS function based views. Maybe you will run in some compatibility problem tough, if someone can't follow the tutorial after doing this conversion. The optional chapter should then be made to be read at the end.
+
+With this, your tutorial could become a cornerstone to learning django, I think.
+
+about allauth: here's 2 interesting tutorial:
+http://www.sarahhagstrom.com/2013/09/the-missing-django-allauth-tutorial/
+https://speakerdeck.com/tedtieken/signing-up-and-signing-in-users-in-django-with-django-allauth
